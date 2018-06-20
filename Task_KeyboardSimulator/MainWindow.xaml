@@ -100,7 +100,7 @@
             
             <!--Обычные символы - панель по умолчанию-->
             <StackPanel>
-                <!--Первый ряд символов-->
+                <!--Первый ряд кнопок-->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="13*"/>
@@ -130,7 +130,7 @@
                     
                 </Grid>
                 
-                <!--Второй ряд символов-->
+                <!--Второй ряд кнопок-->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.5*"/>
@@ -162,7 +162,7 @@
                     
                 </Grid>
                 
-                <!--Третий ряд-->
+                <!--Третий ряд кнопок-->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
@@ -192,6 +192,37 @@
                     <Button Grid.Column="2" Style="{StaticResource styleModifierKeys}">Enter</Button>
 
                 </Grid>
+                
+                <!--Четвертый ряд кнопок-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2.5*"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="2.5*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Style="{StaticResource styleModifierKeys}">Shift</Button>
+
+                    <UniformGrid Grid.Column="1" Columns="10" Rows="1">
+
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}">z</Button>
+                        <Button Style="{StaticResource styleLeftHandFourthFinger}">x</Button>
+                        <Button Style="{StaticResource styleLeftHandThirdFinger}">c</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}">v</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}">b</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}">n</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}">m</Button>
+                        <Button Style="{StaticResource styleRightHandThirdFinger}">,</Button>
+                        <Button Style="{StaticResource styleRightHandFourthFinger}">.</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}">/</Button>
+
+                    </UniformGrid>
+
+                    <Button Grid.Column="2" Style="{StaticResource styleModifierKeys}">Shift</Button>
+
+                </Grid>
+                
+                <!--Пятый ряд кнопок-->
                 
             </StackPanel>
             
