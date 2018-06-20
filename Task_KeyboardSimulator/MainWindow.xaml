@@ -92,5 +92,49 @@
             </StackPanel>
         </Grid>
         
+        <!--Четвертый ряд - кнопки-->
+        <Grid Grid.Row="3">
+            
+            <!--Символы при нажатии на shift - скрытая панель-->
+            <StackPanel></StackPanel>
+            
+            <!--Обычные символы - панель по умолчанию-->
+            <StackPanel>
+                <!--Первый ряд символов-->
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="13*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <UniformGrid Columns="13" Rows="1" Grid.Column="0">
+
+                        <Button>Test</Button>
+                        <Button>Test</Button>
+                        <Button>Test</Button>
+
+                        <Button>Test</Button>
+                        <Button>Test</Button>
+                        <Button>Test</Button>
+                        <Button>Test</Button>
+                        <Button>Test</Button>
+                        <Button>Test</Button>
+                        <Button>Test</Button>
+                        <Button>Test</Button>
+                        <Button>Test</Button>
+                        <Button>Test</Button>
+
+                    </UniformGrid>
+
+                    <Button Grid.Column="1">Test</Button>
+                </Grid>
+                
+                <!--Второй ряд символов-->
+                
+                
+            </StackPanel>
+            
+        </Grid>
+        
     </Grid>
 </Window>
