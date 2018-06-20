@@ -30,11 +30,25 @@ namespace Task_KeyboardSimulator
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             this.KeyDown += MainWindow_KeyDown;
+            this.PreviewTextInput += MainWindow_PreviewTextInput;
+        }
+
+        private void MainWindow_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Console.WriteLine(e.Text);
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            throw new NotImplementedException();
+            //if (e.Key > Key.D0 && e.Key < Key.D9)
+            //{
+            //    Console.WriteLine(e.Key.ToString());
+            //}
+
+            //Console.WriteLine((char)((int)e.Key + 10));
+            //KeyConverter keyConverter = new KeyConverter();
+            //string key = keyConverter.ConvertToString(;
+            //Console.WriteLine(key);
         }
     }
 }
