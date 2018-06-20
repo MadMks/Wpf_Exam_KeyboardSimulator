@@ -57,7 +57,7 @@
             
         </Grid>
 
-        <!--Второй ряд-->
+        <!--Второй ряд - "Старт" и "Стоп"-->
         <Grid Grid.Row="1" Margin="2">
 
             <Grid.ColumnDefinitions>
@@ -71,9 +71,9 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0">Start</Button>
+                <Button Style="{StaticResource styleControlButtons}" Grid.Column="0">Start</Button>
 
-                <Button Grid.Column="1" Margin="5,0,0,0">Stop</Button>
+                <Button Style="{StaticResource styleControlButtons}" Grid.Column="1" Margin="5,0,0,0">Stop</Button>
             </Grid>
             
         </Grid>
@@ -101,32 +101,32 @@
             <!--Обычные символы - панель по умолчанию-->
             <StackPanel>
                 <!--Первый ряд символов-->
-                <Grid >
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="13*"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <UniformGrid Columns="13" Rows="1" Grid.Column="0">
 
-                        <Button>Test</Button>
-                        <Button>Test</Button>
-                        <Button>Test</Button>
-
-                        <Button>Test</Button>
-                        <Button>Test</Button>
-                        <Button>Test</Button>
-                        <Button>Test</Button>
-                        <Button>Test</Button>
-                        <Button>Test</Button>
-                        <Button>Test</Button>
-                        <Button>Test</Button>
-                        <Button>Test</Button>
-                        <Button>Test</Button>
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}">`</Button>
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}">1</Button>
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}">2</Button>
+                        <Button Style="{StaticResource styleLeftHandFourthFinger}">3</Button>
+                        <Button Style="{StaticResource styleLeftHandThirdFinger}">4</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}">5</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}">6</Button>
+                        <Button>7</Button>
+                        <Button>8</Button>
+                        <Button>9</Button>
+                        <Button>0</Button>
+                        <Button>-</Button>
+                        <Button>=</Button>
 
                     </UniformGrid>
 
-                    <Button Grid.Column="1">Test</Button>
+                    <Button Grid.Column="1" Style="{StaticResource styleModifierKeys}">Backspace</Button>
+                    
                 </Grid>
                 
                 <!--Второй ряд символов-->
