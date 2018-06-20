@@ -65,6 +65,7 @@
         
         <!--Цвета кнопок (для каждого пальца - свой цвет)-->
         <!--TODO первый палец-->
+        <!--Левая рука-->
         <Style TargetType="Button" x:Key="styleLeftHandSecondFinger" BasedOn="{StaticResource styleKeyboardKey}">
             <Setter Property="Background" Value="#FF77BEF0"/>
         </Style>
@@ -76,6 +77,19 @@
         </Style>
         <Style TargetType="Button" x:Key="styleLeftHandFifthFinger" BasedOn="{StaticResource styleKeyboardKey}">
             <Setter Property="Background" Value="#FFF07795"/>
+        </Style>
+        <!--Правая рука-->
+        <Style TargetType="Button" x:Key="styleRightHandSecondFinger" BasedOn="{StaticResource styleKeyboardKey}">
+            <Setter Property="Background" Value="#FFDB77F0"/>
+        </Style>
+        <Style TargetType="Button" x:Key="styleRightHandThirdFinger" BasedOn="{StaticResource styleKeyboardKey}">
+            <Setter Property="Background" Value="#FFF07795"/>
+        </Style>
+        <Style TargetType="Button" x:Key="styleRightHandFourthFinger" BasedOn="{StaticResource styleKeyboardKey}">
+            <Setter Property="Background" Value="#FFE6F077"/>
+        </Style>
+        <Style TargetType="Button" x:Key="styleRightHandFifthFinger" BasedOn="{StaticResource styleKeyboardKey}">
+            <Setter Property="Background" Value="#FF7FF077"/>
         </Style>
         
     </Application.Resources>

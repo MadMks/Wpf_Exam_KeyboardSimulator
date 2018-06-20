@@ -116,12 +116,12 @@
                         <Button Style="{StaticResource styleLeftHandThirdFinger}">4</Button>
                         <Button Style="{StaticResource styleLeftHandSecondFinger}">5</Button>
                         <Button Style="{StaticResource styleLeftHandSecondFinger}">6</Button>
-                        <Button>7</Button>
-                        <Button>8</Button>
-                        <Button>9</Button>
-                        <Button>0</Button>
-                        <Button>-</Button>
-                        <Button>=</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}">7</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}">8</Button>
+                        <Button Style="{StaticResource styleRightHandThirdFinger}">9</Button>
+                        <Button Style="{StaticResource styleRightHandFourthFinger}">0</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}">-</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}">=</Button>
 
                     </UniformGrid>
 
