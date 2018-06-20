@@ -23,6 +23,18 @@ namespace Task_KeyboardSimulator
         public MainWindow()
         {
             InitializeComponent();
+
+            this.Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.KeyDown += MainWindow_KeyDown;
+        }
+
+        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
