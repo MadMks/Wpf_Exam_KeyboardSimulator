@@ -223,6 +223,28 @@
                 </Grid>
                 
                 <!--Пятый ряд кнопок-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4.5*"/>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="4.5*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <UniformGrid Grid.Column="0" Columns="3" Rows="1">
+                        <Button Style="{StaticResource styleModifierKeys}">Ctrl</Button>
+                        <Button Style="{StaticResource styleModifierKeys}">Win</Button>
+                        <Button Style="{StaticResource styleModifierKeys}">Alt</Button>
+                    </UniformGrid>
+
+                    <Button Grid.Column="1" Style="{StaticResource styleFirstFinger}">Space</Button>
+
+                    <UniformGrid Grid.Column="2" Columns="3" Rows="1">
+                        <Button Style="{StaticResource styleModifierKeys}">Alt</Button>
+                        <Button Style="{StaticResource styleModifierKeys}">Win</Button>
+                        <Button Style="{StaticResource styleModifierKeys}">Ctrl</Button>
+                    </UniformGrid>
+
+                </Grid>
                 
             </StackPanel>
             
