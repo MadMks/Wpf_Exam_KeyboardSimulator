@@ -162,6 +162,37 @@
                     
                 </Grid>
                 
+                <!--Третий ряд-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="11*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Style="{StaticResource styleModifierKeys}">Caps Lock</Button>
+
+                    <UniformGrid Grid.Column="1" Columns="11" Rows="1">
+
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}">a</Button>
+
+                        <Button Style="{StaticResource styleLeftHandFourthFinger}">s</Button>
+                        <Button Style="{StaticResource styleLeftHandThirdFinger}">d</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}">f</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}">g</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}">h</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}">j</Button>
+                        <Button Style="{StaticResource styleRightHandThirdFinger}">k</Button>
+                        <Button Style="{StaticResource styleRightHandFourthFinger}">l</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}">;</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}">'</Button>
+
+                    </UniformGrid>
+
+                    <Button Grid.Column="2" Style="{StaticResource styleModifierKeys}">Enter</Button>
+
+                </Grid>
+                
             </StackPanel>
             
         </Grid>
