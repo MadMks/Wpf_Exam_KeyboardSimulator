@@ -5,96 +5,11 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
-        <!--Кнопки с символами (клавиатура)-->
-        <ControlTemplate x:Key="templateKeyButtons" TargetType="Button">
-            <Border CornerRadius="10"
-                    BorderThickness="{TemplateBinding BorderThickness}" 
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    Background="{TemplateBinding Background}"
-                    Margin="{TemplateBinding Margin}">
-                <Grid>
-                    <TextBlock HorizontalAlignment="Center"
-                               Padding="{TemplateBinding Padding}"
-                               FontSize="{TemplateBinding FontSize}"
-                               VerticalAlignment="{TemplateBinding VerticalAlignment}">
-                        <ContentPresenter></ContentPresenter>
-                    </TextBlock>
-                </Grid>
-            </Border>
-        </ControlTemplate>
-        
-        <!--Кнопки управления программы (Старт и Стоп)-->
-        <ControlTemplate x:Key="templateControlButtons" TargetType="Button">
-            <Border BorderThickness="{TemplateBinding BorderThickness}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    Background="{TemplateBinding Background}"
-                    Margin="{TemplateBinding Margin}">
-                <Grid>
-                    <TextBlock HorizontalAlignment="Center">
-                        <ContentPresenter></ContentPresenter>
-                    </TextBlock>
-                </Grid>
-            </Border>
-        </ControlTemplate>
-
-
-        <!--Все кнопки (не цветная)-->
-        <Style TargetType="Button" x:Key="styleKeyboardKey">
-            <Setter Property="Template" Value="{StaticResource templateKeyButtons}"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="Margin" Value="2"/>
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="30"/>
-        </Style>
-
-        <!--Стили кнопок модификации-->
-        <Style TargetType="Button" x:Key="styleModifierKeys" BasedOn="{StaticResource styleKeyboardKey}">
-            <Setter Property="Template" Value="{StaticResource templateKeyButtons}"></Setter>
-            <Setter Property="Padding" Value="0,15"/>
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="Background" Value="#FFB5B5B5"/>
-        </Style>
-
-        <!--Стили кнопок управления (Старт и Стоп)-->
-        <Style TargetType="Button" x:Key="styleControlButtons">
-            <Setter Property="Template" Value="{StaticResource templateControlButtons}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="Background" Value="LightGray"/>
-        </Style>
-        
-        <!--Цвета кнопок (для каждого пальца - свой цвет)-->
-        <Style TargetType="Button" x:Key="styleFirstFinger" BasedOn="{StaticResource styleModifierKeys}">
-            <Setter Property="Background" Value="#FFE5BB72"/>
-        </Style>
-        <!--Левая рука-->
-        <Style TargetType="Button" x:Key="styleLeftHandSecondFinger" BasedOn="{StaticResource styleKeyboardKey}">
-            <Setter Property="Background" Value="#FF77BEF0"/>
-        </Style>
-        <Style TargetType="Button" x:Key="styleLeftHandThirdFinger" BasedOn="{StaticResource styleKeyboardKey}">
-            <Setter Property="Background" Value="#FF7FF077"/>
-        </Style>
-        <Style TargetType="Button" x:Key="styleLeftHandFourthFinger" BasedOn="{StaticResource styleKeyboardKey}">
-            <Setter Property="Background" Value="#FFE6F077"/>
-        </Style>
-        <Style TargetType="Button" x:Key="styleLeftHandFifthFinger" BasedOn="{StaticResource styleKeyboardKey}">
-            <Setter Property="Background" Value="#FFF07795"/>
-        </Style>
-        <!--Правая рука-->
-        <Style TargetType="Button" x:Key="styleRightHandSecondFinger" BasedOn="{StaticResource styleKeyboardKey}">
-            <Setter Property="Background" Value="#FFDB77F0"/>
-        </Style>
-        <Style TargetType="Button" x:Key="styleRightHandThirdFinger" BasedOn="{StaticResource styleKeyboardKey}">
-            <Setter Property="Background" Value="#FFF07795"/>
-        </Style>
-        <Style TargetType="Button" x:Key="styleRightHandFourthFinger" BasedOn="{StaticResource styleKeyboardKey}">
-            <Setter Property="Background" Value="#FFE6F077"/>
-        </Style>
-        <Style TargetType="Button" x:Key="styleRightHandFifthFinger" BasedOn="{StaticResource styleKeyboardKey}">
-            <Setter Property="Background" Value="#FF7FF077"/>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DictionarystyleButtons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
         
     </Application.Resources>
 </Application>
