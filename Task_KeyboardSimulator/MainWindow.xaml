@@ -112,6 +112,7 @@
                         <Button Style="{StaticResource styleLeftHandFifthFinger}">`</Button>
                         <Button Style="{StaticResource styleLeftHandFifthFinger}">1</Button>
                         <Button Style="{StaticResource styleLeftHandFifthFinger}">2</Button>
+                        
                         <Button Style="{StaticResource styleLeftHandFourthFinger}">3</Button>
                         <Button Style="{StaticResource styleLeftHandThirdFinger}">4</Button>
                         <Button Style="{StaticResource styleLeftHandSecondFinger}">5</Button>
@@ -130,7 +131,36 @@
                 </Grid>
                 
                 <!--Второй ряд символов-->
-                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="12*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Style="{StaticResource styleModifierKeys}">Tab</Button>
+
+                    <UniformGrid Grid.Column="1" Columns="12" Rows="1">
+
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}">q</Button>
+                        <Button Style="{StaticResource styleLeftHandFourthFinger}">w</Button>
+
+                        <Button Style="{StaticResource styleLeftHandThirdFinger}">e</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}">r</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}">t</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}">y</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}">u</Button>
+                        <Button Style="{StaticResource styleRightHandThirdFinger}">i</Button>
+                        <Button Style="{StaticResource styleRightHandFourthFinger}">o</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}">p</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}">[</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}">]</Button>
+
+                    </UniformGrid>
+                    
+                    <Button Grid.Column="2" Style="{StaticResource styleRightHandFifthFinger}">\</Button>
+                    
+                </Grid>
                 
             </StackPanel>
             
