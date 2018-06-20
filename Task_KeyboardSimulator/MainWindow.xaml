@@ -78,16 +78,16 @@
             
         </Grid>
         
-        <!--Третий ряд - текст-->
+        <!--Третий ряд - 2 строки текста-->
         <Grid Grid.Row="2" Margin="2">
             <StackPanel>    <!--TODO-->
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>1</TextBlock>
-                    <TextBlock>2</TextBlock>
+                <StackPanel Background="LightBlue" Orientation="Horizontal">
+                    <TextBlock Background="LightGreen" FontFamily="Consolas" FontSize="20">1</TextBlock>
+                    <TextBlock FontFamily="Consolas" FontSize="20">2</TextBlock>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>1</TextBlock>
-                    <TextBlock>2</TextBlock>
+                <StackPanel Background="LightBlue" Orientation="Horizontal">
+                    <TextBlock Background="LightGreen" FontFamily="Consolas" FontSize="20">1</TextBlock>
+                    <TextBlock FontFamily="Consolas" FontSize="20">2</TextBlock>
                 </StackPanel>
             </StackPanel>
         </Grid>

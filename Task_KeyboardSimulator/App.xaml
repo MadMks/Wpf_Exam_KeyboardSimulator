@@ -25,7 +25,10 @@
         
         <!--Кнопки управления программы (Старт и Стоп)-->
         <ControlTemplate x:Key="templateControlButtons" TargetType="Button">
-            <Border BorderThickness="1" BorderBrush="Black" Background="LightGray">
+            <Border BorderThickness="{TemplateBinding BorderThickness}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    Background="{TemplateBinding Background}"
+                    Margin="{TemplateBinding Margin}">
                 <Grid>
                     <TextBlock HorizontalAlignment="Center">
                         <ContentPresenter></ContentPresenter>
@@ -37,7 +40,7 @@
 
         <!--Все кнопки (не цветная)-->
         <Style TargetType="Button" x:Key="styleKeyboardKey">
-            <Setter Property="Template" Value="{StaticResource templateKeyButtons}"></Setter>
+            <Setter Property="Template" Value="{StaticResource templateKeyButtons}"/>
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="Margin" Value="2"/>
@@ -49,18 +52,17 @@
         <!--Стили кнопок модификации-->
         <Style TargetType="Button" x:Key="styleModifierKeys" BasedOn="{StaticResource styleKeyboardKey}">
             <Setter Property="Template" Value="{StaticResource templateKeyButtons}"></Setter>
-            <!--<Setter Property="BorderBrush" Value="Black"/>-->
-            <!--<Setter Property="BorderThickness" Value="2"/>-->
-            <!--<Setter Property="Margin" Value="2"/>-->
             <Setter Property="Padding" Value="0,15"/>
-            <!--<Setter Property="VerticalAlignment" Value="Center"/>-->
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Background" Value="#FFB5B5B5"/>
         </Style>
 
         <!--Стили кнопок управления (Старт и Стоп)-->
         <Style TargetType="Button" x:Key="styleControlButtons">
-            <Setter Property="Template" Value="{StaticResource templateControlButtons}"></Setter>
+            <Setter Property="Template" Value="{StaticResource templateControlButtons}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="Background" Value="LightGray"/>
         </Style>
         
         <!--Цвета кнопок (для каждого пальца - свой цвет)-->
