@@ -36,22 +36,49 @@ namespace Task_KeyboardSimulator
 
         private void MainWindow_KeyUp(object sender, KeyEventArgs e)
         {
-            if (this.btnStart.IsEnabled == false)
+            if (this.IsTrainingStarted())
             {
-                if ((int)e.Key > 34 
+                WorkWithSymbolsInBoxes(e);
+
+                // Проверка равно ли кол-во символов в строках
+                ComputeTypingRequiredNumberOfCharacters();
+            }
+        }
+
+        /// <summary>
+        /// Работа с символами в текстБоксах
+        /// </summary>
+        /// <param name="e">Параметры события нажатия кнопки.</param>
+        private void WorkWithSymbolsInBoxes(KeyEventArgs e)
+        {
+            if ((int)e.Key > 34
                     && (int)e.Key < 115
                     || (int)e.Key > 117
                     && (int)e.Key < 151
                     || (int)e.Key == 18)
-                {
-                    this.textTyped.Text += this.textNeedToType.Text[0];
-                    this.textNeedToType.Text = this.textNeedToType.Text.Substring(1);
-                }
-                else if ((int)e.Key == 2)
-                {
-                    this.textNeedToType.Text = String.Concat(this.textTyped.Text[textTyped.Text.Length - 1], this.textNeedToType.Text);
-                    this.textTyped.Text = textTyped.Text.Substring(0, textTyped.Text.Length - 1);
-                }
+            {
+                this.textTyped.Text += this.textNeedToType.Text[0];
+                this.textNeedToType.Text = this.textNeedToType.Text.Substring(1);
+            }
+            else if ((int)e.Key == 2)
+            {
+                this.textNeedToType.Text = String.Concat(this.textTyped.Text[textTyped.Text.Length - 1], this.textNeedToType.Text);
+                this.textTyped.Text = textTyped.Text.Substring(0, textTyped.Text.Length - 1);
+            }
+        }
+
+        private void ComputeTypingRequiredNumberOfCharacters()
+        {
+            if (this.textTyped.Text.Length == this.textUserTyped.Text.Length
+                && this.textNeedToType.Text.Length == 0)
+            {
+                this.btnStop.IsEnabled = false;
+
+                MessageBox.Show("Конец тренировки: результаты");
+
+                // TODO убрать фокус с текстБокса
+                // например на кнопку старт
+                this.btnStart.Focus();
             }
         }
 
@@ -148,7 +175,24 @@ namespace Task_KeyboardSimulator
 
         private void gridTypingBlocks_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            this.textUserTyped.Focus();
+            if (this.IsTrainingStarted())
+            {
+                this.textUserTyped.Focus();
+            }
+        }
+
+        /// <summary>
+        /// Началось обучение.
+        /// </summary>
+        /// <returns>true если началось обучение (если нажата кнопка Start)</returns>
+        private bool IsTrainingStarted()
+        {
+            if (this.btnStart.IsEnabled == false)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

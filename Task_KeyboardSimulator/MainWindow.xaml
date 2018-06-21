@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Task_KeyboardSimulator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        MinWidth="800" MinHeight="440">
     <Grid>
 
         <Grid.RowDefinitions>
@@ -74,7 +75,8 @@
                 <Button Name="btnStart"
                         Style="{StaticResource styleControlButtons}" Grid.Column="0"
                         Click="btnStart_Click"
-                        IsEnabledChanged="btnStart_IsEnabledChanged">Start</Button>
+                        IsEnabledChanged="btnStart_IsEnabledChanged"
+                        IsDefault="True">Start</Button>
                 <Button Name="btnStop"
                         Style="{StaticResource styleControlButtons}" Grid.Column="1"
                         Margin="5,0,0,0" IsEnabled="False"
@@ -112,7 +114,8 @@
                         <!--<TextBlock FontFamily="Consolas" FontSize="20">2</TextBlock>-->
                     </StackPanel>
                     <TextBox IsReadOnly="True"
-                             Background="Transparent" Focusable="False"></TextBox>
+                             Background="Transparent" 
+                             Focusable="False"></TextBox>
                 </Grid>
                 
             </StackPanel>
