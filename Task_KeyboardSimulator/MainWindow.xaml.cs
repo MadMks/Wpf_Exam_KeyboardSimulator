@@ -36,6 +36,8 @@ namespace Task_KeyboardSimulator
         private void MainWindow_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Console.WriteLine(e.Text);
+
+
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)

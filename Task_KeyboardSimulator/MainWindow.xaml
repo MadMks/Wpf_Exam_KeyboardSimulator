@@ -71,9 +71,10 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Button Style="{StaticResource styleControlButtons}" Grid.Column="0">Start</Button>
-
-                <Button Style="{StaticResource styleControlButtons}" Grid.Column="1" Margin="5,0,0,0">Stop</Button>
+                <Button Name="btnStart"
+                        Style="{StaticResource styleControlButtons}" Grid.Column="0">Start</Button>
+                <Button Name="btnStop"
+                        Style="{StaticResource styleControlButtons}" Grid.Column="1" Margin="5,0,0,0">Stop</Button>
             </Grid>
             
         </Grid>
