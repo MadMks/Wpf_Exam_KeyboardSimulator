@@ -27,7 +27,8 @@
                     Background="{TemplateBinding Background}"
                     Margin="{TemplateBinding Margin}">
             <Grid>
-                <TextBlock HorizontalAlignment="Center">
+                <TextBlock HorizontalAlignment="Center"
+                           Foreground="{TemplateBinding Foreground}">
                         <ContentPresenter></ContentPresenter>
                 </TextBlock>
             </Grid>
@@ -69,10 +70,28 @@
 
     <!--Стили кнопок управления (Старт и Стоп)-->
     <Style TargetType="Button" x:Key="styleControlButtons">
-        <Setter Property="Template" Value="{StaticResource templateControlButtons}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="Black"/>
-        <Setter Property="Background" Value="LightGray"/>
+        <Style.Setters>
+            <Setter Property="Template" Value="{StaticResource templateControlButtons}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="Background" Value="LightGray"/>
+        </Style.Setters>
+        <Style.Triggers>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="#FFEEEEEE"/>
+                <Setter Property="BorderBrush" Value="#FF9C9C9C"/>
+                <Setter Property="Foreground" Value="#FFCCCCCC"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!--Цвета кнопок (для каждого пальца - свой цвет)-->

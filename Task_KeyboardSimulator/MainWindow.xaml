@@ -72,9 +72,14 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Name="btnStart"
-                        Style="{StaticResource styleControlButtons}" Grid.Column="0">Start</Button>
+                        Style="{StaticResource styleControlButtons}" Grid.Column="0"
+                        Click="btnStart_Click"
+                        IsEnabledChanged="btnStart_IsEnabledChanged">Start</Button>
                 <Button Name="btnStop"
-                        Style="{StaticResource styleControlButtons}" Grid.Column="1" Margin="5,0,0,0">Stop</Button>
+                        Style="{StaticResource styleControlButtons}" Grid.Column="1"
+                        Margin="5,0,0,0" IsEnabled="False"
+                        Click="btnStop_Click"
+                        IsEnabledChanged="btnStop_IsEnabledChanged">Stop</Button>
             </Grid>
             
         </Grid>
@@ -83,11 +88,14 @@
         <Grid Grid.Row="2" Margin="2">
             <StackPanel>    <!--TODO-->
                 <StackPanel Background="LightBlue" Orientation="Horizontal">
-                    <TextBlock Background="LightGreen" FontFamily="Consolas" FontSize="20">1</TextBlock>
-                    <TextBlock FontFamily="Consolas" FontSize="20">2</TextBlock>
+                    <TextBlock Name="textTyped"
+                               Background="LightGreen" FontFamily="Consolas" FontSize="20">1</TextBlock>
+                    <TextBlock Name="textNeedToType"
+                               FontFamily="Consolas" FontSize="20">2</TextBlock>
                 </StackPanel>
                 <StackPanel Background="LightBlue" Orientation="Horizontal">
-                    <TextBlock Background="LightGreen" FontFamily="Consolas" FontSize="20">1</TextBlock>
+                    <TextBlock Name="textUserTyped"
+                               Background="LightGreen" FontFamily="Consolas" FontSize="20">1</TextBlock>
                     <TextBlock FontFamily="Consolas" FontSize="20">2</TextBlock>
                 </StackPanel>
             </StackPanel>
@@ -108,7 +116,7 @@
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
 
-                    <UniformGrid Columns="13" Rows="1" Grid.Column="0">
+                    <UniformGrid Name="test" Columns="13" Rows="1" Grid.Column="0">
 
                         <Button Style="{StaticResource styleLeftHandFifthFinger}">`</Button>
                         <Button Style="{StaticResource styleLeftHandFifthFinger}">1</Button>

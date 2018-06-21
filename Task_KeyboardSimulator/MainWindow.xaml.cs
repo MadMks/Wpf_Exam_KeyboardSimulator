@@ -37,7 +37,33 @@ namespace Task_KeyboardSimulator
         {
             Console.WriteLine(e.Text);
 
+            if (this.btnStart.IsEnabled == false)
+            {
+                this.textUserTyped.Text += e.Text;
+            }
 
+
+            foreach (Button item in this.test.Children)
+            {
+
+                //Console.WriteLine(item.Content.ToString());
+
+                if (e.Text == item.Content.ToString())
+                {
+                    Console.WriteLine(item.Content.ToString());
+
+                    //item.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+
+                    item.Focus();
+
+                    typeof(Button).GetMethod("OnClick",
+                        System.Reflection.BindingFlags.Instance
+                        | System.Reflection.BindingFlags.NonPublic)
+                        .Invoke(item as Button, new object[0]);
+                }
+            }
+
+            //(sender as Button).
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
@@ -50,7 +76,44 @@ namespace Task_KeyboardSimulator
             //Console.WriteLine((char)((int)e.Key + 10));
             //KeyConverter keyConverter = new KeyConverter();
             //string key = keyConverter.ConvertToString(;
-            //Console.WriteLine(key);
+            //Console.WriteLine((sender as Button).Content);
+
+            //this.test.Children
+
+            //(sender as Button).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            //typeof(Button).GetMethod("OnClick",
+            //    System.Reflection.BindingFlags.Instance
+            //    | System.Reflection.BindingFlags.NonPublic)
+            //    .Invoke(sender as Button, new object[0]);
+
         }
+
+        private void btnStart_Click(object sender, RoutedEventArgs e)
+        {
+            this.btnStart.IsEnabled = false;
+        }
+
+        private void btnStop_Click(object sender, RoutedEventArgs e)
+        {
+            this.btnStop.IsEnabled = false;
+        }
+
+        private void btnStop_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (this.btnStop.IsEnabled == false)
+            {
+                this.btnStart.IsEnabled = true;
+            }
+        }
+
+        private void btnStart_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (this.btnStart.IsEnabled == false)
+            {
+                this.btnStop.IsEnabled = true;
+            }
+        }
+
+        
     }
 }
