@@ -85,19 +85,36 @@
         </Grid>
         
         <!--Третий ряд - 2 строки текста-->
-        <Grid Grid.Row="2" Margin="2">
+        <Grid Grid.Row="2" Margin="2"
+              Name="gridTypingBlocks" MouseDown="gridTypingBlocks_MouseDown">
             <StackPanel>    <!--TODO-->
                 <StackPanel Background="LightBlue" Orientation="Horizontal">
-                    <TextBlock Name="textTyped"
-                               Background="LightGreen" FontFamily="Consolas" FontSize="20">1</TextBlock>
+                    <!--<TextBlock Name="textTyped"
+                               Background="LightGreen" FontFamily="Consolas" FontSize="20"></TextBlock>
                     <TextBlock Name="textNeedToType"
-                               FontFamily="Consolas" FontSize="20">2</TextBlock>
+                               FontFamily="Consolas" FontSize="20">Lorem ipsum</TextBlock>-->
+                    <TextBox Name="textTyped"
+                             Background="LightGreen" FontFamily="Consolas" FontSize="20"
+                             IsReadOnly="True"
+                             Focusable="False"></TextBox>
+                    <TextBox Name="textNeedToType"
+                             FontFamily="Consolas" FontSize="20"
+                             Background="Transparent"
+                             IsReadOnly="True"
+                             Focusable="False">Lorem ipsum</TextBox>
                 </StackPanel>
-                <StackPanel Background="LightBlue" Orientation="Horizontal">
-                    <TextBlock Name="textUserTyped"
-                               Background="LightGreen" FontFamily="Consolas" FontSize="20">1</TextBlock>
-                    <TextBlock FontFamily="Consolas" FontSize="20">2</TextBlock>
-                </StackPanel>
+                <Grid>
+                    <StackPanel Background="LightBlue" Orientation="Horizontal">
+                        <!--<TextBlock Name="textUserTyped"
+                               Background="LightGreen" FontFamily="Consolas" FontSize="20"></TextBlock>-->
+                        <TextBox Name="textUserTyped"
+                                 Background="LightGreen" FontFamily="Consolas" FontSize="20"></TextBox>
+                        <!--<TextBlock FontFamily="Consolas" FontSize="20">2</TextBlock>-->
+                    </StackPanel>
+                    <TextBox IsReadOnly="True"
+                             Background="Transparent" Focusable="False"></TextBox>
+                </Grid>
+                
             </StackPanel>
         </Grid>
         

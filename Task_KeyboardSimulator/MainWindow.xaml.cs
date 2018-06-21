@@ -30,7 +30,29 @@ namespace Task_KeyboardSimulator
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             this.KeyDown += MainWindow_KeyDown;
+            this.KeyUp += MainWindow_KeyUp;
             this.PreviewTextInput += MainWindow_PreviewTextInput;
+        }
+
+        private void MainWindow_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (this.btnStart.IsEnabled == false)
+            {
+                if ((int)e.Key > 34 
+                    && (int)e.Key < 115
+                    || (int)e.Key > 117
+                    && (int)e.Key < 151
+                    || (int)e.Key == 18)
+                {
+                    this.textTyped.Text += this.textNeedToType.Text[0];
+                    this.textNeedToType.Text = this.textNeedToType.Text.Substring(1);
+                }
+                else if ((int)e.Key == 2)
+                {
+                    this.textNeedToType.Text = String.Concat(this.textTyped.Text[textTyped.Text.Length - 1], this.textNeedToType.Text);
+                    this.textTyped.Text = textTyped.Text.Substring(0, textTyped.Text.Length - 1);
+                }
+            }
         }
 
         private void MainWindow_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -39,29 +61,29 @@ namespace Task_KeyboardSimulator
 
             if (this.btnStart.IsEnabled == false)
             {
-                this.textUserTyped.Text += e.Text;
+                //this.textUserTyped.Text += e.Text;
             }
 
 
-            foreach (Button item in this.test.Children)
-            {
+            //foreach (Button item in this.test.Children)
+            //{
 
-                //Console.WriteLine(item.Content.ToString());
+            //    //Console.WriteLine(item.Content.ToString());
 
-                if (e.Text == item.Content.ToString())
-                {
-                    Console.WriteLine(item.Content.ToString());
+            //    if (e.Text == item.Content.ToString())
+            //    {
+            //        //Console.WriteLine(item.Content.ToString());
 
-                    //item.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            //        //item.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
 
-                    item.Focus();
+            //        //item.Focus();
 
-                    typeof(Button).GetMethod("OnClick",
-                        System.Reflection.BindingFlags.Instance
-                        | System.Reflection.BindingFlags.NonPublic)
-                        .Invoke(item as Button, new object[0]);
-                }
-            }
+            //        typeof(Button).GetMethod("OnClick",
+            //            System.Reflection.BindingFlags.Instance
+            //            | System.Reflection.BindingFlags.NonPublic)
+            //            .Invoke(item as Button, new object[0]);
+            //    }
+            //}
 
             //(sender as Button).
         }
@@ -73,7 +95,7 @@ namespace Task_KeyboardSimulator
             //    Console.WriteLine(e.Key.ToString());
             //}
 
-            //Console.WriteLine((char)((int)e.Key + 10));
+            Console.WriteLine((int)e.Key);
             //KeyConverter keyConverter = new KeyConverter();
             //string key = keyConverter.ConvertToString(;
             //Console.WriteLine((sender as Button).Content);
@@ -86,11 +108,21 @@ namespace Task_KeyboardSimulator
             //    | System.Reflection.BindingFlags.NonPublic)
             //    .Invoke(sender as Button, new object[0]);
 
+
+            if (this.btnStart.IsEnabled == false)
+            {
+                //if (e.Key == Key.Back)
+                //{
+                //    string temp = textUserTyped.Text.Substring(0, textUserTyped.Text.Length - 1);
+                //}
+            }
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             this.btnStart.IsEnabled = false;
+
+            this.textUserTyped.Focus();
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
@@ -114,6 +146,9 @@ namespace Task_KeyboardSimulator
             }
         }
 
-        
+        private void gridTypingBlocks_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.textUserTyped.Focus();
+        }
     }
 }
