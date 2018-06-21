@@ -20,6 +20,8 @@ namespace Task_KeyboardSimulator
     /// </summary>
     public partial class MainWindow : Window
     {
+        private int numberOfMistakes;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -29,6 +31,8 @@ namespace Task_KeyboardSimulator
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            numberOfMistakes = 0;
+
             this.KeyDown += MainWindow_KeyDown;
             this.KeyUp += MainWindow_KeyUp;
             this.PreviewTextInput += MainWindow_PreviewTextInput;
@@ -40,9 +44,40 @@ namespace Task_KeyboardSimulator
             {
                 WorkWithSymbolsInBoxes(e);
 
+                // TODO проверка на ошибки
+                // разукрашивание ошибок
+                ErrorChecking();
+
                 // Проверка равно ли кол-во символов в строках
-                ComputeTypingRequiredNumberOfCharacters();
+                CheckTypingRequiredNumberOfCharacters();
             }
+        }
+
+        /// <summary>
+        /// Проверка ошибок.
+        /// </summary>
+        private void ErrorChecking()
+        {
+            //Console.WriteLine(textUserTyped.Text.Length);
+            //if (textUserTyped.Text.Length > 0)
+            //{
+            //    Console.WriteLine(this.textUserTyped.Text[textUserTyped.Text.Length - 1]);
+            //}
+
+            if (textUserTyped.Text.Length > 0)
+            {
+                if (this.textUserTyped.Text[textUserTyped.Text.Length - 1] != this.textTyped.Text[textTyped.Text.Length - 1])
+                {
+                    //Console.WriteLine(this.textTyped.Text[textTyped.Text.Length - 1]);
+                    //Console.WriteLine(this.textUserTyped.Text[textUserTyped.Text.Length - 1]);
+
+                    //this.textTyped.Select(textTyped.Text.Length - 1, 1);
+                    //this.textTyped.SelectionBrush
+
+                    this.answerNumberOfMistakes.Text = (++numberOfMistakes).ToString();
+                }
+            }
+
         }
 
         /// <summary>
@@ -59,6 +94,10 @@ namespace Task_KeyboardSimulator
             {
                 this.textTyped.Text += this.textNeedToType.Text[0];
                 this.textNeedToType.Text = this.textNeedToType.Text.Substring(1);
+
+                // TODO for RichTextBox
+                //this.textTyped.AppendText(this.textNeedToType.Text[0].ToString());
+                //this.textNeedToType.Text = this.textNeedToType.Text.Substring(1);
             }
             else if ((int)e.Key == 2)
             {
@@ -67,7 +106,10 @@ namespace Task_KeyboardSimulator
             }
         }
 
-        private void ComputeTypingRequiredNumberOfCharacters()
+        /// <summary>
+        /// Проверка равно ли кол-во символов в строках
+        /// </summary>
+        private void CheckTypingRequiredNumberOfCharacters()
         {
             if (this.textTyped.Text.Length == this.textUserTyped.Text.Length
                 && this.textNeedToType.Text.Length == 0)
@@ -84,7 +126,7 @@ namespace Task_KeyboardSimulator
 
         private void MainWindow_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Console.WriteLine(e.Text);
+            //Console.WriteLine(e.Text);
 
             if (this.btnStart.IsEnabled == false)
             {
@@ -122,7 +164,7 @@ namespace Task_KeyboardSimulator
             //    Console.WriteLine(e.Key.ToString());
             //}
 
-            Console.WriteLine((int)e.Key);
+            //Console.WriteLine((int)e.Key);
             //KeyConverter keyConverter = new KeyConverter();
             //string key = keyConverter.ConvertToString(;
             //Console.WriteLine((sender as Button).Content);

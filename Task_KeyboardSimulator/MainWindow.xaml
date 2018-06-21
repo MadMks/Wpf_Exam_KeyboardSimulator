@@ -34,7 +34,7 @@
 
             <StackPanel Grid.Column="1" Orientation="Horizontal">
                 <TextBlock Text="Fails: "/><!--TODO fs-->
-                <TextBlock Text="0"/><!--TODO fs fw-->
+                <TextBlock Name="answerNumberOfMistakes" Text="0"/><!--TODO fs fw-->
             </StackPanel>
 
             <Grid Grid.Column="2">
