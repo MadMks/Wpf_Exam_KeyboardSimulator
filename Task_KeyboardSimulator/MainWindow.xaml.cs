@@ -25,6 +25,12 @@ namespace Task_KeyboardSimulator
 
         private int numberOfMistakes;
         private int numberOfSeconds;
+        /// <summary>
+        /// Добавление символов 
+        /// (пригодится при проверке символов,
+        /// чтоб не реагировать на Backspace).
+        /// </summary>
+        private bool isAddingSymbols;
 
         public MainWindow()
         {
@@ -61,7 +67,10 @@ namespace Task_KeyboardSimulator
 
                 //ErrorChecking();    // проверка на ошибку (при этом в нижнем еще нет буквы!!!!!)
 
-                CheckTypingRequiredNumberOfCharacters();
+                //CheckTypingRequiredNumberOfCharacters();
+
+                Console.WriteLine("MainWindow_PreviewKeyDown");
+                Console.WriteLine("textUserTyped.Text.Length - " + textUserTyped.Text.Length);
             }
         }
 
@@ -69,11 +78,18 @@ namespace Task_KeyboardSimulator
         {
             if (this.IsTrainingStarted())
             {
-                //WorkWithSymbolsInBoxes(e);
 
+                Console.WriteLine("TextUserTyped_TextChanged");
+                Console.WriteLine("textUserTyped.Text.Length - " + textUserTyped.Text.Length);
+
+                //WorkWithSymbolsInBoxes(e);
+                //if ()
+                //{
+                //    MessageBox.Show("1");
+                //}
                 ErrorChecking();
 
-                //CheckTypingRequiredNumberOfCharacters();
+                CheckTypingRequiredNumberOfCharacters();
             }
         }
 
@@ -105,8 +121,8 @@ namespace Task_KeyboardSimulator
             if (this.btnStart.IsEnabled == false)
             {
                 Console.WriteLine(" - MainWindow_PreviewKeyUp");
-                Console.WriteLine("textTyped.Text.Length - " + textTyped.Text.Length);
-                Console.WriteLine("textNeedToType.Text.Length - " + textNeedToType.Text.Length);
+                //Console.WriteLine("textTyped.Text.Length - " + textTyped.Text.Length);
+                //Console.WriteLine("textNeedToType.Text.Length - " + textNeedToType.Text.Length);
                 Console.WriteLine("textUserTyped.Text.Length - " + textUserTyped.Text.Length);
             }
         }
@@ -121,8 +137,8 @@ namespace Task_KeyboardSimulator
             if (this.btnStart.IsEnabled == false)
             {
                 Console.WriteLine(" - MainWindow_KeyUp");
-                Console.WriteLine("textTyped.Text.Length - " + textTyped.Text.Length);
-                Console.WriteLine("textNeedToType.Text.Length - " + textNeedToType.Text.Length);
+                //Console.WriteLine("textTyped.Text.Length - " + textTyped.Text.Length);
+                //Console.WriteLine("textNeedToType.Text.Length - " + textNeedToType.Text.Length);
                 Console.WriteLine("textUserTyped.Text.Length - " + textUserTyped.Text.Length);
             }
         }
@@ -138,7 +154,8 @@ namespace Task_KeyboardSimulator
             //    Console.WriteLine(this.textUserTyped.Text[textUserTyped.Text.Length - 1]);
             //}
 
-            if (textUserTyped.Text.Length > 0)
+            if (textUserTyped.Text.Length > 0 
+                && isAddingSymbols)
             {
                 if (this.textUserTyped.Text[textUserTyped.Text.Length - 1] != this.textTyped.Text[textTyped.Text.Length - 1])
                 {
@@ -179,14 +196,19 @@ namespace Task_KeyboardSimulator
                 // TODO for RichTextBox
                 //this.textTyped.AppendText(this.textNeedToType.Text[0].ToString());
                 //this.textNeedToType.Text = this.textNeedToType.Text.Substring(1);
+
+                isAddingSymbols = true;
             }
             // иначе если Backspace
             else if ((int)e.Key == 2)
             {
                 if (this.textTyped.Text.Length > 0)
                 {
+                    // Изменения верхнего ряда (текстБоксов).
                     this.textNeedToType.Text = String.Concat(this.textTyped.Text[textTyped.Text.Length - 1], this.textNeedToType.Text);
                     this.textTyped.Text = textTyped.Text.Substring(0, textTyped.Text.Length - 1);
+
+                    isAddingSymbols = false;
                 }
             }
         }
@@ -260,8 +282,8 @@ namespace Task_KeyboardSimulator
                 //    string temp = textUserTyped.Text.Substring(0, textUserTyped.Text.Length - 1);
                 //}
                 Console.WriteLine(" - MainWindow_PreviewTextInput");
-                Console.WriteLine("textTyped.Text.Length - " + textTyped.Text.Length);
-                Console.WriteLine("textNeedToType.Text.Length - " + textNeedToType.Text.Length);
+                //Console.WriteLine("textTyped.Text.Length - " + textTyped.Text.Length);
+                //Console.WriteLine("textNeedToType.Text.Length - " + textNeedToType.Text.Length);
                 Console.WriteLine("textUserTyped.Text.Length - " + textUserTyped.Text.Length);
             }
         }
@@ -294,17 +316,17 @@ namespace Task_KeyboardSimulator
                 //    string temp = textUserTyped.Text.Substring(0, textUserTyped.Text.Length - 1);
                 //}
                 Console.WriteLine(" - MainWindow_KeyDown");
-                Console.WriteLine("textTyped.Text.Length - " + textTyped.Text.Length);
-                Console.WriteLine("textNeedToType.Text.Length - " + textNeedToType.Text.Length);
+                //Console.WriteLine("textTyped.Text.Length - " + textTyped.Text.Length);
+                //Console.WriteLine("textNeedToType.Text.Length - " + textNeedToType.Text.Length);
                 Console.WriteLine("textUserTyped.Text.Length - " + textUserTyped.Text.Length);
             }
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            this.btnStart.IsEnabled = false;
-
             this.ZeroingData();
+
+            this.btnStart.IsEnabled = false;
 
             this.textNeedToType.Text = "Lorem ipsum";
             //this.textNeedToType.Text = this.StringGeneration(); // TODO param StringGeneration(param)
