@@ -139,8 +139,10 @@
                     <UniformGrid Name="test" Columns="13" Rows="1" Grid.Column="0">
 
                         <Button Style="{StaticResource styleLeftHandFifthFinger}">`</Button>
+                        <!--<Button Style="{StaticResource styleLeftHandFifthFinger}"
+                                Command="{x:Static local:WindowCommands.BtnPressRoutedCommand}">1</Button>-->
                         <Button Style="{StaticResource styleLeftHandFifthFinger}">1</Button>
-                        <Button Style="{StaticResource styleLeftHandFifthFinger}">2</Button>
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}" Name="btnTests">2</Button>
                         
                         <Button Style="{StaticResource styleLeftHandFourthFinger}">3</Button>
                         <Button Style="{StaticResource styleLeftHandThirdFinger}">4</Button>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -55,6 +56,74 @@ namespace Task_KeyboardSimulator
             this.textUserTyped.TextChanged += TextUserTyped_TextChanged;
 
             this.PreviewKeyDown += MainWindow_PreviewKeyDown;
+
+
+            this.KeyBindingToThePressingCommand();
+        }
+
+        /// <summary>
+        /// Привязка кнопок клавиатуры к команде "визуального нажатия".
+        /// </summary>
+        private void KeyBindingToThePressingCommand()
+        {
+            this.CreationOfACommandOfVisualPressing();
+
+            this.BindingEachButtonToTheCommand();
+        }
+
+        private void BindingEachButtonToTheCommand()
+        {
+            KeyBinding keyBinding;
+
+            //for (int i = 34; i < 35; i++)  // TODO define!
+            //{
+            //    keyBinding = new KeyBinding();
+            //    keyBinding.Key = (Key)i;
+            //    keyBinding.Command = WindowCommands.BtnPressRoutedCommand;
+            //    this.InputBindings.Add(keyBinding);
+            //}
+
+            keyBinding = new KeyBinding();
+            keyBinding.Key = Key.D1;
+            keyBinding.Command = WindowCommands.BtnPressRoutedCommand;
+            this.InputBindings.Add(keyBinding);
+        }
+
+        /// <summary>
+        /// Создание команды "визуального нажатия на кнопку".
+        /// </summary>
+        private void CreationOfACommandOfVisualPressing()
+        {
+            CommandBinding commandBindingPressBtn = new CommandBinding(WindowCommands.BtnPressRoutedCommand);
+            commandBindingPressBtn.Executed += CommandBindingPressBtn_Executed;
+            this.CommandBindings.Add(commandBindingPressBtn);
+        }
+
+        /// <summary>
+        /// Метод обработки команды "визуального нажатия на кнопку".
+        /// </summary>
+        private void CommandBindingPressBtn_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            //typeof(Button).GetMethod(
+            //    "set_IsPressed",
+            //    BindingFlags.Instance | BindingFlags.NonPublic
+            //    ).Invoke((e.Source as Button), new object[] { true });
+
+            typeof(Button).GetMethod(
+                "set_IsPressed",
+                BindingFlags.Instance | BindingFlags.NonPublic
+                ).Invoke(btnTests, new object[] { true });
+
+            //typeof(Button).GetMethod(
+            //    "set_IsPressed",
+            //    BindingFlags.Instance | BindingFlags.NonPublic
+            //    ).Invoke(SearchingVisualButtons((sender as Button).Content), new object[] { true });
+
+            Console.WriteLine("working");
+            Console.WriteLine(sender.GetType().Name);
+            //Console.WriteLine((int)((Key)sender));
+            Console.WriteLine(e.Source.GetType().Name);
+            //Console.WriteLine((e.Source as Button).Content);
         }
 
         private void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -65,6 +134,8 @@ namespace Task_KeyboardSimulator
 
                 //ErrorChecking();    // проверка на ошибку (при этом в нижнем еще нет буквы!!!!!)
             }
+
+            //Console.WriteLine((int)e.Key);
         }
 
         private void TextUserTyped_TextChanged(object sender, TextChangedEventArgs e)
