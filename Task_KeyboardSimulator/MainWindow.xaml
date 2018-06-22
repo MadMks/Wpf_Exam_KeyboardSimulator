@@ -28,7 +28,7 @@
 
             <StackPanel Grid.Column="0" Orientation="Horizontal">
                 <TextBlock Text="Speed: "/><!--TODO fs-->
-                <TextBlock Text="0"/> <!--TODO fs fw--> 
+                <TextBlock Name="answerNumberOfCharsMin" Text="0"/> <!--TODO fs fw--> 
                 <TextBlock Text=" chars/min"/> <!--TODO fs-->
             </StackPanel>
 

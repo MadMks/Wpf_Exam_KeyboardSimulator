@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Task_KeyboardSimulator
 {
@@ -20,7 +21,10 @@ namespace Task_KeyboardSimulator
     /// </summary>
     public partial class MainWindow : Window
     {
+        private DispatcherTimer timer;
+
         private int numberOfMistakes;
+        private int numberOfSeconds;
 
         public MainWindow()
         {
@@ -31,25 +35,104 @@ namespace Task_KeyboardSimulator
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            timer = new DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Tick += Timer_Tick;
+
             numberOfMistakes = 0;
+            numberOfSeconds = 0;
 
             this.KeyDown += MainWindow_KeyDown;
             this.KeyUp += MainWindow_KeyUp;
             this.PreviewTextInput += MainWindow_PreviewTextInput;
+
+            this.PreviewKeyUp += MainWindow_PreviewKeyUp;
+
+            this.textUserTyped.TextChanged += TextUserTyped_TextChanged;
+
+            this.PreviewKeyDown += MainWindow_PreviewKeyDown;
+        }
+
+        private void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (this.IsTrainingStarted())
+            {
+                WorkWithSymbolsInBoxes(e);
+
+                ErrorChecking();
+
+                //CheckTypingRequiredNumberOfCharacters();
+            }
+        }
+
+        private void TextUserTyped_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (this.IsTrainingStarted())
+            {
+                //WorkWithSymbolsInBoxes(e);
+
+                //ErrorChecking();
+
+                //CheckTypingRequiredNumberOfCharacters();
+            }
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            numberOfSeconds++;
+
+            this.answerNumberOfCharsMin.Text = ComputeNumberOfCharsMin();
+        }
+
+        private string ComputeNumberOfCharsMin()
+        {
+            int numberOfCharsMin = (60 / this.numberOfSeconds) * (this.textUserTyped.Text.Length - this.numberOfMistakes);
+
+            return numberOfCharsMin.ToString();
+        }
+
+        private void MainWindow_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (this.IsTrainingStarted())
+            {
+                //WorkWithSymbolsInBoxes(e);
+
+                //ErrorChecking();
+
+                CheckTypingRequiredNumberOfCharacters();
+            }
+
+            if (this.btnStart.IsEnabled == false)
+            {
+                Console.WriteLine(" - MainWindow_PreviewKeyUp");
+                Console.WriteLine("textTyped.Text.Length - " + textTyped.Text.Length);
+                Console.WriteLine("textNeedToType.Text.Length - " + textNeedToType.Text.Length);
+                Console.WriteLine("textUserTyped.Text.Length - " + textUserTyped.Text.Length);
+            }
         }
 
         private void MainWindow_KeyUp(object sender, KeyEventArgs e)
         {
             if (this.IsTrainingStarted())
             {
-                WorkWithSymbolsInBoxes(e);
+                //if (e.IsRepeat == true)
+                //{
+                //    return;
+                //}
 
-                // TODO проверка на ошибки
-                // разукрашивание ошибок
-                ErrorChecking();
+                //WorkWithSymbolsInBoxes(e);
 
-                // Проверка равно ли кол-во символов в строках
-                CheckTypingRequiredNumberOfCharacters();
+                //ErrorChecking();
+
+                //CheckTypingRequiredNumberOfCharacters();
+            }
+
+            if (this.btnStart.IsEnabled == false)
+            {
+                Console.WriteLine(" - MainWindow_KeyUp");
+                Console.WriteLine("textTyped.Text.Length - " + textTyped.Text.Length);
+                Console.WriteLine("textNeedToType.Text.Length - " + textNeedToType.Text.Length);
+                Console.WriteLine("textUserTyped.Text.Length - " + textUserTyped.Text.Length);
             }
         }
 
@@ -68,6 +151,8 @@ namespace Task_KeyboardSimulator
             {
                 if (this.textUserTyped.Text[textUserTyped.Text.Length - 1] != this.textTyped.Text[textTyped.Text.Length - 1])
                 {
+                    // TODO разукрашивание ошибок
+
                     //Console.WriteLine(this.textTyped.Text[textTyped.Text.Length - 1]);
                     //Console.WriteLine(this.textUserTyped.Text[textUserTyped.Text.Length - 1]);
 
@@ -99,10 +184,14 @@ namespace Task_KeyboardSimulator
                 //this.textTyped.AppendText(this.textNeedToType.Text[0].ToString());
                 //this.textNeedToType.Text = this.textNeedToType.Text.Substring(1);
             }
+            // иначе если Backspace
             else if ((int)e.Key == 2)
             {
-                this.textNeedToType.Text = String.Concat(this.textTyped.Text[textTyped.Text.Length - 1], this.textNeedToType.Text);
-                this.textTyped.Text = textTyped.Text.Substring(0, textTyped.Text.Length - 1);
+                if (this.textTyped.Text.Length > 0)
+                {
+                    this.textNeedToType.Text = String.Concat(this.textTyped.Text[textTyped.Text.Length - 1], this.textNeedToType.Text);
+                    this.textTyped.Text = textTyped.Text.Substring(0, textTyped.Text.Length - 1);
+                }
             }
         }
 
@@ -116,11 +205,21 @@ namespace Task_KeyboardSimulator
             {
                 this.btnStop.IsEnabled = false;
 
+                this.timer.Stop();
+
                 MessageBox.Show("Конец тренировки: результаты");
 
                 // TODO убрать фокус с текстБокса
                 // например на кнопку старт
                 this.btnStart.Focus();
+            }
+            else if (this.textUserTyped.Text.Length > this.textTyped.Text.Length)
+            {
+                this.btnStop.IsEnabled = false;
+
+                this.timer.Stop();
+
+                MessageBox.Show("Чак Норрис");
             }
         }
 
@@ -147,14 +246,28 @@ namespace Task_KeyboardSimulator
 
             //        //item.Focus();
 
-            //        typeof(Button).GetMethod("OnClick",
-            //            System.Reflection.BindingFlags.Instance
-            //            | System.Reflection.BindingFlags.NonPublic)
-            //            .Invoke(item as Button, new object[0]);
+            //        //typeof(Button).GetMethod("OnClick",
+            //        //    System.Reflection.BindingFlags.Instance
+            //        //    | System.Reflection.BindingFlags.NonPublic)
+            //        //    .Invoke(item as Button, new object[0]);
+
+            //        //item.IsPressed = true;
             //    }
             //}
 
             //(sender as Button).
+
+            if (this.btnStart.IsEnabled == false)
+            {
+                //if (e.Key == Key.Back)
+                //{
+                //    string temp = textUserTyped.Text.Substring(0, textUserTyped.Text.Length - 1);
+                //}
+                Console.WriteLine(" - MainWindow_PreviewTextInput");
+                Console.WriteLine("textTyped.Text.Length - " + textTyped.Text.Length);
+                Console.WriteLine("textNeedToType.Text.Length - " + textNeedToType.Text.Length);
+                Console.WriteLine("textUserTyped.Text.Length - " + textUserTyped.Text.Length);
+            }
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
@@ -184,6 +297,10 @@ namespace Task_KeyboardSimulator
                 //{
                 //    string temp = textUserTyped.Text.Substring(0, textUserTyped.Text.Length - 1);
                 //}
+                Console.WriteLine(" - MainWindow_KeyDown");
+                Console.WriteLine("textTyped.Text.Length - " + textTyped.Text.Length);
+                Console.WriteLine("textNeedToType.Text.Length - " + textNeedToType.Text.Length);
+                Console.WriteLine("textUserTyped.Text.Length - " + textUserTyped.Text.Length);
             }
         }
 
@@ -191,12 +308,36 @@ namespace Task_KeyboardSimulator
         {
             this.btnStart.IsEnabled = false;
 
+            this.ZeroingData();
+
+            this.textNeedToType.Text = "Lorem ipsum";
+            //this.textNeedToType.Text = this.StringGeneration(); // TODO param StringGeneration(param)
+
             this.textUserTyped.Focus();
+
+            this.timer.Start();
+        }
+
+        /// <summary>
+        /// Обнуление данных.
+        /// </summary>
+        private void ZeroingData()
+        {
+            this.numberOfMistakes = 0;
+            this.numberOfSeconds = 0;
+
+            this.answerNumberOfCharsMin.Text = "0";
+            this.answerNumberOfMistakes.Text = "0";
+
+            this.textTyped.Text = "";
+            this.textUserTyped.Text = "";
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
             this.btnStop.IsEnabled = false;
+
+            this.timer.Stop();
         }
 
         private void btnStop_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -204,6 +345,8 @@ namespace Task_KeyboardSimulator
             if (this.btnStop.IsEnabled == false)
             {
                 this.btnStart.IsEnabled = true;
+
+                //this.timer.Start();
             }
         }
 
@@ -212,6 +355,8 @@ namespace Task_KeyboardSimulator
             if (this.btnStart.IsEnabled == false)
             {
                 this.btnStop.IsEnabled = true;
+
+                //this.timer.Stop();
             }
         }
 
