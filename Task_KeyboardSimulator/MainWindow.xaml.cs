@@ -57,11 +57,11 @@ namespace Task_KeyboardSimulator
         {
             if (this.IsTrainingStarted())
             {
-                WorkWithSymbolsInBoxes(e);
+                WorkWithSymbolsInBoxes(e);  // уже переместил букву в верхнем текстБоксе.
 
-                ErrorChecking();
+                //ErrorChecking();    // проверка на ошибку (при этом в нижнем еще нет буквы!!!!!)
 
-                //CheckTypingRequiredNumberOfCharacters();
+                CheckTypingRequiredNumberOfCharacters();
             }
         }
 
@@ -71,7 +71,7 @@ namespace Task_KeyboardSimulator
             {
                 //WorkWithSymbolsInBoxes(e);
 
-                //ErrorChecking();
+                ErrorChecking();
 
                 //CheckTypingRequiredNumberOfCharacters();
             }
@@ -99,7 +99,7 @@ namespace Task_KeyboardSimulator
 
                 //ErrorChecking();
 
-                CheckTypingRequiredNumberOfCharacters();
+                //CheckTypingRequiredNumberOfCharacters();
             }
 
             if (this.btnStart.IsEnabled == false)
@@ -115,15 +115,6 @@ namespace Task_KeyboardSimulator
         {
             if (this.IsTrainingStarted())
             {
-                //if (e.IsRepeat == true)
-                //{
-                //    return;
-                //}
-
-                //WorkWithSymbolsInBoxes(e);
-
-                //ErrorChecking();
-
                 //CheckTypingRequiredNumberOfCharacters();
             }
 
@@ -177,8 +168,13 @@ namespace Task_KeyboardSimulator
                     && (int)e.Key < 151
                     || (int)e.Key == 18)
             {
-                this.textTyped.Text += this.textNeedToType.Text[0];
-                this.textNeedToType.Text = this.textNeedToType.Text.Substring(1);
+                // Тут ошибка с выходом за рамки массива. верхний текстбокс.
+                // Вроде ошибку убрал.
+                if (this.textNeedToType.Text.Length > 0)
+                {
+                    this.textTyped.Text += this.textNeedToType.Text[0];
+                    this.textNeedToType.Text = this.textNeedToType.Text.Substring(1);
+                }
 
                 // TODO for RichTextBox
                 //this.textTyped.AppendText(this.textNeedToType.Text[0].ToString());
@@ -215,11 +211,11 @@ namespace Task_KeyboardSimulator
             }
             else if (this.textUserTyped.Text.Length > this.textTyped.Text.Length)
             {
-                this.btnStop.IsEnabled = false;
+                //this.btnStop.IsEnabled = false;
 
-                this.timer.Stop();
+                //this.timer.Stop();
 
-                MessageBox.Show("Чак Норрис");
+                //MessageBox.Show("Чак Норрис");
             }
         }
 
