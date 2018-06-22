@@ -27,7 +27,7 @@ namespace Task_KeyboardSimulator
         private int numberOfSeconds;
         /// <summary>
         /// Добавление символов 
-        /// (пригодится при проверке символов,
+        /// (для проверки символов,
         /// чтоб не реагировать на Backspace).
         /// </summary>
         private bool isAddingSymbols;
@@ -48,11 +48,9 @@ namespace Task_KeyboardSimulator
             numberOfMistakes = 0;
             numberOfSeconds = 0;
 
-            this.KeyDown += MainWindow_KeyDown;
-            this.KeyUp += MainWindow_KeyUp;
-            this.PreviewTextInput += MainWindow_PreviewTextInput;
 
-            this.PreviewKeyUp += MainWindow_PreviewKeyUp;
+            this.PreviewTextInput += MainWindow_PreviewTextInput;
+            
 
             this.textUserTyped.TextChanged += TextUserTyped_TextChanged;
 
@@ -66,11 +64,6 @@ namespace Task_KeyboardSimulator
                 WorkWithSymbolsInBoxes(e);  // уже переместил букву в верхнем текстБоксе.
 
                 //ErrorChecking();    // проверка на ошибку (при этом в нижнем еще нет буквы!!!!!)
-
-                //CheckTypingRequiredNumberOfCharacters();
-
-                Console.WriteLine("MainWindow_PreviewKeyDown");
-                Console.WriteLine("textUserTyped.Text.Length - " + textUserTyped.Text.Length);
             }
         }
 
@@ -78,15 +71,6 @@ namespace Task_KeyboardSimulator
         {
             if (this.IsTrainingStarted())
             {
-
-                Console.WriteLine("TextUserTyped_TextChanged");
-                Console.WriteLine("textUserTyped.Text.Length - " + textUserTyped.Text.Length);
-
-                //WorkWithSymbolsInBoxes(e);
-                //if ()
-                //{
-                //    MessageBox.Show("1");
-                //}
                 ErrorChecking();
 
                 CheckTypingRequiredNumberOfCharacters();
@@ -107,65 +91,19 @@ namespace Task_KeyboardSimulator
             return numberOfCharsMin.ToString();
         }
 
-        private void MainWindow_PreviewKeyUp(object sender, KeyEventArgs e)
-        {
-            if (this.IsTrainingStarted())
-            {
-                //WorkWithSymbolsInBoxes(e);
 
-                //ErrorChecking();
-
-                //CheckTypingRequiredNumberOfCharacters();
-            }
-
-            if (this.btnStart.IsEnabled == false)
-            {
-                Console.WriteLine(" - MainWindow_PreviewKeyUp");
-                //Console.WriteLine("textTyped.Text.Length - " + textTyped.Text.Length);
-                //Console.WriteLine("textNeedToType.Text.Length - " + textNeedToType.Text.Length);
-                Console.WriteLine("textUserTyped.Text.Length - " + textUserTyped.Text.Length);
-            }
-        }
-
-        private void MainWindow_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (this.IsTrainingStarted())
-            {
-                //CheckTypingRequiredNumberOfCharacters();
-            }
-
-            if (this.btnStart.IsEnabled == false)
-            {
-                Console.WriteLine(" - MainWindow_KeyUp");
-                //Console.WriteLine("textTyped.Text.Length - " + textTyped.Text.Length);
-                //Console.WriteLine("textNeedToType.Text.Length - " + textNeedToType.Text.Length);
-                Console.WriteLine("textUserTyped.Text.Length - " + textUserTyped.Text.Length);
-            }
-        }
 
         /// <summary>
         /// Проверка ошибок.
         /// </summary>
         private void ErrorChecking()
         {
-            //Console.WriteLine(textUserTyped.Text.Length);
-            //if (textUserTyped.Text.Length > 0)
-            //{
-            //    Console.WriteLine(this.textUserTyped.Text[textUserTyped.Text.Length - 1]);
-            //}
-
             if (textUserTyped.Text.Length > 0 
                 && isAddingSymbols)
             {
                 if (this.textUserTyped.Text[textUserTyped.Text.Length - 1] != this.textTyped.Text[textTyped.Text.Length - 1])
                 {
                     // TODO разукрашивание ошибок
-
-                    //Console.WriteLine(this.textTyped.Text[textTyped.Text.Length - 1]);
-                    //Console.WriteLine(this.textUserTyped.Text[textUserTyped.Text.Length - 1]);
-
-                    //this.textTyped.Select(textTyped.Text.Length - 1, 1);
-                    //this.textTyped.SelectionBrush
 
                     this.answerNumberOfMistakes.Text = (++numberOfMistakes).ToString();
                 }
@@ -277,50 +215,11 @@ namespace Task_KeyboardSimulator
 
             if (this.btnStart.IsEnabled == false)
             {
-                //if (e.Key == Key.Back)
-                //{
-                //    string temp = textUserTyped.Text.Substring(0, textUserTyped.Text.Length - 1);
-                //}
-                Console.WriteLine(" - MainWindow_PreviewTextInput");
-                //Console.WriteLine("textTyped.Text.Length - " + textTyped.Text.Length);
-                //Console.WriteLine("textNeedToType.Text.Length - " + textNeedToType.Text.Length);
-                Console.WriteLine("textUserTyped.Text.Length - " + textUserTyped.Text.Length);
+
             }
         }
 
-        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
-        {
-            //if (e.Key > Key.D0 && e.Key < Key.D9)
-            //{
-            //    Console.WriteLine(e.Key.ToString());
-            //}
 
-            //Console.WriteLine((int)e.Key);
-            //KeyConverter keyConverter = new KeyConverter();
-            //string key = keyConverter.ConvertToString(;
-            //Console.WriteLine((sender as Button).Content);
-
-            //this.test.Children
-
-            //(sender as Button).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-            //typeof(Button).GetMethod("OnClick",
-            //    System.Reflection.BindingFlags.Instance
-            //    | System.Reflection.BindingFlags.NonPublic)
-            //    .Invoke(sender as Button, new object[0]);
-
-
-            if (this.btnStart.IsEnabled == false)
-            {
-                //if (e.Key == Key.Back)
-                //{
-                //    string temp = textUserTyped.Text.Substring(0, textUserTyped.Text.Length - 1);
-                //}
-                Console.WriteLine(" - MainWindow_KeyDown");
-                //Console.WriteLine("textTyped.Text.Length - " + textTyped.Text.Length);
-                //Console.WriteLine("textNeedToType.Text.Length - " + textNeedToType.Text.Length);
-                Console.WriteLine("textUserTyped.Text.Length - " + textUserTyped.Text.Length);
-            }
-        }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
