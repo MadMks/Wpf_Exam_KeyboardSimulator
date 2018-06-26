@@ -9,11 +9,12 @@ namespace Task_KeyboardSimulator
 {
     public class WindowCommands
     {
-        public static RoutedCommand BtnPressRoutedCommand { get; set; }
+        public static RoutedUICommand BtnPressRoutedCommand { get; set; }
 
         static WindowCommands()
         {
-            BtnPressRoutedCommand = new RoutedCommand("PressBtn", typeof(MainWindow));
+            //BtnPressRoutedCommand = new RoutedCommand("PressBtn", typeof(MainWindow));
+            BtnPressRoutedCommand = new RoutedUICommand("PressBtn", "PressBtn", typeof(MainWindow));
         }
     }
 }
