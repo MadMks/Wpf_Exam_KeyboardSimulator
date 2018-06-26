@@ -145,12 +145,13 @@
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
 
-                    <UniformGrid Name="test" Columns="13" Rows="1" Grid.Column="0">
+                    <UniformGrid Name="firstRowOfButtons" Columns="13" Rows="1" Grid.Column="0">
 
                         <Button Style="{StaticResource styleLeftHandFifthFinger}">`</Button>
                         <!--<Button Style="{StaticResource styleLeftHandFifthFinger}"
                                 Command="{x:Static local:WindowCommands.BtnPressRoutedCommand}">1</Button>-->
-                        <Button Style="{StaticResource styleLeftHandFifthFinger}">1</Button>
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}"
+                                Name="btn1"     Tag="D1">1</Button>
                         <Button Style="{StaticResource styleLeftHandFifthFinger}"
                                 Name="btnTests" Tag="D2"
                                 >2</Button>

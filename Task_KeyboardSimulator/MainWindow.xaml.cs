@@ -33,7 +33,8 @@ namespace Task_KeyboardSimulator
         /// чтоб не реагировать на Backspace).
         /// </summary>
         private bool isAddingSymbols;
-        private string lastKeyPressed;
+        private Key lastKeyPressed;
+        private Button currentPressedButton;
 
         public MainWindow()
         {
@@ -73,11 +74,12 @@ namespace Task_KeyboardSimulator
 
         private void BtnTests_KeyUp(object sender, KeyEventArgs e)
         {
-            Console.WriteLine("========BtnTests_KeyUp");
+            //Console.WriteLine("========BtnTests_KeyUp");
 
-            this.textUserTyped.Text += (sender as Button).Content;
+            //this.textUserTyped.Text += this.currentPressedButton.Content;
 
-            this.lastKeyPressed = (sender as Button).Content.ToString();
+           // this.lastKeyPressed = (sender as Button).Content.ToString();
+           //this.lastKeyPressed
         }
 
         private void BtnTests_KeyDown(object sender, KeyEventArgs e)
@@ -95,7 +97,9 @@ namespace Task_KeyboardSimulator
             typeof(Button).GetMethod(
                 "set_IsPressed",
                 BindingFlags.Instance | BindingFlags.NonPublic
-                ).Invoke(btnTests, new object[] { false });
+                ).Invoke(currentPressedButton, new object[] { false });
+
+            this.textUserTyped.Text += this.currentPressedButton.Content;
 
             Console.WriteLine("- Key Up - " + e.Key);
         }
@@ -127,6 +131,11 @@ namespace Task_KeyboardSimulator
             keyBinding.Key = Key.D1;
             keyBinding.Command = WindowCommands.BtnPressRoutedCommand;
             this.InputBindings.Add(keyBinding);
+
+            keyBinding = new KeyBinding();
+            keyBinding.Key = Key.D2;
+            keyBinding.Command = WindowCommands.BtnPressRoutedCommand;
+            this.InputBindings.Add(keyBinding);
         }
 
         /// <summary>
@@ -148,33 +157,40 @@ namespace Task_KeyboardSimulator
             //    "set_IsPressed",
             //    BindingFlags.Instance | BindingFlags.NonPublic
             //    ).Invoke((e.Source as Button), new object[] { true });
-
-            btnTests.Focus();
+            this.currentPressedButton = SearchingVisualButtons(this.lastKeyPressed);
+            currentPressedButton.Focus();
 
 
 
             // рабочий вариант с тестовой кнопкой - "2"
-            typeof(Button).GetMethod(
-                "set_IsPressed",
-                BindingFlags.Instance | BindingFlags.NonPublic
-                ).Invoke(btnTests, new object[] { true });
-
             //typeof(Button).GetMethod(
             //    "set_IsPressed",
             //    BindingFlags.Instance | BindingFlags.NonPublic
-            //    ).Invoke(SearchingVisualButtons((sender as Button).Content), new object[] { true });
+            //    ).Invoke(btnTests, new object[] { true });
+
+            typeof(Button).GetMethod(
+                "set_IsPressed",
+                BindingFlags.Instance | BindingFlags.NonPublic
+                ).Invoke(currentPressedButton, new object[] { true });
 
 
+            Console.WriteLine("working" + currentPressedButton.Name);
+        }
 
-            Console.WriteLine("working");
-            Console.WriteLine((sender).GetType().Name);
-            //Console.WriteLine((sender as TextBox).Text[(sender as TextBox).Text.Length - 1]);
-            //Console.WriteLine(lastKeyPressed);
-            //Console.WriteLine(e.Source.GetType().Name);
-            //Console.WriteLine((e.Source as Button).Content);
-            //this.textUserTyped.Text += ()
+        private Button SearchingVisualButtons(Key lastKey)
+        {
+            //Button button = null;
 
-            
+            if (lastKey == Key.D1)
+            {
+                return btn1;
+            }
+            else if(lastKey == Key.D2)
+            {
+                return btnTests;
+            }
+
+            return btnTests;
         }
 
         private void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -196,6 +212,7 @@ namespace Task_KeyboardSimulator
             //Console.WriteLine("---" + e.DeadCharProcessedKey.ToString());
             Console.WriteLine("PreviewKeyDown " + e.Key);
             //this.textUserTyped.Text += e.Key;
+            this.lastKeyPressed = e.Key;
         }
 
         private void TextUserTyped_TextChanged(object sender, TextChangedEventArgs e)
@@ -321,30 +338,6 @@ namespace Task_KeyboardSimulator
                 //this.textUserTyped.Text += e.Text;
             }
 
-
-            //foreach (Button item in this.test.Children)
-            //{
-
-            //    //Console.WriteLine(item.Content.ToString());
-
-            //    if (e.Text == item.Content.ToString())
-            //    {
-            //        //Console.WriteLine(item.Content.ToString());
-
-            //        //item.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-
-            //        //item.Focus();
-
-            //        //typeof(Button).GetMethod("OnClick",
-            //        //    System.Reflection.BindingFlags.Instance
-            //        //    | System.Reflection.BindingFlags.NonPublic)
-            //        //    .Invoke(item as Button, new object[0]);
-
-            //        //item.IsPressed = true;
-            //    }
-            //}
-
-            //(sender as Button).
 
             if (this.btnStart.IsEnabled == false)
             {
