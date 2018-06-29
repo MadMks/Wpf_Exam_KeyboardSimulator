@@ -42,6 +42,7 @@ namespace Task_KeyboardSimulator
         private Button currentPressedButton;
         //private List<Button> buttons;
         private bool IsCapsLockIsOn;
+        private List<int> listOfErrorIndices;
 
         public MainWindow()
         {
@@ -58,6 +59,8 @@ namespace Task_KeyboardSimulator
 
             numberOfMistakes = 0;
             numberOfSeconds = 0;
+
+            this.listOfErrorIndices = new List<int>();
 
             //this.buttons = new List<Button>();
             //this.buttons.AddRange(this.firstRowOfButtons.Children as IEnumerable<Button>);
@@ -89,12 +92,12 @@ namespace Task_KeyboardSimulator
             // Узнаем состояние CapsLock. Запоминаем.
             if (Keyboard.IsKeyToggled(Key.Capital) == true)
             {
-                Console.WriteLine("cap true");
+                //Console.WriteLine("cap true");
                 this.IsCapsLockIsOn = true;
             }
             else if (Keyboard.IsKeyToggled(Key.Capital) == false)
             {
-                Console.WriteLine("cap false");
+                //Console.WriteLine("cap false");
                 this.IsCapsLockIsOn = false;
             }
 
@@ -167,7 +170,7 @@ namespace Task_KeyboardSimulator
 
             SwitchingVisualButtonsToStateWithoutPressing();
 
-            Console.WriteLine("MainWindow_PreviewKeyUp ");
+            //Console.WriteLine("MainWindow_PreviewKeyUp ");
         }
 
         private void ButtonPressUp(Button button)
@@ -430,7 +433,7 @@ namespace Task_KeyboardSimulator
             }
 
 
-            Console.WriteLine("PreviewKeyDown ");
+            //Console.WriteLine("PreviewKeyDown ");
             //this.textUserTyped.Text += e.Key;
             this.lastKeyPressed = e.Key;
             if (this.stackPanelButtons.Visibility == Visibility.Visible)
@@ -503,6 +506,35 @@ namespace Task_KeyboardSimulator
                 if (this.textUserTyped.Text[textUserTyped.Text.Length - 1] != this.textTyped.Text[textTyped.Text.Length - 1])
                 {
                     // TODO разукрашивание ошибок
+                    //Console.WriteLine("Разукрашивание");
+
+                    ////string temp1 = this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1);
+                    ////Run runText = new Run(this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1));
+                    //Run runText = new Run();
+                    //runText.Text = (this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1));
+
+                    ////string temp2 = this.textUserTyped.Text.Substring(this.textUserTyped.Text.Length - 1);
+                    ////Run runLetterError = new Run(this.textUserTyped.Text.Substring(this.textUserTyped.Text.Length - 1)) { Background = Brushes.Red};
+                    //Run runLetterError = new Run();
+                    //runLetterError = this.textUserTyped.Inlines.LastInline as Run;
+                    //runLetterError.Background = Brushes.Red;
+
+                    //this.textUserTyped.Text = null;
+                    //this.textUserTyped.Inlines.Add(runText);
+                    //this.textUserTyped.Inlines.Add(runLetterError);
+
+
+                    //this.textUserTyped.Inlines.LastInline.Background = Brushes.Red;
+                    //this.textUserTyped.Inlines.Add(this.textUserTyped.Inlines.LastInline);
+
+                    //test
+                    //this.textUserTyped.Inlines.Add(new Run("Q") { Background = Brushes.Red });
+                    Run run = new Run(this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1));
+                    run.TextDecorations = this.textUserTyped.TextDecorations;
+                    string letterError = this.textUserTyped.Text.Substring(this.textUserTyped.Text.Length - 1);
+                    this.textUserTyped.Text = null;
+                    this.textUserTyped.Inlines.Add(run);
+                    this.textUserTyped.Inlines.Add(new Run(letterError) { Background = Brushes.Red });
 
                     this.answerNumberOfMistakes.Text = (++numberOfMistakes).ToString();
                 }
@@ -542,13 +574,47 @@ namespace Task_KeyboardSimulator
                 // Изменение нижнего ряда (TextBlock).
                 if (this.textUserTyped.Text.Length > 0)
                 {
-                    string temp = this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1);
-                    this.textUserTyped.Text = null;
-                    this.textUserTyped.Inlines.Add(new Run(temp));
+                    //string temp = this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1);
+                    //this.textUserTyped.Text = null;
+                    //this.textUserTyped.Inlines.Add(new Run(temp));
                     //this.textUserTyped.Text[this.textUserTyped.Text.Length] = '\0';
-
+                    if (listOfErrorIndices.Exists(x => x == this.textUserTyped.Text.Length - 1))
+                    {
+                        this.listOfErrorIndices.RemoveAt(this.listOfErrorIndices.FindIndex(x => x == this.textUserTyped.Text.Length - 1));
+                        Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + this.listOfErrorIndices.Count);
+                    }
                     //this.textUserTyped.Text = this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1);
+
+                    // #1
+                    //Run run = new Run(this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1));
+                    //run.TextDecorations = this.textUserTyped.TextDecorations;
+                    //run.TextEffects = this.textUserTyped.TextEffects;
+                    //run.Style = this.textUserTyped.Style;
+                    //this.textUserTyped.Inlines.Clear();
+                    //this.textUserTyped.Inlines.Add(run);
+
+                    // #2
+                    string tempStrUserTyped = this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1);
+                    this.textUserTyped.Inlines.Clear();
+
+                    for (int i = 0; i < tempStrUserTyped.Length; i++)
+                    {
+                        if (this.listOfErrorIndices.Exists(j => i == j ))
+                        {
+                            this.AddingLetterAsAnError(tempStrUserTyped[i].ToString());
+                        }
+                        else
+                        {
+                            this.AddingLetter(tempStrUserTyped[i].ToString());
+                        }
+                    }
+
+
+                    
+
+                    Console.WriteLine("Backspace");
                 }
+                
 
                 if (this.textTyped.Text.Length > 0)
                 {
@@ -687,9 +753,11 @@ namespace Task_KeyboardSimulator
                 if (e.Text != "\b" && e.Text != "\r")
                 {
                     // >block
-                    this.textUserTyped.Text += e.Text;
+                    //this.textUserTyped.Text += e.Text;
+                    //this.textUserTyped.Inlines.Add(new Run(e.Text));s
+                    AddingLetterToTextUserTyped(e.Text);
                 }
-                Console.WriteLine("===========" + e.Text);
+                //Console.WriteLine("===========    ====" + e.Text);
                 
             }
             //this.textUserTyped.Focus();
@@ -697,17 +765,50 @@ namespace Task_KeyboardSimulator
             // >block
             if (this.IsTrainingStarted())
             {
-                ErrorChecking();
+                //ErrorChecking();
+                // >block
 
                 CheckTypingRequiredNumberOfCharacters();
             }
 
-            Console.WriteLine("MainWindow_PreviewTextInput ");
+            //Console.WriteLine("MainWindow_PreviewTextInput ");
             //Console.WriteLine(e.Text);
             //Console.WriteLine(sender.ToString());
         }
 
+        private void AddingLetterToTextUserTyped(string letter)
+        {
+            if (IstheEnteredLetterIsCorrect(letter))
+            //if (letter[0] != this.textTyped.Text[textTyped.Text.Length - 1])
+            {
+                AddingLetter(letter);
+            }
+            else
+            {
+                AddingLetterAsAnError(letter);
+            }
+        }
 
+        private bool IstheEnteredLetterIsCorrect(string letter)
+        {
+            if (letter[0] == this.textTyped.Text[textTyped.Text.Length - 1])
+            {
+                return true;
+            }
+
+            this.listOfErrorIndices.Add(this.textUserTyped.Text.Length);
+            return false;
+        }
+
+        private void AddingLetter(string letter)
+        {
+            this.textUserTyped.Inlines.Add(new Run(letter));
+        }
+
+        private void AddingLetterAsAnError(string letter)
+        {
+            this.textUserTyped.Inlines.Add(new Run(letter) { Background = Brushes.Red});
+        }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
@@ -736,6 +837,8 @@ namespace Task_KeyboardSimulator
 
             this.textTyped.Text = "";
             this.textUserTyped.Text = "";
+
+            this.listOfErrorIndices.Clear();
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
