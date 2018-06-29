@@ -573,20 +573,20 @@ namespace Task_KeyboardSimulator
 
                     // #2
                     // Закрашивание с выделенными ошибками.
-                    string tempStrTyped = this.textTyped.Text;
-                    this.textTyped.Inlines.Clear();
+                    //string tempStrTyped = this.textTyped.Text;
+                    //this.textTyped.Inlines.Clear();
 
-                    for (int i = 0; i < tempStrTyped.Length; i++)
-                    {
-                        if (this.listOfErrorIndicesForTyped.Exists(j => i == j))
-                        {
-                            this.AddingLetterAsAnError(this.textTyped, tempStrTyped[i].ToString());
-                        }
-                        else
-                        {
-                            this.AddingLetter(this.textTyped, tempStrTyped[i].ToString());
-                        }
-                    }
+                    //for (int i = 0; i < tempStrTyped.Length; i++)
+                    //{
+                    //    if (this.listOfErrorIndicesForTyped.Exists(j => i == j))
+                    //    {
+                    //        this.AddingLetterAsAnError(this.textTyped, tempStrTyped[i].ToString());
+                    //    }
+                    //    else
+                    //    {
+                    //        this.AddingLetter(this.textTyped, tempStrTyped[i].ToString());
+                    //    }
+                    //}
                 }
 
                 // TODO for RichTextBox
@@ -817,6 +817,23 @@ namespace Task_KeyboardSimulator
             {
                 //ErrorChecking();
                 // >block
+
+                // #2
+                // Закрашивание с выделенными ошибками.
+                string tempStrTyped = this.textTyped.Text;
+                this.textTyped.Inlines.Clear();
+
+                for (int i = 0; i < tempStrTyped.Length; i++)
+                {
+                    if (this.listOfErrorIndicesForTyped.Exists(j => i == j))
+                    {
+                        this.AddingLetterAsAnError(this.textTyped, tempStrTyped[i].ToString());
+                    }
+                    else
+                    {
+                        this.AddingLetter(this.textTyped, tempStrTyped[i].ToString());
+                    }
+                }
 
                 CheckTypingRequiredNumberOfCharacters();
             }
