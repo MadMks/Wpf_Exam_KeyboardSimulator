@@ -109,22 +109,15 @@
                     <StackPanel Background="LightBlue" Orientation="Horizontal">
                         <!--<TextBlock Name="textUserTyped"
                                Background="LightGreen" FontFamily="Consolas" FontSize="20"></TextBlock>-->
-                        <TextBox Name="textUserTyped"
-                                 Background="LightGreen" FontFamily="Consolas" FontSize="20"></TextBox>
-                        <!--<TextBlock FontFamily="Consolas" FontSize="20">2</TextBlock>-->
+                        <!--<TextBox Name="textUserTyped"
+                                 Background="LightGreen" FontFamily="Consolas" FontSize="20"></TextBox>-->
+                        <TextBlock Name="textUserTyped"
+                                   Background="LightGreen" FontFamily="Consolas" FontSize="20"></TextBlock>
                     </StackPanel>
-                    <TextBox IsReadOnly="True"
+                    <!--<TextBox IsReadOnly="True"
                              Background="Transparent" 
                              Focusable="False">
-                        <!--<TextBox.CommandBindings>
-                            <CommandBinding Command="{x:Static local:WindowCommands.BtnPressRoutedCommand}"
-                                            Executed="CommandBindingPressBtn_Executed"/>
-                        </TextBox.CommandBindings>
-                        <TextBox.InputBindings>
-                            <KeyBinding Key="NoName" Command="{x:Static local:WindowCommands.BtnPressRoutedCommand}"
-                                        CommandParameter="{Binding Text,RelativeSource={RelativeSource Mode=Self}}"/>
-                        </TextBox.InputBindings>-->
-                    </TextBox>
+                    </TextBox>-->
                 </Grid>
                 
             </StackPanel>

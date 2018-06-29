@@ -67,7 +67,10 @@ namespace Task_KeyboardSimulator
             this.PreviewTextInput += MainWindow_PreviewTextInput;
             
 
-            this.textUserTyped.TextChanged += TextUserTyped_TextChanged;
+            // <box
+            //this.textUserTyped.TextChanged += TextUserTyped_TextChanged;
+            // >block
+            
 
             this.PreviewKeyDown += MainWindow_PreviewKeyDown;
             this.PreviewKeyUp += MainWindow_PreviewKeyUp;
@@ -108,10 +111,14 @@ namespace Task_KeyboardSimulator
                 this.stackPanelButtons.Visibility = Visibility.Visible;
             }
 
+
+
+
+            
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
-        {
+       {
             // Переключение на символы с помощью Shift. (нажатие).
             if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
             {
@@ -193,78 +200,7 @@ namespace Task_KeyboardSimulator
             }
         }
 
-        /// <summary>
-        /// Привязка кнопок клавиатуры к команде "визуального нажатия".
-        /// </summary>
-        private void KeyBindingToThePressingCommand()
-        {
-            this.CreationOfACommandOfVisualPressing();
-
-            this.BindingEachButtonToTheCommand();
-        }
-
-        private void BindingEachButtonToTheCommand()
-        {
-            KeyBinding keyBinding;
-
-            //for (int i = 34; i < 35; i++)  // TODO define!
-            //{
-            //    keyBinding = new KeyBinding();
-            //    keyBinding.Key = (Key)i;
-            //    keyBinding.Command = WindowCommands.BtnPressRoutedCommand;
-            //    this.InputBindings.Add(keyBinding);
-            //}
-
-            // Физическая привязка.
-            //keyBinding = new KeyBinding();
-            //keyBinding.Key = Key.D1;
-            //keyBinding.Command = WindowCommands.BtnPressRoutedCommand;
-            //this.InputBindings.Add(keyBinding);
-
-            //keyBinding = new KeyBinding();
-            //keyBinding.Key = Key.D2;
-            //keyBinding.Command = WindowCommands.BtnPressRoutedCommand;
-            //this.InputBindings.Add(keyBinding);
-        }
-
-        /// <summary>
-        /// Создание команды "визуального нажатия на кнопку".
-        /// </summary>
-        private void CreationOfACommandOfVisualPressing()
-        {
-            //CommandBinding commandBindingPressBtn = new CommandBinding(WindowCommands.BtnPressRoutedCommand);
-            //commandBindingPressBtn.Executed += CommandBindingPressBtn_Executed;
-            //this.CommandBindings.Add(commandBindingPressBtn);
-        }
-
-        /// <summary>
-        /// Метод обработки команды "визуального нажатия на кнопку".
-        /// </summary>
-        private void CommandBindingPressBtn_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            //typeof(Button).GetMethod(
-            //    "set_IsPressed",
-            //    BindingFlags.Instance | BindingFlags.NonPublic
-            //    ).Invoke((e.Source as Button), new object[] { true });
-            this.currentPressedButton = SearchingVisualButtons(this.lastKeyPressed);
-            currentPressedButton.Focus();
-
-
-
-            // рабочий вариант с тестовой кнопкой - "2"
-            //typeof(Button).GetMethod(
-            //    "set_IsPressed",
-            //    BindingFlags.Instance | BindingFlags.NonPublic
-            //    ).Invoke(btnTests, new object[] { true });
-
-            typeof(Button).GetMethod(
-                "set_IsPressed",
-                BindingFlags.Instance | BindingFlags.NonPublic
-                ).Invoke(currentPressedButton, new object[] { true });
-
-
-            Console.WriteLine("working" + currentPressedButton.Name);
-        }
+        
 
         private Button SearchingVisualButtons(Key lastKey)
         {
@@ -543,6 +479,10 @@ namespace Task_KeyboardSimulator
             this.answerNumberOfCharsMin.Text = ComputeNumberOfCharsMin();
         }
 
+        /// <summary>
+        /// TODO Вычисление ...
+        /// </summary>
+        /// <returns></returns>
         private string ComputeNumberOfCharsMin()
         {
             int numberOfCharsMin = (60 / this.numberOfSeconds) * (this.textUserTyped.Text.Length - this.numberOfMistakes);
@@ -599,6 +539,17 @@ namespace Task_KeyboardSimulator
             // иначе если Backspace
             else if ((int)e.Key == 2)
             {
+                // Изменение нижнего ряда (TextBlock).
+                if (this.textUserTyped.Text.Length > 0)
+                {
+                    string temp = this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1);
+                    this.textUserTyped.Text = null;
+                    this.textUserTyped.Inlines.Add(new Run(temp));
+                    //this.textUserTyped.Text[this.textUserTyped.Text.Length] = '\0';
+
+                    //this.textUserTyped.Text = this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1);
+                }
+
                 if (this.textTyped.Text.Length > 0)
                 {
                     // Изменения верхнего ряда (текстБоксов).
@@ -730,18 +681,25 @@ namespace Task_KeyboardSimulator
 
         private void MainWindow_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            //Console.WriteLine(e.Text);
-
             if (this.btnStart.IsEnabled == false)
             {
-                //this.textUserTyped.Text += e.Text;
+                
+                if (e.Text != "\b" && e.Text != "\r")
+                {
+                    // >block
+                    this.textUserTyped.Text += e.Text;
+                }
+                Console.WriteLine("===========" + e.Text);
                 
             }
             //this.textUserTyped.Focus();
 
-            if (this.btnStart.IsEnabled == false)
+            // >block
+            if (this.IsTrainingStarted())
             {
+                ErrorChecking();
 
+                CheckTypingRequiredNumberOfCharacters();
             }
 
             Console.WriteLine("MainWindow_PreviewTextInput ");
@@ -828,5 +786,94 @@ namespace Task_KeyboardSimulator
 
             return false;
         }
+
+
+
+
+
+
+
+
+
+
+
+        // -------------
+
+        /// <summary>
+        /// Привязка кнопок клавиатуры к команде "визуального нажатия".
+        /// </summary>
+        private void KeyBindingToThePressingCommand()
+        {
+            this.CreationOfACommandOfVisualPressing();
+
+            this.BindingEachButtonToTheCommand();
+        }
+
+        private void BindingEachButtonToTheCommand()
+        {
+            KeyBinding keyBinding;
+
+            //for (int i = 34; i < 35; i++)  // TODO define!
+            //{
+            //    keyBinding = new KeyBinding();
+            //    keyBinding.Key = (Key)i;
+            //    keyBinding.Command = WindowCommands.BtnPressRoutedCommand;
+            //    this.InputBindings.Add(keyBinding);
+            //}
+
+            // Физическая привязка.
+            //keyBinding = new KeyBinding();
+            //keyBinding.Key = Key.D1;
+            //keyBinding.Command = WindowCommands.BtnPressRoutedCommand;
+            //this.InputBindings.Add(keyBinding);
+
+            //keyBinding = new KeyBinding();
+            //keyBinding.Key = Key.D2;
+            //keyBinding.Command = WindowCommands.BtnPressRoutedCommand;
+            //this.InputBindings.Add(keyBinding);
+        }
+
+        /// <summary>
+        /// Создание команды "визуального нажатия на кнопку".
+        /// </summary>
+        private void CreationOfACommandOfVisualPressing()
+        {
+            //CommandBinding commandBindingPressBtn = new CommandBinding(WindowCommands.BtnPressRoutedCommand);
+            //commandBindingPressBtn.Executed += CommandBindingPressBtn_Executed;
+            //this.CommandBindings.Add(commandBindingPressBtn);
+        }
+
+        /// <summary>
+        /// Метод обработки команды "визуального нажатия на кнопку".
+        /// </summary>
+        private void CommandBindingPressBtn_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            //typeof(Button).GetMethod(
+            //    "set_IsPressed",
+            //    BindingFlags.Instance | BindingFlags.NonPublic
+            //    ).Invoke((e.Source as Button), new object[] { true });
+            this.currentPressedButton = SearchingVisualButtons(this.lastKeyPressed);
+            currentPressedButton.Focus();
+
+
+
+            // рабочий вариант с тестовой кнопкой - "2"
+            //typeof(Button).GetMethod(
+            //    "set_IsPressed",
+            //    BindingFlags.Instance | BindingFlags.NonPublic
+            //    ).Invoke(btnTests, new object[] { true });
+
+            typeof(Button).GetMethod(
+                "set_IsPressed",
+                BindingFlags.Instance | BindingFlags.NonPublic
+                ).Invoke(currentPressedButton, new object[] { true });
+
+
+            Console.WriteLine("working" + currentPressedButton.Name);
+        }
+
+
+
+
     }
 }
