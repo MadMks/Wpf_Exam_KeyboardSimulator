@@ -36,6 +36,7 @@ namespace Task_KeyboardSimulator
         private Key lastKeyPressed;
         private Button currentPressedButton;
         //private List<Button> buttons;
+        private bool IsCapsLockIsOn;
 
         public MainWindow()
         {
@@ -76,60 +77,81 @@ namespace Task_KeyboardSimulator
             //btnTests.KeyDown += BtnTests_KeyDown;
             //btnTests.KeyUp += BtnTests_KeyUp;
 
-        }
 
-        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
-        {
-            //if (Keyboard.GetKeyStates(Key.Capital) == KeyStates.Down)
-            //{
-            //    this.stackPanelButtonsWithShift.Visibility = Visibility.Visible;
-            //    this.stackPanelButtons.Visibility = Visibility.Collapsed;
-            //}
-
-            //if (Keyboard.GetKeyStates(Key.Capital) == KeyStates.Toggled)
-            //{
-            //    this.stackPanelButtonsWithShift.Visibility = Visibility.Collapsed;
-            //    this.stackPanelButtons.Visibility = Visibility.Visible;
-            //}
-
+            // Узнаем состояние CapsLock. Запоминаем.
             if (Keyboard.IsKeyToggled(Key.Capital) == true)
+            {
+                Console.WriteLine("cap true");
+                this.IsCapsLockIsOn = true;
+            }
+            else if (Keyboard.IsKeyToggled(Key.Capital) == false)
+            {
+                Console.WriteLine("cap false");
+                this.IsCapsLockIsOn = false;
+            }
+
+
+
+            if (IsCapsLockIsOn)
             {
                 this.stackPanelButtonsWithShift.Visibility = Visibility.Visible;
                 this.stackPanelButtons.Visibility = Visibility.Collapsed;
             }
-
-            if (Keyboard.IsKeyToggled(Key.Capital) == false)
+            else
             {
                 this.stackPanelButtonsWithShift.Visibility = Visibility.Collapsed;
                 this.stackPanelButtons.Visibility = Visibility.Visible;
             }
+
         }
 
-        private void MainWindow_PreviewKeyUp(object sender, KeyEventArgs e)
+        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            // Переключение на клавиатуру нижнего регистра.
-            //if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
-            //{
-            //    this.stackPanelButtonsWithShift.Visibility = Visibility.Collapsed;
-            //    this.stackPanelButtons.Visibility = Visibility.Visible;
-            //}
-
+            // Переключение на символы с помощью Shift. (нажатие).
             if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
             {
-                if (Keyboard.IsKeyToggled(Key.Capital) == true)
+                if (this.IsCapsLockIsOn)
                 {
+                    // Нажимаем шифт.
                     this.stackPanelButtonsWithShift.Visibility = Visibility.Collapsed;
                     this.stackPanelButtons.Visibility = Visibility.Visible;
                 }
-
-                if (Keyboard.IsKeyToggled(Key.Capital) == false)
+                else if (!this.IsCapsLockIsOn)
                 {
                     this.stackPanelButtonsWithShift.Visibility = Visibility.Visible;
                     this.stackPanelButtons.Visibility = Visibility.Collapsed;
                 }
             }
 
+        }
 
+        private void MainWindow_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            // Переключение на буквы верхнего регистра с помощью Caps Lock.
+            if (e.Key == Key.CapsLock)
+            {
+                if (IsCapsLockIsOn == true)
+                {
+                    IsCapsLockIsOn = false;
+                }
+                else if (IsCapsLockIsOn == false)
+                {
+                    IsCapsLockIsOn = true;
+                }
+
+
+
+                if (IsCapsLockIsOn)
+                {
+                    this.stackPanelButtonsWithShift.Visibility = Visibility.Visible;
+                    this.stackPanelButtons.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    this.stackPanelButtonsWithShift.Visibility = Visibility.Collapsed;
+                    this.stackPanelButtons.Visibility = Visibility.Visible;
+                }
+            }
 
 
 
@@ -153,17 +175,21 @@ namespace Task_KeyboardSimulator
 
         private void MainWindow_KeyUp(object sender, KeyEventArgs e)
         {
-            //typeof(Button).GetMethod(
-            //    "set_IsPressed",
-            //    BindingFlags.Instance | BindingFlags.NonPublic
-            //    ).Invoke(currentPressedButton, new object[] { false });
-
-            // для команды.
-            //this.textUserTyped.Text += this.currentPressedButton.Content;
-
-            
-
-            Console.WriteLine("Key Up ");
+            // Переключение на символы с помощью Shift. (отпускание).
+            if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
+            {
+                if (this.IsCapsLockIsOn)
+                {
+                    // Отпускаем шифт.
+                    this.stackPanelButtonsWithShift.Visibility = Visibility.Visible;
+                    this.stackPanelButtons.Visibility = Visibility.Collapsed;
+                }
+                else if (!this.IsCapsLockIsOn)
+                {
+                    this.stackPanelButtonsWithShift.Visibility = Visibility.Collapsed;
+                    this.stackPanelButtons.Visibility = Visibility.Visible;
+                }
+            }
         }
 
         /// <summary>
@@ -243,14 +269,6 @@ namespace Task_KeyboardSimulator
         {
             //Button button = null;
 
-            //if (lastKey == Key.D1)
-            //{
-            //    return btn1;
-            //}
-            //else if(lastKey == Key.D2)
-            //{
-            //    return btnTests;
-            //}
 
             Console.WriteLine("                  " + lastKey.ToString());
 
@@ -367,33 +385,6 @@ namespace Task_KeyboardSimulator
 
                 //ErrorChecking();    // проверка на ошибку (при этом в нижнем еще нет буквы!!!!!)
             }
-
-            //Console.WriteLine((int)e.Key);
-            //MainWindow_PreviewTextInput(sender, new TextCompositionEventArgs(e.Device,
-            //    new TextComposition(InputManager.Current, null,
-            //    (Convert.ToChar((int)e.Key)).ToString()
-            //    )));
-            //MainWindow_PreviewTextInput(sender, null);
-            //this.lastKeyPressed = e;
-            //Console.WriteLine("---" + e.DeadCharProcessedKey.ToString());
-
-            // Переключение на клавиатуру верхнего регистра. Shift.
-            if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
-            {
-                if (Keyboard.IsKeyToggled(Key.Capital) == true)
-                {
-                    this.stackPanelButtonsWithShift.Visibility = Visibility.Collapsed;
-                    this.stackPanelButtons.Visibility = Visibility.Visible;
-                }
-
-                if (Keyboard.IsKeyToggled(Key.Capital) == false)
-                {
-                    this.stackPanelButtonsWithShift.Visibility = Visibility.Visible;
-                    this.stackPanelButtons.Visibility = Visibility.Collapsed;
-                }
-            }
-
-            
 
 
             Console.WriteLine("PreviewKeyDown ");
