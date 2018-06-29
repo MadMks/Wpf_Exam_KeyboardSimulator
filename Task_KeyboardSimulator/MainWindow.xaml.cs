@@ -16,6 +16,11 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
+
+// TODO #1 задержка визуального нажатия Шифта (скорее из-за поиска кнопки в большем кол-ве циклов).
+// TODO #2 добавить 3-ю клавиатуру для Caps Lock (нажатие Caps отличается от нажатия Shift).
+
+
 namespace Task_KeyboardSimulator
 {
     /// <summary>
@@ -139,8 +144,6 @@ namespace Task_KeyboardSimulator
                     IsCapsLockIsOn = true;
                 }
 
-
-
                 if (IsCapsLockIsOn)
                 {
                     this.stackPanelButtonsWithShift.Visibility = Visibility.Visible;
@@ -152,8 +155,6 @@ namespace Task_KeyboardSimulator
                     this.stackPanelButtons.Visibility = Visibility.Visible;
                 }
             }
-
-
 
             ButtonPressUp(this.currentPressedButton);
 
@@ -267,9 +268,6 @@ namespace Task_KeyboardSimulator
 
         private Button SearchingVisualButtons(Key lastKey)
         {
-            //Button button = null;
-
-
             Console.WriteLine("                  " + lastKey.ToString());
 
             // HACK много одинакового кода #1. -> заменить на: поместить все кнопки в одну коллекцию.
@@ -377,6 +375,115 @@ namespace Task_KeyboardSimulator
             return null;
         }
 
+        private Button SearchingVisualButtonsWithShift(Key lastKey)
+        {
+            Console.WriteLine("                  " + lastKey.ToString());
+
+            // HACK много одинакового кода #3. -> заменить на: поместить все кнопки в одну коллекцию.
+            #region ButtonSearchSecondKeyboard
+            // 1 ряд
+            foreach (Button button in this.firstRowOfButtonsWithShift.Children)
+            {
+                if (button.Tag != null)
+                {
+                    if (button.Tag.ToString() == lastKey.ToString())
+                    {
+                        return button;
+                    }
+                }
+            }
+            if (this.firstRowBackspaceButtonWithShift.Tag.ToString() == lastKey.ToString())
+            {
+                return this.firstRowBackspaceButtonWithShift;
+            }
+            // 2 ряд
+            else if (this.secondRowTabButtonWithShift.Tag.ToString() == lastKey.ToString())
+            {
+                return this.secondRowTabButtonWithShift;
+            }
+            foreach (Button button in this.secondRowOfButtonsWithShift.Children)
+            {
+                if (button.Tag != null)
+                {
+                    if (button.Tag.ToString() == lastKey.ToString())
+                    {
+                        return button;
+                    }
+                }
+            }
+            if (this.secondRowBackslashButtonWithShift.Tag.ToString() == lastKey.ToString())
+            {
+                return secondRowBackslashButtonWithShift;
+            }
+            // 3 ряд
+            if (this.thirdRowCapitalButtonWithShift.Tag.ToString() == lastKey.ToString())
+            {
+                return this.thirdRowCapitalButtonWithShift;
+            }
+            foreach (Button button in this.thirdRowOfButtonsWithShift.Children)
+            {
+                if (button.Tag != null)
+                {
+                    if (button.Tag.ToString() == lastKey.ToString())
+                    {
+                        return button;
+                    }
+                }
+            }
+            if (this.thirdRowReturnButtonWithShift.Tag.ToString() == lastKey.ToString())
+            {
+                return this.thirdRowReturnButtonWithShift;
+            }
+            // 4 ряд
+            if (this.fourthRowLShiftButtonWithShift.Tag.ToString() == lastKey.ToString())
+            {
+                return this.fourthRowLShiftButtonWithShift;
+            }
+            foreach (Button button in this.fourthRowOfButtonsWithShift.Children)
+            {
+                if (button.Tag != null)
+                {
+                    if (button.Tag.ToString() == lastKey.ToString())
+                    {
+                        return button;
+                    }
+                }
+            }
+            if (this.fourthRowRShiftButtonWithShift.Tag.ToString() == lastKey.ToString())
+            {
+                return this.fourthRowRShiftButtonWithShift;
+            }
+            // 5 ряд
+            foreach (Button button in this.fifthRowLeftButtonsWithShift.Children)
+            {
+                if (button.Tag != null)
+                {
+                    if (button.Tag.ToString() == lastKey.ToString())
+                    {
+                        return button;
+                    }
+                }
+            }
+            if (this.fifthRowSpaceButtonWithShift.Tag.ToString() == lastKey.ToString())
+            {
+                return this.fifthRowSpaceButtonWithShift;
+            }
+            foreach (Button button in this.fifthRowRightButtonsWithShift.Children)
+            {
+                if (button.Tag != null)
+                {
+                    if (button.Tag.ToString() == lastKey.ToString())
+                    {
+                        return button;
+                    }
+                }
+            }
+            #endregion
+
+
+            return null;
+        }
+
         private void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (this.IsTrainingStarted())
@@ -390,8 +497,15 @@ namespace Task_KeyboardSimulator
             Console.WriteLine("PreviewKeyDown ");
             //this.textUserTyped.Text += e.Key;
             this.lastKeyPressed = e.Key;
-
-            this.currentPressedButton = SearchingVisualButtons(this.lastKeyPressed);
+            if (this.stackPanelButtons.Visibility == Visibility.Visible)
+            {
+                this.currentPressedButton = SearchingVisualButtons(this.lastKeyPressed);
+            }
+            else if (this.stackPanelButtonsWithShift.Visibility == Visibility.Visible)
+            {
+                this.currentPressedButton = SearchingVisualButtonsWithShift(this.lastKeyPressed);
+            }
+            
             //currentPressedButton.Focus();
             ButtonPressDown();
             
@@ -567,6 +681,47 @@ namespace Task_KeyboardSimulator
             }
             this.ButtonPressUp(fifthRowSpaceButton);
             foreach (Button button in this.fifthRowRightButtons.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            #endregion
+
+            // HACK много одинакового кода #4. -> заменить на: поместить все кнопки в одну коллекцию.
+            #region ButtonSearchAndPressUpSecondKeyboard
+            // 1 ряд
+            foreach (Button button in this.firstRowOfButtonsWithShift.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(firstRowBackspaceButtonWithShift);
+            // 2 ряд
+            this.ButtonPressUp(secondRowTabButtonWithShift);
+            foreach (Button button in this.secondRowOfButtonsWithShift.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(secondRowBackslashButtonWithShift);
+            // 3 ряд
+            this.ButtonPressUp(thirdRowCapitalButtonWithShift);
+            foreach (Button button in this.thirdRowOfButtonsWithShift.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(thirdRowReturnButtonWithShift);
+            // 4 ряд
+            this.ButtonPressUp(fourthRowLShiftButtonWithShift);
+            foreach (Button button in this.fourthRowOfButtonsWithShift.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(fourthRowRShiftButtonWithShift);
+            // 5 ряд
+            foreach (Button button in this.fifthRowLeftButtonsWithShift.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(fifthRowSpaceButtonWithShift);
+            foreach (Button button in this.fifthRowRightButtonsWithShift.Children)
             {
                 this.ButtonPressUp(button);
             }
