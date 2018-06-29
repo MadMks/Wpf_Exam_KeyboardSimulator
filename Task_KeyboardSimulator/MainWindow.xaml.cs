@@ -42,7 +42,8 @@ namespace Task_KeyboardSimulator
         private Button currentPressedButton;
         //private List<Button> buttons;
         private bool IsCapsLockIsOn;
-        private List<int> listOfErrorIndices;
+        private List<int> listOfErrorIndicesForUserTyped;
+        private List<int> listOfErrorIndicesForTyped;
 
         public MainWindow()
         {
@@ -60,7 +61,8 @@ namespace Task_KeyboardSimulator
             numberOfMistakes = 0;
             numberOfSeconds = 0;
 
-            this.listOfErrorIndices = new List<int>();
+            this.listOfErrorIndicesForUserTyped = new List<int>();
+            this.listOfErrorIndicesForTyped = new List<int>();
 
             //this.buttons = new List<Button>();
             //this.buttons.AddRange(this.firstRowOfButtons.Children as IEnumerable<Button>);
@@ -578,10 +580,12 @@ namespace Task_KeyboardSimulator
                     //this.textUserTyped.Text = null;
                     //this.textUserTyped.Inlines.Add(new Run(temp));
                     //this.textUserTyped.Text[this.textUserTyped.Text.Length] = '\0';
-                    if (listOfErrorIndices.Exists(x => x == this.textUserTyped.Text.Length - 1))
+
+                    // При исправлении ошибки - убираем пометку (красный фон).
+                    if (listOfErrorIndicesForUserTyped.Exists(x => x == this.textUserTyped.Text.Length - 1))
                     {
-                        this.listOfErrorIndices.RemoveAt(this.listOfErrorIndices.FindIndex(x => x == this.textUserTyped.Text.Length - 1));
-                        Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + this.listOfErrorIndices.Count);
+                        this.listOfErrorIndicesForUserTyped.RemoveAt(this.listOfErrorIndicesForUserTyped.FindIndex(x => x == this.textUserTyped.Text.Length - 1));
+                        Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + this.listOfErrorIndicesForUserTyped.Count);
                     }
                     //this.textUserTyped.Text = this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1);
 
@@ -594,18 +598,19 @@ namespace Task_KeyboardSimulator
                     //this.textUserTyped.Inlines.Add(run);
 
                     // #2
+                    // Удаление последнего символа. // TODO method
                     string tempStrUserTyped = this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1);
                     this.textUserTyped.Inlines.Clear();
 
                     for (int i = 0; i < tempStrUserTyped.Length; i++)
                     {
-                        if (this.listOfErrorIndices.Exists(j => i == j ))
+                        if (this.listOfErrorIndicesForUserTyped.Exists(j => i == j ))
                         {
-                            this.AddingLetterAsAnError(tempStrUserTyped[i].ToString());
+                            this.AddingLetterAsAnError(this.textUserTyped, tempStrUserTyped[i].ToString());
                         }
                         else
                         {
-                            this.AddingLetter(tempStrUserTyped[i].ToString());
+                            this.AddingLetter(this.textUserTyped, tempStrUserTyped[i].ToString());
                         }
                     }
 
@@ -614,13 +619,30 @@ namespace Task_KeyboardSimulator
 
                     Console.WriteLine("Backspace");
                 }
-                
 
+                // Изменения верхнего ряда (текстБоксов).
                 if (this.textTyped.Text.Length > 0)
                 {
-                    // Изменения верхнего ряда (текстБоксов).
+                    // Удаление последнего символа. // TODO method
+                    // #1
                     this.textNeedToType.Text = String.Concat(this.textTyped.Text[textTyped.Text.Length - 1], this.textNeedToType.Text);
                     this.textTyped.Text = textTyped.Text.Substring(0, textTyped.Text.Length - 1);
+
+                    // #2
+                    //string tempStrTyped = this.textTyped.Text.Substring(0, this.textTyped.Text.Length - 1);
+                    //this.textTyped.Inlines.Clear();
+
+                    //for (int i = 0; i < tempStrTyped.Length; i++)
+                    //{
+                    //    if (this.listOfErrorIndicesForTyped.Exists(j => i == j))
+                    //    {
+                    //        this.AddingLetterAsAnError(this.textTyped, tempStrTyped[i].ToString());
+                    //    }
+                    //    else
+                    //    {
+                    //        this.AddingLetter(this.textTyped, tempStrTyped[i].ToString());
+                    //    }
+                    //}
 
                     isAddingSymbols = false;
                 }
@@ -781,11 +803,11 @@ namespace Task_KeyboardSimulator
             if (IstheEnteredLetterIsCorrect(letter))
             //if (letter[0] != this.textTyped.Text[textTyped.Text.Length - 1])
             {
-                AddingLetter(letter);
+                AddingLetter(this.textUserTyped, letter);
             }
             else
             {
-                AddingLetterAsAnError(letter);
+                AddingLetterAsAnError(this.textUserTyped, letter);
             }
         }
 
@@ -796,18 +818,22 @@ namespace Task_KeyboardSimulator
                 return true;
             }
 
-            this.listOfErrorIndices.Add(this.textUserTyped.Text.Length);
+            this.answerNumberOfMistakes.Text = (++numberOfMistakes).ToString();
+
+            // TODO method  addErr(index)
+            this.listOfErrorIndicesForUserTyped.Add(this.textUserTyped.Text.Length);
+            this.listOfErrorIndicesForTyped.Add(this.textTyped.Text.Length);
             return false;
         }
 
-        private void AddingLetter(string letter)
+        private void AddingLetter(TextBlock textBlock, string letter)
         {
-            this.textUserTyped.Inlines.Add(new Run(letter));
+            textBlock.Inlines.Add(new Run(letter));
         }
 
-        private void AddingLetterAsAnError(string letter)
+        private void AddingLetterAsAnError(TextBlock textBlock, string letter)
         {
-            this.textUserTyped.Inlines.Add(new Run(letter) { Background = Brushes.Red});
+            textBlock.Inlines.Add(new Run(letter) { Background = Brushes.Red});
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
@@ -838,7 +864,7 @@ namespace Task_KeyboardSimulator
             this.textTyped.Text = "";
             this.textUserTyped.Text = "";
 
-            this.listOfErrorIndices.Clear();
+            this.listOfErrorIndicesForUserTyped.Clear();
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
