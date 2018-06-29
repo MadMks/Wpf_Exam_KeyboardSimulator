@@ -134,10 +134,7 @@
         <Grid Grid.Row="3">
             
             <!--Символы при нажатии на shift - скрытая панель-->
-            <StackPanel></StackPanel>
-            
-            <!--Обычные символы - панель по умолчанию-->
-            <StackPanel>
+            <StackPanel Visibility="Collapsed" Name="stackPanelButtonsWithShift">
                 <!--Первый ряд кнопок-->
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -145,31 +142,27 @@
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
 
-                    <UniformGrid Name="firstRowOfButtons" Columns="13" Rows="1" Grid.Column="0">
+                    <UniformGrid Name="firstRowOfButtonsWithShift" Columns="13" Rows="1" Grid.Column="0">
 
-                        <Button Style="{StaticResource styleLeftHandFifthFinger}">`</Button>
-                        <!--<Button Style="{StaticResource styleLeftHandFifthFinger}"
-                                Command="{x:Static local:WindowCommands.BtnPressRoutedCommand}">1</Button>-->
-                        <Button Style="{StaticResource styleLeftHandFifthFinger}"
-                                Name="btn1"     Tag="D1">1</Button>
-                        <Button Style="{StaticResource styleLeftHandFifthFinger}"
-                                Name="btnTests" Tag="D2"
-                                >2</Button>
-                        
-                        <Button Style="{StaticResource styleLeftHandFourthFinger}">3</Button>
-                        <Button Style="{StaticResource styleLeftHandThirdFinger}">4</Button>
-                        <Button Style="{StaticResource styleLeftHandSecondFinger}">5</Button>
-                        <Button Style="{StaticResource styleLeftHandSecondFinger}">6</Button>
-                        <Button Style="{StaticResource styleRightHandSecondFinger}">7</Button>
-                        <Button Style="{StaticResource styleRightHandSecondFinger}">8</Button>
-                        <Button Style="{StaticResource styleRightHandThirdFinger}">9</Button>
-                        <Button Style="{StaticResource styleRightHandFourthFinger}">0</Button>
-                        <Button Style="{StaticResource styleRightHandFifthFinger}">-</Button>
-                        <Button Style="{StaticResource styleRightHandFifthFinger}">=</Button>
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}" Tag="Oem3">~</Button>
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}" Tag="D1">!</Button>
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}" Tag="D2">@</Button>
+
+                        <Button Style="{StaticResource styleLeftHandFourthFinger}" Tag="D3">#</Button>
+                        <Button Style="{StaticResource styleLeftHandThirdFinger}" Tag="D4">$</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}" Tag="D5">%</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}" Tag="D6">^</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}" Tag="D7">&#38;</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}" Tag="D8">*</Button>
+                        <Button Style="{StaticResource styleRightHandThirdFinger}" Tag="D9">(</Button>
+                        <Button Style="{StaticResource styleRightHandFourthFinger}" Tag="D0">)</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}" Tag="OemMinus">_</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}" Tag="OemPlus">+</Button>
 
                     </UniformGrid>
 
-                    <Button Grid.Column="1" Style="{StaticResource styleModifierKeys}">Backspace</Button>
+                    <Button Grid.Column="1" Style="{StaticResource styleModifierKeys}"
+                            Name="firstRowBackspaceButtonWithShift" Tag="Back">Backspace</Button>
                     
                 </Grid>
                 
@@ -181,27 +174,29 @@
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" Style="{StaticResource styleModifierKeys}">Tab</Button>
+                    <Button Grid.Column="0" Style="{StaticResource styleModifierKeys}"
+                            Name="secondRowTabButtonWithShift" Tag="Tab">Tab</Button>
 
-                    <UniformGrid Grid.Column="1" Columns="12" Rows="1">
+                    <UniformGrid Name="secondRowOfButtonsWithShift" Grid.Column="1" Columns="12" Rows="1">
 
-                        <Button Style="{StaticResource styleLeftHandFifthFinger}">q</Button>
-                        <Button Style="{StaticResource styleLeftHandFourthFinger}">w</Button>
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}" Tag="Q">Q</Button>
+                        <Button Style="{StaticResource styleLeftHandFourthFinger}" Tag="W">W</Button>
 
-                        <Button Style="{StaticResource styleLeftHandThirdFinger}">e</Button>
-                        <Button Style="{StaticResource styleLeftHandSecondFinger}">r</Button>
-                        <Button Style="{StaticResource styleLeftHandSecondFinger}">t</Button>
-                        <Button Style="{StaticResource styleRightHandSecondFinger}">y</Button>
-                        <Button Style="{StaticResource styleRightHandSecondFinger}">u</Button>
-                        <Button Style="{StaticResource styleRightHandThirdFinger}">i</Button>
-                        <Button Style="{StaticResource styleRightHandFourthFinger}">o</Button>
-                        <Button Style="{StaticResource styleRightHandFifthFinger}">p</Button>
-                        <Button Style="{StaticResource styleRightHandFifthFinger}">[</Button>
-                        <Button Style="{StaticResource styleRightHandFifthFinger}">]</Button>
+                        <Button Style="{StaticResource styleLeftHandThirdFinger}" Tag="E">E</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}" Tag="R">R</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}" Tag="T">T</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}" Tag="Y">Y</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}" Tag="U">U</Button>
+                        <Button Style="{StaticResource styleRightHandThirdFinger}" Tag="I">I</Button>
+                        <Button Style="{StaticResource styleRightHandFourthFinger}" Tag="O">O</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}" Tag="P">P</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}" Tag="OemOpenBrackets">{</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}" Tag="Oem6">}</Button>
 
                     </UniformGrid>
-                    
-                    <Button Grid.Column="2" Style="{StaticResource styleRightHandFifthFinger}">\</Button>
+
+                    <Button Grid.Column="2" Style="{StaticResource styleRightHandFifthFinger}"
+                            Name="secondRowBackslashButtonWithShift" Tag="Oem5">|</Button>
                     
                 </Grid>
                 
@@ -213,26 +208,28 @@
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" Style="{StaticResource styleModifierKeys}">Caps Lock</Button>
+                    <Button Grid.Column="0" Style="{StaticResource styleModifierKeys}"
+                            Name="thirdRowCapitalButtonWithShift" Tag="Capital">Caps Lock</Button>
 
-                    <UniformGrid Grid.Column="1" Columns="11" Rows="1">
+                    <UniformGrid Name="thirdRowOfButtonsWithShift" Grid.Column="1" Columns="11" Rows="1">
 
-                        <Button Style="{StaticResource styleLeftHandFifthFinger}">a</Button>
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}" Tag="A">A</Button>
 
-                        <Button Style="{StaticResource styleLeftHandFourthFinger}">s</Button>
-                        <Button Style="{StaticResource styleLeftHandThirdFinger}">d</Button>
-                        <Button Style="{StaticResource styleLeftHandSecondFinger}">f</Button>
-                        <Button Style="{StaticResource styleLeftHandSecondFinger}">g</Button>
-                        <Button Style="{StaticResource styleRightHandSecondFinger}">h</Button>
-                        <Button Style="{StaticResource styleRightHandSecondFinger}">j</Button>
-                        <Button Style="{StaticResource styleRightHandThirdFinger}">k</Button>
-                        <Button Style="{StaticResource styleRightHandFourthFinger}">l</Button>
-                        <Button Style="{StaticResource styleRightHandFifthFinger}">;</Button>
-                        <Button Style="{StaticResource styleRightHandFifthFinger}">'</Button>
+                        <Button Style="{StaticResource styleLeftHandFourthFinger}" Tag="S">S</Button>
+                        <Button Style="{StaticResource styleLeftHandThirdFinger}" Tag="D">D</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}" Tag="F">F</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}" Tag="G">G</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}" Tag="H">H</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}" Tag="J">J</Button>
+                        <Button Style="{StaticResource styleRightHandThirdFinger}" Tag="K">K</Button>
+                        <Button Style="{StaticResource styleRightHandFourthFinger}" Tag="L">L</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}" Tag="Oem1">:</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}" Tag="OemQuotes">"</Button>
 
                     </UniformGrid>
 
-                    <Button Grid.Column="2" Style="{StaticResource styleModifierKeys}">Enter</Button>
+                    <Button Grid.Column="2" Style="{StaticResource styleModifierKeys}"
+                            Name="thirdRowReturnButtonWithShift" Tag="Return">Enter</Button>
 
                 </Grid>
                 
@@ -244,24 +241,26 @@
                         <ColumnDefinition Width="2.5*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" Style="{StaticResource styleModifierKeys}">Shift</Button>
+                    <Button Grid.Column="0" Style="{StaticResource styleModifierKeys}"
+                            Name="fourthRowLShiftButtonWithShift" Tag="LeftShift">Shift</Button>
 
-                    <UniformGrid Grid.Column="1" Columns="10" Rows="1">
+                    <UniformGrid Name="fourthRowOfButtonsWithShift" Grid.Column="1" Columns="10" Rows="1">
 
-                        <Button Style="{StaticResource styleLeftHandFifthFinger}">z</Button>
-                        <Button Style="{StaticResource styleLeftHandFourthFinger}">x</Button>
-                        <Button Style="{StaticResource styleLeftHandThirdFinger}">c</Button>
-                        <Button Style="{StaticResource styleLeftHandSecondFinger}">v</Button>
-                        <Button Style="{StaticResource styleLeftHandSecondFinger}">b</Button>
-                        <Button Style="{StaticResource styleRightHandSecondFinger}">n</Button>
-                        <Button Style="{StaticResource styleRightHandSecondFinger}">m</Button>
-                        <Button Style="{StaticResource styleRightHandThirdFinger}">,</Button>
-                        <Button Style="{StaticResource styleRightHandFourthFinger}">.</Button>
-                        <Button Style="{StaticResource styleRightHandFifthFinger}">/</Button>
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}" Tag="Z">Z</Button>
+                        <Button Style="{StaticResource styleLeftHandFourthFinger}" Tag="X">X</Button>
+                        <Button Style="{StaticResource styleLeftHandThirdFinger}" Tag="C">C</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}" Tag="V">V</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}" Tag="B">B</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}" Tag="N">N</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}" Tag="M">M</Button>
+                        <Button Style="{StaticResource styleRightHandThirdFinger}" Tag="OemComma">&#60;</Button>
+                        <Button Style="{StaticResource styleRightHandFourthFinger}" Tag="OemPeriod">&#62;</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}" Tag="OemQuestion">?</Button>
 
                     </UniformGrid>
 
-                    <Button Grid.Column="2" Style="{StaticResource styleModifierKeys}">Shift</Button>
+                    <Button Grid.Column="2" Style="{StaticResource styleModifierKeys}"
+                            Name="fourthRowRShiftButtonWithShift" Tag="RightShift">Shift</Button>
 
                 </Grid>
                 
@@ -273,18 +272,178 @@
                         <ColumnDefinition Width="4.5*"/>
                     </Grid.ColumnDefinitions>
 
-                    <UniformGrid Grid.Column="0" Columns="3" Rows="1">
-                        <Button Style="{StaticResource styleModifierKeys}">Ctrl</Button>
-                        <Button Style="{StaticResource styleModifierKeys}">Win</Button>
-                        <Button Style="{StaticResource styleModifierKeys}">Alt</Button>
+                    <UniformGrid Name="fifthRowLeftButtonsWithShift" Grid.Column="0" Columns="3" Rows="1">
+                        <Button Style="{StaticResource styleModifierKeys}" Tag="LeftCtrl">Ctrl</Button>
+                        <Button Style="{StaticResource styleModifierKeys}" Tag="LWin">Win</Button>
+                        <Button Style="{StaticResource styleModifierKeys}" Tag="System">Alt</Button>
                     </UniformGrid>
 
-                    <Button Grid.Column="1" Style="{StaticResource styleFirstFinger}">Space</Button>
+                    <Button Grid.Column="1" Style="{StaticResource styleFirstFinger}"
+                            Name="fifthRowSpaceButtonWithShift" Tag="Space">Space</Button>
 
-                    <UniformGrid Grid.Column="2" Columns="3" Rows="1">
-                        <Button Style="{StaticResource styleModifierKeys}">Alt</Button>
-                        <Button Style="{StaticResource styleModifierKeys}">Win</Button>
-                        <Button Style="{StaticResource styleModifierKeys}">Ctrl</Button>
+                    <UniformGrid Name="fifthRowRightButtonsWithShift" Grid.Column="2" Columns="3" Rows="1">
+                        <Button Style="{StaticResource styleModifierKeys}" Tag="System">Alt</Button>
+                        <Button Style="{StaticResource styleModifierKeys}" Tag="RWin">Win</Button>
+                        <Button Style="{StaticResource styleModifierKeys}" Tag="RightCtrl">Ctrl</Button>
+                    </UniformGrid>
+
+                </Grid>
+            </StackPanel>
+            
+            <!--Обычные символы - панель по умолчанию-->
+            <StackPanel Name="stackPanelButtons" Visibility="Visible">
+                <!--Первый ряд кнопок-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="13*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <UniformGrid Name="firstRowOfButtons" Columns="13" Rows="1" Grid.Column="0">
+
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}" Tag="Oem3">`</Button>
+                        <!--<Button Style="{StaticResource styleLeftHandFifthFinger}"
+                                Command="{x:Static local:WindowCommands.BtnPressRoutedCommand}">1</Button>-->
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}" Tag="D1">1</Button>
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}" Tag="D2">2</Button>
+                        
+                        <Button Style="{StaticResource styleLeftHandFourthFinger}" Tag="D3">3</Button>
+                        <Button Style="{StaticResource styleLeftHandThirdFinger}" Tag="D4">4</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}" Tag="D5">5</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}" Tag="D6">6</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}" Tag="D7">7</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}" Tag="D8">8</Button>
+                        <Button Style="{StaticResource styleRightHandThirdFinger}" Tag="D9">9</Button>
+                        <Button Style="{StaticResource styleRightHandFourthFinger}" Tag="D0">0</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}" Tag="OemMinus">-</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}" Tag="OemPlus">=</Button>
+
+                    </UniformGrid>
+
+                    <Button Grid.Column="1" Style="{StaticResource styleModifierKeys}"
+                            Name="firstRowBackspaceButton" Tag="Back">Backspace</Button>
+                    
+                </Grid>
+                
+                <!--Второй ряд кнопок-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="12*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Style="{StaticResource styleModifierKeys}"
+                            Name="secondRowTabButton" Tag="Tab">Tab</Button>
+
+                    <UniformGrid Name="secondRowOfButtons" Grid.Column="1" Columns="12" Rows="1">
+
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}" Tag="Q">q</Button>
+                        <Button Style="{StaticResource styleLeftHandFourthFinger}" Tag="W">w</Button>
+
+                        <Button Style="{StaticResource styleLeftHandThirdFinger}" Tag="E">e</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}" Tag="R">r</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}" Tag="T">t</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}" Tag="Y">y</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}" Tag="U">u</Button>
+                        <Button Style="{StaticResource styleRightHandThirdFinger}" Tag="I">i</Button>
+                        <Button Style="{StaticResource styleRightHandFourthFinger}" Tag="O">o</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}" Tag="P">p</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}" Tag="OemOpenBrackets">[</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}" Tag="Oem6">]</Button>
+
+                    </UniformGrid>
+                    
+                    <Button Grid.Column="2" Style="{StaticResource styleRightHandFifthFinger}"
+                            Name="secondRowBackslashButton" Tag="Oem5">\</Button>
+                    
+                </Grid>
+                
+                <!--Третий ряд кнопок-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="11*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Style="{StaticResource styleModifierKeys}"
+                            Name="thirdRowCapitalButton" Tag="Capital">Caps Lock</Button>
+
+                    <UniformGrid Name="thirdRowOfButtons" Grid.Column="1" Columns="11" Rows="1">
+
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}" Tag="A">a</Button>
+
+                        <Button Style="{StaticResource styleLeftHandFourthFinger}" Tag="S">s</Button>
+                        <Button Style="{StaticResource styleLeftHandThirdFinger}" Tag="D">d</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}" Tag="F">f</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}" Tag="G">g</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}" Tag="H">h</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}" Tag="J">j</Button>
+                        <Button Style="{StaticResource styleRightHandThirdFinger}" Tag="K">k</Button>
+                        <Button Style="{StaticResource styleRightHandFourthFinger}" Tag="L">l</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}" Tag="Oem1">;</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}" Tag="OemQuotes">'</Button>
+
+                    </UniformGrid>
+
+                    <Button Grid.Column="2" Style="{StaticResource styleModifierKeys}"
+                            Name="thirdRowReturnButton" Tag="Return">Enter</Button>
+
+                </Grid>
+                
+                <!--Четвертый ряд кнопок-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2.5*"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="2.5*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Style="{StaticResource styleModifierKeys}"
+                            Name="fourthRowLShiftButton" Tag="LeftShift">Shift</Button>
+
+                    <UniformGrid Name="fourthRowOfButtons" Grid.Column="1" Columns="10" Rows="1">
+
+                        <Button Style="{StaticResource styleLeftHandFifthFinger}" Tag="Z">z</Button>
+                        <Button Style="{StaticResource styleLeftHandFourthFinger}" Tag="X">x</Button>
+                        <Button Style="{StaticResource styleLeftHandThirdFinger}" Tag="C">c</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}" Tag="V">v</Button>
+                        <Button Style="{StaticResource styleLeftHandSecondFinger}" Tag="B">b</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}" Tag="N">n</Button>
+                        <Button Style="{StaticResource styleRightHandSecondFinger}" Tag="M">m</Button>
+                        <Button Style="{StaticResource styleRightHandThirdFinger}" Tag="OemComma">,</Button>
+                        <Button Style="{StaticResource styleRightHandFourthFinger}" Tag="OemPeriod">.</Button>
+                        <Button Style="{StaticResource styleRightHandFifthFinger}" Tag="OemQuestion">/</Button>
+
+                    </UniformGrid>
+
+                    <Button Grid.Column="2" Style="{StaticResource styleModifierKeys}"
+                            Name="fourthRowRShiftButton" Tag="RightShift">Shift</Button>
+
+                </Grid>
+                
+                <!--Пятый ряд кнопок-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4.5*"/>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="4.5*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <UniformGrid Name="fifthRowLeftButtons" Grid.Column="0" Columns="3" Rows="1">
+                        <Button Style="{StaticResource styleModifierKeys}" Tag="LeftCtrl">Ctrl</Button>
+                        <Button Style="{StaticResource styleModifierKeys}" Tag="LWin">Win</Button>
+                        <Button Style="{StaticResource styleModifierKeys}" Tag="System">Alt</Button>
+                    </UniformGrid>
+
+                    <Button Grid.Column="1" Style="{StaticResource styleFirstFinger}"
+                            Name="fifthRowSpaceButton" Tag="Space">Space</Button>
+
+                    <UniformGrid Name="fifthRowRightButtons" Grid.Column="2" Columns="3" Rows="1">
+                        <Button Style="{StaticResource styleModifierKeys}" Tag="System">Alt</Button>
+                        <Button Style="{StaticResource styleModifierKeys}" Tag="RWin">Win</Button>
+                        <Button Style="{StaticResource styleModifierKeys}" Tag="RightCtrl">Ctrl</Button>
                     </UniformGrid>
 
                 </Grid>

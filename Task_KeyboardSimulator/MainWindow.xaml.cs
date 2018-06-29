@@ -35,6 +35,7 @@ namespace Task_KeyboardSimulator
         private bool isAddingSymbols;
         private Key lastKeyPressed;
         private Button currentPressedButton;
+        //private List<Button> buttons;
 
         public MainWindow()
         {
@@ -52,6 +53,10 @@ namespace Task_KeyboardSimulator
             numberOfMistakes = 0;
             numberOfSeconds = 0;
 
+            //this.buttons = new List<Button>();
+            //this.buttons.AddRange(this.firstRowOfButtons.Children as IEnumerable<Button>);
+            //this.buttons.Add(this.firstRowBackspace);
+
 
             this.PreviewTextInput += MainWindow_PreviewTextInput;
             
@@ -59,49 +64,106 @@ namespace Task_KeyboardSimulator
             this.textUserTyped.TextChanged += TextUserTyped_TextChanged;
 
             this.PreviewKeyDown += MainWindow_PreviewKeyDown;
-
+            this.PreviewKeyUp += MainWindow_PreviewKeyUp;
 
             this.KeyBindingToThePressingCommand();
 
             // test
             this.KeyUp += MainWindow_KeyUp;
+            this.KeyDown += MainWindow_KeyDown;
 
-            btnTests.Click += BtnTests_Click;
-            btnTests.KeyDown += BtnTests_KeyDown;
-            btnTests.KeyUp += BtnTests_KeyUp;
+            //btnTests.Click += BtnTests_Click;
+            //btnTests.KeyDown += BtnTests_KeyDown;
+            //btnTests.KeyUp += BtnTests_KeyUp;
 
         }
 
-        private void BtnTests_KeyUp(object sender, KeyEventArgs e)
+        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            //Console.WriteLine("========BtnTests_KeyUp");
+            //if (Keyboard.GetKeyStates(Key.Capital) == KeyStates.Down)
+            //{
+            //    this.stackPanelButtonsWithShift.Visibility = Visibility.Visible;
+            //    this.stackPanelButtons.Visibility = Visibility.Collapsed;
+            //}
 
-            //this.textUserTyped.Text += this.currentPressedButton.Content;
+            //if (Keyboard.GetKeyStates(Key.Capital) == KeyStates.Toggled)
+            //{
+            //    this.stackPanelButtonsWithShift.Visibility = Visibility.Collapsed;
+            //    this.stackPanelButtons.Visibility = Visibility.Visible;
+            //}
 
-           // this.lastKeyPressed = (sender as Button).Content.ToString();
-           //this.lastKeyPressed
+            if (Keyboard.IsKeyToggled(Key.Capital) == true)
+            {
+                this.stackPanelButtonsWithShift.Visibility = Visibility.Visible;
+                this.stackPanelButtons.Visibility = Visibility.Collapsed;
+            }
+
+            if (Keyboard.IsKeyToggled(Key.Capital) == false)
+            {
+                this.stackPanelButtonsWithShift.Visibility = Visibility.Collapsed;
+                this.stackPanelButtons.Visibility = Visibility.Visible;
+            }
         }
 
-        private void BtnTests_KeyDown(object sender, KeyEventArgs e)
+        private void MainWindow_PreviewKeyUp(object sender, KeyEventArgs e)
         {
-            Console.WriteLine("========BtnTests_KeyDown");
+            // Переключение на клавиатуру нижнего регистра.
+            //if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
+            //{
+            //    this.stackPanelButtonsWithShift.Visibility = Visibility.Collapsed;
+            //    this.stackPanelButtons.Visibility = Visibility.Visible;
+            //}
+
+            if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
+            {
+                if (Keyboard.IsKeyToggled(Key.Capital) == true)
+                {
+                    this.stackPanelButtonsWithShift.Visibility = Visibility.Collapsed;
+                    this.stackPanelButtons.Visibility = Visibility.Visible;
+                }
+
+                if (Keyboard.IsKeyToggled(Key.Capital) == false)
+                {
+                    this.stackPanelButtonsWithShift.Visibility = Visibility.Visible;
+                    this.stackPanelButtons.Visibility = Visibility.Collapsed;
+                }
+            }
+
+
+
+
+
+            ButtonPressUp(this.currentPressedButton);
+
+            SwitchingVisualButtonsToStateWithoutPressing();
+
+            Console.WriteLine("MainWindow_PreviewKeyUp ");
         }
 
-        private void BtnTests_Click(object sender, RoutedEventArgs e)
+        private void ButtonPressUp(Button button)
         {
-            Console.WriteLine("========BtnTests_Click");
+            if (button != null)
+            {
+                typeof(Button).GetMethod(
+                    "set_IsPressed",
+                    BindingFlags.Instance | BindingFlags.NonPublic
+                    ).Invoke(button, new object[] { false });
+            }
         }
 
         private void MainWindow_KeyUp(object sender, KeyEventArgs e)
         {
-            typeof(Button).GetMethod(
-                "set_IsPressed",
-                BindingFlags.Instance | BindingFlags.NonPublic
-                ).Invoke(currentPressedButton, new object[] { false });
+            //typeof(Button).GetMethod(
+            //    "set_IsPressed",
+            //    BindingFlags.Instance | BindingFlags.NonPublic
+            //    ).Invoke(currentPressedButton, new object[] { false });
 
-            this.textUserTyped.Text += this.currentPressedButton.Content;
+            // для команды.
+            //this.textUserTyped.Text += this.currentPressedButton.Content;
 
-            Console.WriteLine("- Key Up - " + e.Key);
+            
+
+            Console.WriteLine("Key Up ");
         }
 
         /// <summary>
@@ -127,15 +189,15 @@ namespace Task_KeyboardSimulator
             //}
 
             // Физическая привязка.
-            keyBinding = new KeyBinding();
-            keyBinding.Key = Key.D1;
-            keyBinding.Command = WindowCommands.BtnPressRoutedCommand;
-            this.InputBindings.Add(keyBinding);
+            //keyBinding = new KeyBinding();
+            //keyBinding.Key = Key.D1;
+            //keyBinding.Command = WindowCommands.BtnPressRoutedCommand;
+            //this.InputBindings.Add(keyBinding);
 
-            keyBinding = new KeyBinding();
-            keyBinding.Key = Key.D2;
-            keyBinding.Command = WindowCommands.BtnPressRoutedCommand;
-            this.InputBindings.Add(keyBinding);
+            //keyBinding = new KeyBinding();
+            //keyBinding.Key = Key.D2;
+            //keyBinding.Command = WindowCommands.BtnPressRoutedCommand;
+            //this.InputBindings.Add(keyBinding);
         }
 
         /// <summary>
@@ -143,9 +205,9 @@ namespace Task_KeyboardSimulator
         /// </summary>
         private void CreationOfACommandOfVisualPressing()
         {
-            CommandBinding commandBindingPressBtn = new CommandBinding(WindowCommands.BtnPressRoutedCommand);
-            commandBindingPressBtn.Executed += CommandBindingPressBtn_Executed;
-            this.CommandBindings.Add(commandBindingPressBtn);
+            //CommandBinding commandBindingPressBtn = new CommandBinding(WindowCommands.BtnPressRoutedCommand);
+            //commandBindingPressBtn.Executed += CommandBindingPressBtn_Executed;
+            //this.CommandBindings.Add(commandBindingPressBtn);
         }
 
         /// <summary>
@@ -181,16 +243,120 @@ namespace Task_KeyboardSimulator
         {
             //Button button = null;
 
-            if (lastKey == Key.D1)
-            {
-                return btn1;
-            }
-            else if(lastKey == Key.D2)
-            {
-                return btnTests;
-            }
+            //if (lastKey == Key.D1)
+            //{
+            //    return btn1;
+            //}
+            //else if(lastKey == Key.D2)
+            //{
+            //    return btnTests;
+            //}
 
-            return btnTests;
+            Console.WriteLine("                  " + lastKey.ToString());
+
+            // HACK много одинакового кода #1. -> заменить на: поместить все кнопки в одну коллекцию.
+            #region ButtonSearch
+            // 1 ряд
+            foreach (Button button in this.firstRowOfButtons.Children)
+            {
+                if (button.Tag != null)
+                {
+                    if (button.Tag.ToString() == lastKey.ToString())
+                    {
+                        return button;
+                    }
+                }
+            }
+            if (this.firstRowBackspaceButton.Tag.ToString() == lastKey.ToString())
+            {
+                return this.firstRowBackspaceButton;
+            }
+            // 2 ряд
+            else if (this.secondRowTabButton.Tag.ToString() == lastKey.ToString())
+            {
+                return this.secondRowTabButton;
+            }
+            foreach (Button button in this.secondRowOfButtons.Children)
+            {
+                if (button.Tag != null)
+                {
+                    if (button.Tag.ToString() == lastKey.ToString())
+                    {
+                        return button;
+                    }
+                }
+            }
+            if (this.secondRowBackslashButton.Tag.ToString() == lastKey.ToString())
+            {
+                return secondRowBackslashButton;
+            }
+            // 3 ряд
+            if (this.thirdRowCapitalButton.Tag.ToString() == lastKey.ToString())
+            {
+                return this.thirdRowCapitalButton;
+            }
+            foreach (Button button in this.thirdRowOfButtons.Children)
+            {
+                if (button.Tag != null)
+                {
+                    if (button.Tag.ToString() == lastKey.ToString())
+                    {
+                        return button;
+                    }
+                }
+            }
+            if (this.thirdRowReturnButton.Tag.ToString() == lastKey.ToString())
+            {
+                return this.thirdRowReturnButton;
+            }
+            // 4 ряд
+            if (this.fourthRowLShiftButton.Tag.ToString() == lastKey.ToString())
+            {
+                return this.fourthRowLShiftButton;
+            }
+            foreach (Button button in this.fourthRowOfButtons.Children)
+            {
+                if (button.Tag != null)
+                {
+                    if (button.Tag.ToString() == lastKey.ToString())
+                    {
+                        return button;
+                    }
+                }
+            }
+            if (this.fourthRowRShiftButton.Tag.ToString() == lastKey.ToString())
+            {
+                return this.fourthRowRShiftButton;
+            }
+            // 5 ряд
+            foreach (Button button in this.fifthRowLeftButtons.Children)
+            {
+                if (button.Tag != null)
+                {
+                    if (button.Tag.ToString() == lastKey.ToString())
+                    {
+                        return button;
+                    }
+                }
+            }
+            if (this.fifthRowSpaceButton.Tag.ToString() == lastKey.ToString())
+            {
+                return this.fifthRowSpaceButton;
+            }
+            foreach (Button button in this.fifthRowRightButtons.Children)
+            {
+                if (button.Tag != null)
+                {
+                    if (button.Tag.ToString() == lastKey.ToString())
+                    {
+                        return button;
+                    }
+                }
+            }
+            #endregion
+
+
+            return null;
         }
 
         private void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -210,9 +376,47 @@ namespace Task_KeyboardSimulator
             //MainWindow_PreviewTextInput(sender, null);
             //this.lastKeyPressed = e;
             //Console.WriteLine("---" + e.DeadCharProcessedKey.ToString());
-            Console.WriteLine("PreviewKeyDown " + e.Key);
+
+            // Переключение на клавиатуру верхнего регистра. Shift.
+            if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
+            {
+                if (Keyboard.IsKeyToggled(Key.Capital) == true)
+                {
+                    this.stackPanelButtonsWithShift.Visibility = Visibility.Collapsed;
+                    this.stackPanelButtons.Visibility = Visibility.Visible;
+                }
+
+                if (Keyboard.IsKeyToggled(Key.Capital) == false)
+                {
+                    this.stackPanelButtonsWithShift.Visibility = Visibility.Visible;
+                    this.stackPanelButtons.Visibility = Visibility.Collapsed;
+                }
+            }
+
+            
+
+
+            Console.WriteLine("PreviewKeyDown ");
             //this.textUserTyped.Text += e.Key;
             this.lastKeyPressed = e.Key;
+
+            this.currentPressedButton = SearchingVisualButtons(this.lastKeyPressed);
+            //currentPressedButton.Focus();
+            ButtonPressDown();
+            
+
+            
+        }
+
+        private void ButtonPressDown()
+        {
+            if (currentPressedButton != null)
+            {
+                typeof(Button).GetMethod(
+                    "set_IsPressed",
+                    BindingFlags.Instance | BindingFlags.NonPublic
+                    ).Invoke(currentPressedButton, new object[] { true });
+            }
         }
 
         private void TextUserTyped_TextChanged(object sender, TextChangedEventArgs e)
@@ -313,6 +517,8 @@ namespace Task_KeyboardSimulator
 
                 this.timer.Stop();
 
+                SwitchingVisualButtonsToStateWithoutPressing();
+
                 MessageBox.Show("Конец тренировки: результаты");
 
                 // TODO убрать фокус с текстБокса
@@ -329,6 +535,53 @@ namespace Task_KeyboardSimulator
             }
         }
 
+        /// <summary>
+        /// Переключение визуальных кнопок в состояние без нажатия.
+        /// </summary>
+        private void SwitchingVisualButtonsToStateWithoutPressing()
+        {
+            // HACK много одинакового кода #2. -> заменить на: поместить все кнопки в одну коллекцию.
+            #region ButtonSearchAndPressUp
+            // 1 ряд
+            foreach (Button button in this.firstRowOfButtons.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(firstRowBackspaceButton);
+            // 2 ряд
+            this.ButtonPressUp(secondRowTabButton);
+            foreach (Button button in this.secondRowOfButtons.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(secondRowBackslashButton);
+            // 3 ряд
+            this.ButtonPressUp(thirdRowCapitalButton);
+            foreach (Button button in this.thirdRowOfButtons.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(thirdRowReturnButton);
+            // 4 ряд
+            this.ButtonPressUp(fourthRowLShiftButton);
+            foreach (Button button in this.fourthRowOfButtons.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(fourthRowRShiftButton);
+            // 5 ряд
+            foreach (Button button in this.fifthRowLeftButtons.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(fifthRowSpaceButton);
+            foreach (Button button in this.fifthRowRightButtons.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            #endregion
+        }
+
         private void MainWindow_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             //Console.WriteLine(e.Text);
@@ -336,16 +589,17 @@ namespace Task_KeyboardSimulator
             if (this.btnStart.IsEnabled == false)
             {
                 //this.textUserTyped.Text += e.Text;
+                
             }
-
+            //this.textUserTyped.Focus();
 
             if (this.btnStart.IsEnabled == false)
             {
 
             }
 
-            Console.Write("Нажата ");
-            Console.WriteLine(e.Text);
+            Console.WriteLine("MainWindow_PreviewTextInput ");
+            //Console.WriteLine(e.Text);
             //Console.WriteLine(sender.ToString());
         }
 
