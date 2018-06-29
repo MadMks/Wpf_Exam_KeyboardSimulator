@@ -95,15 +95,13 @@
                                Background="LightGreen" FontFamily="Consolas" FontSize="20"></TextBlock>
                     <TextBlock Name="textNeedToType"
                                FontFamily="Consolas" FontSize="20">Lorem ipsum</TextBlock>-->
-                    <TextBox Name="textTyped"
+                    <TextBlock Name="textTyped"
                              Background="LightGreen" FontFamily="Consolas" FontSize="20"
-                             IsReadOnly="True"
-                             Focusable="False"></TextBox>
-                    <TextBox Name="textNeedToType"
+                             Focusable="False"></TextBlock>
+                    <TextBlock Name="textNeedToType"
                              FontFamily="Consolas" FontSize="20"
                              Background="Transparent"
-                             IsReadOnly="True"
-                             Focusable="False">Lorem ipsum</TextBox>
+                             Focusable="False">Lorem ipsum</TextBlock>
                 </StackPanel>
                 <Grid>
                     <StackPanel Background="LightBlue" Orientation="Horizontal">
