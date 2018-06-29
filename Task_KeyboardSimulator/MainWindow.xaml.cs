@@ -560,8 +560,33 @@ namespace Task_KeyboardSimulator
                 // Вроде ошибку убрал.
                 if (this.textNeedToType.Text.Length > 0)
                 {
-                    this.textTyped.Text += this.textNeedToType.Text[0];
-                    this.textNeedToType.Text = this.textNeedToType.Text.Substring(1);
+                    // #1
+                    //this.textTyped.Text += this.textNeedToType.Text[0];
+                    //this.textNeedToType.Text = this.textNeedToType.Text.Substring(1);
+
+                    // #2
+                    this.textTyped.Inlines.Add(new Run(this.textNeedToType.Text[0].ToString()));
+                    string tempStrNeedToType = this.textNeedToType.Text.Substring(1);
+                    this.textNeedToType.Inlines.Clear();
+                    this.textNeedToType.Inlines.Add(tempStrNeedToType);
+
+
+                    // #2
+                    // Закрашивание с выделенными ошибками.
+                    string tempStrTyped = this.textTyped.Text;
+                    this.textTyped.Inlines.Clear();
+
+                    for (int i = 0; i < tempStrTyped.Length; i++)
+                    {
+                        if (this.listOfErrorIndicesForTyped.Exists(j => i == j))
+                        {
+                            this.AddingLetterAsAnError(this.textTyped, tempStrTyped[i].ToString());
+                        }
+                        else
+                        {
+                            this.AddingLetter(this.textTyped, tempStrTyped[i].ToString());
+                        }
+                    }
                 }
 
                 // TODO for RichTextBox
@@ -626,23 +651,26 @@ namespace Task_KeyboardSimulator
                     // Удаление последнего символа. // TODO method
                     // #1
                     this.textNeedToType.Text = String.Concat(this.textTyped.Text[textTyped.Text.Length - 1], this.textNeedToType.Text);
-                    this.textTyped.Text = textTyped.Text.Substring(0, textTyped.Text.Length - 1);
+                    //this.textTyped.Text = textTyped.Text.Substring(0, textTyped.Text.Length - 1);
 
                     // #2
-                    //string tempStrTyped = this.textTyped.Text.Substring(0, this.textTyped.Text.Length - 1);
-                    //this.textTyped.Inlines.Clear();
 
-                    //for (int i = 0; i < tempStrTyped.Length; i++)
-                    //{
-                    //    if (this.listOfErrorIndicesForTyped.Exists(j => i == j))
-                    //    {
-                    //        this.AddingLetterAsAnError(this.textTyped, tempStrTyped[i].ToString());
-                    //    }
-                    //    else
-                    //    {
-                    //        this.AddingLetter(this.textTyped, tempStrTyped[i].ToString());
-                    //    }
-                    //}
+
+                    // #2
+                    string tempStrTyped = this.textTyped.Text.Substring(0, this.textTyped.Text.Length - 1);
+                    this.textTyped.Inlines.Clear();
+                    
+                    for (int i = 0; i < tempStrTyped.Length; i++)
+                    {
+                        if (this.listOfErrorIndicesForTyped.Exists(j => i == j))
+                        {
+                            this.AddingLetterAsAnError(this.textTyped, tempStrTyped[i].ToString());
+                        }
+                        else
+                        {
+                            this.AddingLetter(this.textTyped, tempStrTyped[i].ToString());
+                        }
+                    }
 
                     isAddingSymbols = false;
                 }
@@ -822,7 +850,7 @@ namespace Task_KeyboardSimulator
 
             // TODO method  addErr(index)
             this.listOfErrorIndicesForUserTyped.Add(this.textUserTyped.Text.Length);
-            this.listOfErrorIndicesForTyped.Add(this.textTyped.Text.Length);
+            this.listOfErrorIndicesForTyped.Add(this.textUserTyped.Text.Length);
             return false;
         }
 
