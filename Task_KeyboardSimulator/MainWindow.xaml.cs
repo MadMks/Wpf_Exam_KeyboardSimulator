@@ -86,9 +86,6 @@ namespace Task_KeyboardSimulator
             this.KeyUp += MainWindow_KeyUp;
             this.KeyDown += MainWindow_KeyDown;
 
-            //btnTests.Click += BtnTests_Click;
-            //btnTests.KeyDown += BtnTests_KeyDown;
-            //btnTests.KeyUp += BtnTests_KeyUp;
 
 
             // Узнаем состояние CapsLock. Запоминаем.
@@ -171,8 +168,6 @@ namespace Task_KeyboardSimulator
             ButtonPressUp(this.currentPressedButton);
 
             SwitchingVisualButtonsToStateWithoutPressing();
-
-            //Console.WriteLine("MainWindow_PreviewKeyUp ");
         }
 
         private void ButtonPressUp(Button button)
@@ -435,8 +430,6 @@ namespace Task_KeyboardSimulator
             }
 
 
-            //Console.WriteLine("PreviewKeyDown ");
-            //this.textUserTyped.Text += e.Key;
             this.lastKeyPressed = e.Key;
             if (this.stackPanelButtons.Visibility == Visibility.Visible)
             {
@@ -447,11 +440,7 @@ namespace Task_KeyboardSimulator
                 this.currentPressedButton = SearchingVisualButtonsWithShift(this.lastKeyPressed);
             }
             
-            //currentPressedButton.Focus();
             ButtonPressDown();
-            
-
-            
         }
 
         private void ButtonPressDown()
@@ -467,8 +456,6 @@ namespace Task_KeyboardSimulator
 
         private void TextUserTyped_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //CommandBindingPressBtn_Executed(sender, new RoutedEventArgs(e.RoutedEvent) as ExecutedRoutedEventArgs);
-
             if (this.IsTrainingStarted())
             {
                 ErrorChecking();
@@ -507,30 +494,6 @@ namespace Task_KeyboardSimulator
             {
                 if (this.textUserTyped.Text[textUserTyped.Text.Length - 1] != this.textTyped.Text[textTyped.Text.Length - 1])
                 {
-                    // TODO разукрашивание ошибок
-                    //Console.WriteLine("Разукрашивание");
-
-                    ////string temp1 = this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1);
-                    ////Run runText = new Run(this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1));
-                    //Run runText = new Run();
-                    //runText.Text = (this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1));
-
-                    ////string temp2 = this.textUserTyped.Text.Substring(this.textUserTyped.Text.Length - 1);
-                    ////Run runLetterError = new Run(this.textUserTyped.Text.Substring(this.textUserTyped.Text.Length - 1)) { Background = Brushes.Red};
-                    //Run runLetterError = new Run();
-                    //runLetterError = this.textUserTyped.Inlines.LastInline as Run;
-                    //runLetterError.Background = Brushes.Red;
-
-                    //this.textUserTyped.Text = null;
-                    //this.textUserTyped.Inlines.Add(runText);
-                    //this.textUserTyped.Inlines.Add(runLetterError);
-
-
-                    //this.textUserTyped.Inlines.LastInline.Background = Brushes.Red;
-                    //this.textUserTyped.Inlines.Add(this.textUserTyped.Inlines.LastInline);
-
-                    //test
-                    //this.textUserTyped.Inlines.Add(new Run("Q") { Background = Brushes.Red });
                     Run run = new Run(this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1));
                     run.TextDecorations = this.textUserTyped.TextDecorations;
                     string letterError = this.textUserTyped.Text.Substring(this.textUserTyped.Text.Length - 1);
@@ -556,42 +519,14 @@ namespace Task_KeyboardSimulator
                     && (int)e.Key < 151
                     || (int)e.Key == 18)
             {
-                // Тут ошибка с выходом за рамки массива. верхний текстбокс.
-                // Вроде ошибку убрал.
                 if (this.textNeedToType.Text.Length > 0)
                 {
-                    // #1
-                    //this.textTyped.Text += this.textNeedToType.Text[0];
-                    //this.textNeedToType.Text = this.textNeedToType.Text.Substring(1);
-
                     // #2
                     this.textTyped.Inlines.Add(new Run(this.textNeedToType.Text[0].ToString()));
                     string tempStrNeedToType = this.textNeedToType.Text.Substring(1);
                     this.textNeedToType.Inlines.Clear();
                     this.textNeedToType.Inlines.Add(tempStrNeedToType);
-
-
-                    // #2
-                    // Закрашивание с выделенными ошибками.
-                    //string tempStrTyped = this.textTyped.Text;
-                    //this.textTyped.Inlines.Clear();
-
-                    //for (int i = 0; i < tempStrTyped.Length; i++)
-                    //{
-                    //    if (this.listOfErrorIndicesForTyped.Exists(j => i == j))
-                    //    {
-                    //        this.AddingLetterAsAnError(this.textTyped, tempStrTyped[i].ToString());
-                    //    }
-                    //    else
-                    //    {
-                    //        this.AddingLetter(this.textTyped, tempStrTyped[i].ToString());
-                    //    }
-                    //}
                 }
-
-                // TODO for RichTextBox
-                //this.textTyped.AppendText(this.textNeedToType.Text[0].ToString());
-                //this.textNeedToType.Text = this.textNeedToType.Text.Substring(1);
 
                 isAddingSymbols = true;
             }
@@ -601,43 +536,30 @@ namespace Task_KeyboardSimulator
                 // Изменение нижнего ряда (TextBlock).
                 if (this.textUserTyped.Text.Length > 0)
                 {
-                    //string temp = this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1);
-                    //this.textUserTyped.Text = null;
-                    //this.textUserTyped.Inlines.Add(new Run(temp));
-                    //this.textUserTyped.Text[this.textUserTyped.Text.Length] = '\0';
-
                     // При исправлении ошибки - убираем пометку (красный фон).
                     if (listOfErrorIndicesForUserTyped.Exists(x => x == this.textUserTyped.Text.Length - 1))
                     {
                         this.listOfErrorIndicesForUserTyped.RemoveAt(this.listOfErrorIndicesForUserTyped.FindIndex(x => x == this.textUserTyped.Text.Length - 1));
-                        Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + this.listOfErrorIndicesForUserTyped.Count);
                     }
-                    //this.textUserTyped.Text = this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1);
 
-                    // #1
-                    //Run run = new Run(this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1));
-                    //run.TextDecorations = this.textUserTyped.TextDecorations;
-                    //run.TextEffects = this.textUserTyped.TextEffects;
-                    //run.Style = this.textUserTyped.Style;
-                    //this.textUserTyped.Inlines.Clear();
-                    //this.textUserTyped.Inlines.Add(run);
 
+                    this.RepaintingAllStoredErrorsWithoutLastLetter(this.textUserTyped, this.listOfErrorIndicesForUserTyped, Brushes.Red);
                     // #2
                     // Удаление последнего символа. // TODO method
-                    string tempStrUserTyped = this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1);
-                    this.textUserTyped.Inlines.Clear();
+                    //string tempStrUserTyped = this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1);
+                    //this.textUserTyped.Inlines.Clear();
 
-                    for (int i = 0; i < tempStrUserTyped.Length; i++)
-                    {
-                        if (this.listOfErrorIndicesForUserTyped.Exists(j => i == j ))
-                        {
-                            this.AddingLetterAsAnError(this.textUserTyped, tempStrUserTyped[i].ToString(), Brushes.Red);
-                        }
-                        else
-                        {
-                            this.AddingLetter(this.textUserTyped, tempStrUserTyped[i].ToString());
-                        }
-                    }
+                    //for (int i = 0; i < tempStrUserTyped.Length; i++)
+                    //{
+                    //    if (this.listOfErrorIndicesForUserTyped.Exists(j => i == j ))
+                    //    {
+                    //        this.AddingLetterAsAnError(this.textUserTyped, tempStrUserTyped[i].ToString(), Brushes.Red);
+                    //    }
+                    //    else
+                    //    {
+                    //        this.AddingLetter(this.textUserTyped, tempStrUserTyped[i].ToString());
+                    //    }
+                    //}
 
 
                     
@@ -651,28 +573,49 @@ namespace Task_KeyboardSimulator
                     // Удаление последнего символа. // TODO method
                     // #1
                     this.textNeedToType.Text = String.Concat(this.textTyped.Text[textTyped.Text.Length - 1], this.textNeedToType.Text);
-                    //this.textTyped.Text = textTyped.Text.Substring(0, textTyped.Text.Length - 1);
 
+                    this.RepaintingAllStoredErrorsWithoutLastLetter(this.textTyped, this.listOfErrorIndicesForTyped, Brushes.Orange);
                     // #2
-
-
-                    // #2
-                    string tempStrTyped = this.textTyped.Text.Substring(0, this.textTyped.Text.Length - 1);
-                    this.textTyped.Inlines.Clear();
+                    //string tempStrTyped = this.textTyped.Text.Substring(0, this.textTyped.Text.Length - 1);
+                    //this.textTyped.Inlines.Clear();
                     
-                    for (int i = 0; i < tempStrTyped.Length; i++)
-                    {
-                        if (this.listOfErrorIndicesForTyped.Exists(j => i == j))
-                        {
-                            this.AddingLetterAsAnError(this.textTyped, tempStrTyped[i].ToString(), Brushes.Orange);
-                        }
-                        else
-                        {
-                            this.AddingLetter(this.textTyped, tempStrTyped[i].ToString());
-                        }
-                    }
+                    //for (int i = 0; i < tempStrTyped.Length; i++)
+                    //{
+                    //    if (this.listOfErrorIndicesForTyped.Exists(j => i == j))
+                    //    {
+                    //        this.AddingLetterAsAnError(this.textTyped, tempStrTyped[i].ToString(), Brushes.Orange);
+                    //    }
+                    //    else
+                    //    {
+                    //        this.AddingLetter(this.textTyped, tempStrTyped[i].ToString());
+                    //    }
+                    //}
 
                     isAddingSymbols = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Перекрашивание всех сохраненных ошибок без последней буквы (для одного TextBlock).
+        /// </summary>
+        /// <param name="textBlock"></param>
+        /// <param name="errorIndices"></param>
+        /// <param name="bgColor"></param>
+        private void RepaintingAllStoredErrorsWithoutLastLetter(TextBlock textBlock, List<int> errorIndices, Brush bgColor)
+        {
+            string tempStr = textBlock.Text.Substring(0, textBlock.Text.Length - 1);
+            textBlock.Inlines.Clear();
+
+            for (int i = 0; i < tempStr.Length; i++)
+            {
+                if (errorIndices.Exists(j => i == j))
+                {
+                    this.AddingLetterAsAnError(textBlock, tempStr[i].ToString(), bgColor);
+                }
+                else
+                {
+                    this.AddingLetter(textBlock, tempStr[i].ToString());
                 }
             }
         }
@@ -799,54 +742,64 @@ namespace Task_KeyboardSimulator
         {
             if (this.btnStart.IsEnabled == false)
             {
-                
                 if (e.Text != "\b" && e.Text != "\r")
                 {
-                    // >block
-                    //this.textUserTyped.Text += e.Text;
-                    //this.textUserTyped.Inlines.Add(new Run(e.Text));s
                     AddingLetterToTextUserTyped(e.Text);
                 }
-                //Console.WriteLine("===========    ====" + e.Text);
-                
             }
-            //this.textUserTyped.Focus();
 
             // >block
             if (this.IsTrainingStarted())
             {
-                //ErrorChecking();
-                // >block
 
+                this.RepaintingAllSavedErrors(this.textTyped, this.listOfErrorIndicesForTyped, Brushes.Orange);
                 // #2
                 // Закрашивание с выделенными ошибками.
-                string tempStrTyped = this.textTyped.Text;
-                this.textTyped.Inlines.Clear();
+                //string tempStrTyped = this.textTyped.Text;
+                //this.textTyped.Inlines.Clear();
 
-                for (int i = 0; i < tempStrTyped.Length; i++)
-                {
-                    if (this.listOfErrorIndicesForTyped.Exists(j => i == j))
-                    {
-                        this.AddingLetterAsAnError(this.textTyped, tempStrTyped[i].ToString(), Brushes.Orange);
-                    }
-                    else
-                    {
-                        this.AddingLetter(this.textTyped, tempStrTyped[i].ToString());
-                    }
-                }
+                //for (int i = 0; i < tempStrTyped.Length; i++)
+                //{
+                //    if (this.listOfErrorIndicesForTyped.Exists(j => i == j))
+                //    {
+                //        this.AddingLetterAsAnError(this.textTyped, tempStrTyped[i].ToString(), Brushes.Orange);
+                //    }
+                //    else
+                //    {
+                //        this.AddingLetter(this.textTyped, tempStrTyped[i].ToString());
+                //    }
+                //}
 
                 CheckTypingRequiredNumberOfCharacters();
             }
+        }
 
-            //Console.WriteLine("MainWindow_PreviewTextInput ");
-            //Console.WriteLine(e.Text);
-            //Console.WriteLine(sender.ToString());
+        /// <summary>
+        /// Перекрашивание всех сохраненных ошибок (для одного TextBlock).
+        /// </summary>
+        /// <param name="textBlock"></param>
+        /// <param name="bgColor"></param>
+        private void RepaintingAllSavedErrors(TextBlock textBlock, List<int> errorIndices, Brush bgColor)
+        {
+            string tempStr = textBlock.Text;
+            textBlock.Inlines.Clear();
+
+            for (int i = 0; i < tempStr.Length; i++)
+            {
+                if (errorIndices.Exists(j => i == j))
+                {
+                    this.AddingLetterAsAnError(textBlock, tempStr[i].ToString(), bgColor);
+                }
+                else
+                {
+                    this.AddingLetter(textBlock, tempStr[i].ToString());
+                }
+            }
         }
 
         private void AddingLetterToTextUserTyped(string letter)
         {
             if (IstheEnteredLetterIsCorrect(letter))
-            //if (letter[0] != this.textTyped.Text[textTyped.Text.Length - 1])
             {
                 AddingLetter(this.textUserTyped, letter);
             }
