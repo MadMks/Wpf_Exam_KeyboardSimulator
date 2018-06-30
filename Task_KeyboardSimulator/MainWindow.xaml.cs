@@ -64,6 +64,11 @@ namespace Task_KeyboardSimulator
         /// </summary>
         //private string numberAndCharacterList;
 
+        // TODO const
+        private int numberOfCharactersInString = 5;
+
+        Random random;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -94,7 +99,8 @@ namespace Task_KeyboardSimulator
 
             this.characterListLower = "fjdksla;ghrueiwoqpvmc,x.z/bn4738291056[]'\\`-=";
             this.characterListUpper = "FJDKSLA:GHRUEIWOQPVMC<X>Z?BN$&#*@(!)%^{}\"|~_+";
-            
+
+            random = new Random();
 
             //this.buttons = new List<Button>();
             //this.buttons.AddRange(this.firstRowOfButtons.Children as IEnumerable<Button>);
@@ -809,19 +815,35 @@ namespace Task_KeyboardSimulator
             //this.textNeedToType.Text = "Lorem ipsum";
             //this.textNeedToType.Text = ("Lorem ipsum123").ToUpper();
             // TODO param StringGeneration(numberOfLetters, stringWithCaseSensitive)
-            this.textNeedToType.Text = this.StringGeneration(2, false);
+            this.textNeedToType.Text = this.StringGeneration(3, false);
 
             this.textUserTyped.Focus();
 
             this.timer.Start();
         }
 
-        private string StringGeneration(int number, bool IsCaseSensitive)
+        private string StringGeneration(int number, bool IsCaseSensitiveUpper)
         {
             // TODO StringBuilder!?
             // string str = Rand
 
-            return;
+            string randomString = null;
+
+            if (IsCaseSensitiveUpper)
+            {
+
+            }
+            else
+            {
+                for (int i = 0; i < this.numberOfCharactersInString; i++)
+                {
+                    randomString += this.characterListLower[random.Next(number)].ToString();
+                }
+            }
+
+            
+
+            return randomString;
         }
 
         /// <summary>
@@ -839,6 +861,7 @@ namespace Task_KeyboardSimulator
             this.textUserTyped.Text = "";
 
             this.listOfErrorIndicesForUserTyped.Clear();
+            this.listOfErrorIndicesForTyped.Clear();
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
