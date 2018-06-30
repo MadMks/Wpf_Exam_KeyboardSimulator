@@ -17,8 +17,12 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 
 
-// TODO #1 задержка визуального нажатия Шифта (скорее из-за поиска кнопки в большем кол-ве циклов).
+// TODO #1 задержка визуального нажатия Шифта. Из-за визуального нажатия на клавиатуре нижнего регистра,
+        // которая в данный момент Visibility.Collapsed (в данный момент не видно).
+        // Визуальное нажатие появляется после сработки зажатия Шифта (RepeatButton).
 // TODO #2 добавить 3-ю клавиатуру для Caps Lock (нажатие Caps отличается от нажатия Shift).
+// TODO #3 Добавить все Button в одну коллекцию (одна коллекция для каждой клавиатуры).
+        // Искать кнопки в коллекции (будет меньше кода).
 
 
 namespace Task_KeyboardSimulator
@@ -472,7 +476,7 @@ namespace Task_KeyboardSimulator
         }
 
         /// <summary>
-        /// TODO Вычисление ...
+        /// Вычисление кол-ва набора символов в минуту.
         /// </summary>
         /// <returns></returns>
         private string ComputeNumberOfCharsMin()
@@ -521,7 +525,6 @@ namespace Task_KeyboardSimulator
             {
                 if (this.textNeedToType.Text.Length > 0)
                 {
-                    // #2
                     this.textTyped.Inlines.Add(new Run(this.textNeedToType.Text[0].ToString()));
                     string tempStrNeedToType = this.textNeedToType.Text.Substring(1);
                     this.textNeedToType.Inlines.Clear();
@@ -530,66 +533,28 @@ namespace Task_KeyboardSimulator
 
                 isAddingSymbols = true;
             }
-            // иначе если Backspace
+            // иначе если Backspace.
             else if ((int)e.Key == 2)
             {
                 // Изменение нижнего ряда (TextBlock).
                 if (this.textUserTyped.Text.Length > 0)
                 {
-                    // При исправлении ошибки - убираем пометку (красный фон).
+                    // При исправлении ошибки - убираем пометку (красный фон, для нижнего textBlock).
                     if (listOfErrorIndicesForUserTyped.Exists(x => x == this.textUserTyped.Text.Length - 1))
                     {
                         this.listOfErrorIndicesForUserTyped.RemoveAt(this.listOfErrorIndicesForUserTyped.FindIndex(x => x == this.textUserTyped.Text.Length - 1));
                     }
 
-
                     this.RepaintingAllStoredErrorsWithoutLastLetter(this.textUserTyped, this.listOfErrorIndicesForUserTyped, Brushes.Red);
-                    // #2
-                    // Удаление последнего символа. // TODO method
-                    //string tempStrUserTyped = this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1);
-                    //this.textUserTyped.Inlines.Clear();
-
-                    //for (int i = 0; i < tempStrUserTyped.Length; i++)
-                    //{
-                    //    if (this.listOfErrorIndicesForUserTyped.Exists(j => i == j ))
-                    //    {
-                    //        this.AddingLetterAsAnError(this.textUserTyped, tempStrUserTyped[i].ToString(), Brushes.Red);
-                    //    }
-                    //    else
-                    //    {
-                    //        this.AddingLetter(this.textUserTyped, tempStrUserTyped[i].ToString());
-                    //    }
-                    //}
-
-
-                    
-
-                    Console.WriteLine("Backspace");
                 }
 
                 // Изменения верхнего ряда (текстБоксов).
                 if (this.textTyped.Text.Length > 0)
                 {
                     // Удаление последнего символа. // TODO method
-                    // #1
                     this.textNeedToType.Text = String.Concat(this.textTyped.Text[textTyped.Text.Length - 1], this.textNeedToType.Text);
 
                     this.RepaintingAllStoredErrorsWithoutLastLetter(this.textTyped, this.listOfErrorIndicesForTyped, Brushes.Orange);
-                    // #2
-                    //string tempStrTyped = this.textTyped.Text.Substring(0, this.textTyped.Text.Length - 1);
-                    //this.textTyped.Inlines.Clear();
-                    
-                    //for (int i = 0; i < tempStrTyped.Length; i++)
-                    //{
-                    //    if (this.listOfErrorIndicesForTyped.Exists(j => i == j))
-                    //    {
-                    //        this.AddingLetterAsAnError(this.textTyped, tempStrTyped[i].ToString(), Brushes.Orange);
-                    //    }
-                    //    else
-                    //    {
-                    //        this.AddingLetter(this.textTyped, tempStrTyped[i].ToString());
-                    //    }
-                    //}
 
                     isAddingSymbols = false;
                 }
@@ -599,9 +564,9 @@ namespace Task_KeyboardSimulator
         /// <summary>
         /// Перекрашивание всех сохраненных ошибок без последней буквы (для одного TextBlock).
         /// </summary>
-        /// <param name="textBlock"></param>
-        /// <param name="errorIndices"></param>
-        /// <param name="bgColor"></param>
+        /// <param name="textBlock">TextBlock в котором нужно перекрасить ошибки.</param>
+        /// <param name="errorIndices">Список с индексами ошибок для textBlock</param>
+        /// <param name="bgColor">Цвет для закрашивания фона ошибки.</param>
         private void RepaintingAllStoredErrorsWithoutLastLetter(TextBlock textBlock, List<int> errorIndices, Brush bgColor)
         {
             string tempStr = textBlock.Text.Substring(0, textBlock.Text.Length - 1);
@@ -639,14 +604,6 @@ namespace Task_KeyboardSimulator
                 // TODO убрать фокус с текстБокса
                 // например на кнопку старт
                 this.btnStart.Focus();
-            }
-            else if (this.textUserTyped.Text.Length > this.textTyped.Text.Length)
-            {
-                //this.btnStop.IsEnabled = false;
-
-                //this.timer.Stop();
-
-                //MessageBox.Show("Чак Норрис");
             }
         }
 
@@ -740,45 +697,25 @@ namespace Task_KeyboardSimulator
 
         private void MainWindow_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (this.btnStart.IsEnabled == false)
+            if (this.IsTrainingStarted())
             {
                 if (e.Text != "\b" && e.Text != "\r")
                 {
-                    AddingLetterToTextUserTyped(e.Text);
+                    this.AddingLetterToTextUserTyped(e.Text);
                 }
-            }
-
-            // >block
-            if (this.IsTrainingStarted())
-            {
 
                 this.RepaintingAllSavedErrors(this.textTyped, this.listOfErrorIndicesForTyped, Brushes.Orange);
-                // #2
-                // Закрашивание с выделенными ошибками.
-                //string tempStrTyped = this.textTyped.Text;
-                //this.textTyped.Inlines.Clear();
 
-                //for (int i = 0; i < tempStrTyped.Length; i++)
-                //{
-                //    if (this.listOfErrorIndicesForTyped.Exists(j => i == j))
-                //    {
-                //        this.AddingLetterAsAnError(this.textTyped, tempStrTyped[i].ToString(), Brushes.Orange);
-                //    }
-                //    else
-                //    {
-                //        this.AddingLetter(this.textTyped, tempStrTyped[i].ToString());
-                //    }
-                //}
-
-                CheckTypingRequiredNumberOfCharacters();
+                this.CheckTypingRequiredNumberOfCharacters();
             }
         }
 
         /// <summary>
         /// Перекрашивание всех сохраненных ошибок (для одного TextBlock).
         /// </summary>
-        /// <param name="textBlock"></param>
-        /// <param name="bgColor"></param>
+        /// <param name="textBlock">TextBlock в котором нужно перекрасить ошибки.</param>
+        /// <param name="errorIndices">Список с индексами ошибок для textBlock</param>
+        /// <param name="bgColor">Цвет для закрашивания фона ошибки.</param>
         private void RepaintingAllSavedErrors(TextBlock textBlock, List<int> errorIndices, Brush bgColor)
         {
             string tempStr = textBlock.Text;
@@ -816,6 +753,7 @@ namespace Task_KeyboardSimulator
                 return true;
             }
 
+            // TODO method  увеличиваем число допущенных ошибок.
             this.answerNumberOfMistakes.Text = (++numberOfMistakes).ToString();
 
             // TODO method  addErr(index)
