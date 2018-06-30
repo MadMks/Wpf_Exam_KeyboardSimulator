@@ -631,7 +631,7 @@ namespace Task_KeyboardSimulator
                     {
                         if (this.listOfErrorIndicesForUserTyped.Exists(j => i == j ))
                         {
-                            this.AddingLetterAsAnError(this.textUserTyped, tempStrUserTyped[i].ToString());
+                            this.AddingLetterAsAnError(this.textUserTyped, tempStrUserTyped[i].ToString(), Brushes.Red);
                         }
                         else
                         {
@@ -664,7 +664,7 @@ namespace Task_KeyboardSimulator
                     {
                         if (this.listOfErrorIndicesForTyped.Exists(j => i == j))
                         {
-                            this.AddingLetterAsAnError(this.textTyped, tempStrTyped[i].ToString());
+                            this.AddingLetterAsAnError(this.textTyped, tempStrTyped[i].ToString(), Brushes.Orange);
                         }
                         else
                         {
@@ -827,7 +827,7 @@ namespace Task_KeyboardSimulator
                 {
                     if (this.listOfErrorIndicesForTyped.Exists(j => i == j))
                     {
-                        this.AddingLetterAsAnError(this.textTyped, tempStrTyped[i].ToString());
+                        this.AddingLetterAsAnError(this.textTyped, tempStrTyped[i].ToString(), Brushes.Orange);
                     }
                     else
                     {
@@ -852,7 +852,7 @@ namespace Task_KeyboardSimulator
             }
             else
             {
-                AddingLetterAsAnError(this.textUserTyped, letter);
+                AddingLetterAsAnError(this.textUserTyped, letter, Brushes.Red);
             }
         }
 
@@ -876,9 +876,9 @@ namespace Task_KeyboardSimulator
             textBlock.Inlines.Add(new Run(letter));
         }
 
-        private void AddingLetterAsAnError(TextBlock textBlock, string letter)
+        private void AddingLetterAsAnError(TextBlock textBlock, string letter, Brush brush)
         {
-            textBlock.Inlines.Add(new Run(letter) { Background = Brushes.Red});
+            textBlock.Inlines.Add(new Run(letter) { Background = brush });
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
