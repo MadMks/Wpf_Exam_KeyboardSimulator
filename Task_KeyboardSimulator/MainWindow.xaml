@@ -45,12 +45,14 @@
 
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
                     <TextBlock Text="Difficulty: "/><!--TODO fs-->
-                    <TextBlock Name="answerDifficulty" Text="0"/> <!--TODO fs fw-->
+                    <TextBlock Name="answerDifficulty" 
+                               Text="{Binding ElementName=sliderDifficulty, Path=Value}"/> <!--TODO fs fw-->
                 </StackPanel>
 
                 <Slider Grid.Column="1"
                         Name="sliderDifficulty" Value="2"
                         SmallChange="1" LargeChange="1"
+                        TickFrequency="1" IsSnapToTickEnabled="True"
                         Minimum="2" Maximum="46"
                         ValueChanged="sliderDifficulty_ValueChanged"/> <!--TODO margin / h v align-->
 

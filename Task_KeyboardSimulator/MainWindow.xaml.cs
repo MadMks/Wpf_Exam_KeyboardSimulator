@@ -964,7 +964,8 @@ namespace Task_KeyboardSimulator
         /// </summary>
         private void sliderDifficulty_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            this.answerDifficulty.Text = Convert.ToInt32(this.sliderDifficulty.Value).ToString();
+            // HACK поменял на привязку
+            //this.answerDifficulty.Text = Convert.ToInt32(this.sliderDifficulty.Value).ToString();
         }
 
 
