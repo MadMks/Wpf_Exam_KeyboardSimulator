@@ -46,8 +46,23 @@ namespace Task_KeyboardSimulator
         private Button currentPressedButton;
         //private List<Button> buttons;
         private bool IsCapsLockIsOn;
+
         private List<int> listOfErrorIndicesForUserTyped;
         private List<int> listOfErrorIndicesForTyped;
+
+        //private List<char> characterList;
+        /// <summary>
+        /// Список символов нижнего регистра.
+        /// </summary>
+        private string characterListLower;
+        /// <summary>
+        /// Список символов верхнего регистра.
+        /// </summary>
+        private string characterListUpper;
+        /// <summary>
+        /// Список символов, цифры и символы.
+        /// </summary>
+        //private string numberAndCharacterList;
 
         public MainWindow()
         {
@@ -67,6 +82,19 @@ namespace Task_KeyboardSimulator
 
             this.listOfErrorIndicesForUserTyped = new List<int>();
             this.listOfErrorIndicesForTyped = new List<int>();
+
+            //this.characterList = new List<string>()
+            //{
+            //    //'f', 'j', 'd', ''
+            //    "fjd"
+            //};
+            //this.lettersListLower = "fjdkslaghrueiwoqptyvmcxzbn";
+            //this.lettersListLower = "FJDKSLAGHRUEIWOQPTYVMCXZBN";
+            //this.numberAndCharacterList = "/.,;[]'\\4738291056`-={}:\"|<>?$&#*@(!)%^~_+";
+
+            this.characterListLower = "fjdksla;ghrueiwoqpvmc,x.z/bn4738291056[]'\\`-=";
+            this.characterListUpper = "FJDKSLA:GHRUEIWOQPVMC<X>Z?BN$&#*@(!)%^{}\"|~_+";
+            
 
             //this.buttons = new List<Button>();
             //this.buttons.AddRange(this.firstRowOfButtons.Children as IEnumerable<Button>);
@@ -778,12 +806,22 @@ namespace Task_KeyboardSimulator
 
             this.btnStart.IsEnabled = false;
 
-            this.textNeedToType.Text = "Lorem ipsum";
-            //this.textNeedToType.Text = this.StringGeneration(); // TODO param StringGeneration(param)
+            //this.textNeedToType.Text = "Lorem ipsum";
+            //this.textNeedToType.Text = ("Lorem ipsum123").ToUpper();
+            // TODO param StringGeneration(numberOfLetters, stringWithCaseSensitive)
+            this.textNeedToType.Text = this.StringGeneration(2, false);
 
             this.textUserTyped.Focus();
 
             this.timer.Start();
+        }
+
+        private string StringGeneration(int number, bool IsCaseSensitive)
+        {
+            // TODO StringBuilder!?
+            // string str = Rand
+
+            return;
         }
 
         /// <summary>
