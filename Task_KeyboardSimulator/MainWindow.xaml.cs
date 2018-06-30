@@ -67,7 +67,10 @@ namespace Task_KeyboardSimulator
         // TODO const
         private int numberOfCharactersInString = 5;
 
-        Random random;
+
+        private bool isGenerateCaseSensitiveString;
+
+
 
         public MainWindow()
         {
@@ -88,39 +91,25 @@ namespace Task_KeyboardSimulator
             this.listOfErrorIndicesForUserTyped = new List<int>();
             this.listOfErrorIndicesForTyped = new List<int>();
 
-            //this.characterList = new List<string>()
-            //{
-            //    //'f', 'j', 'd', ''
-            //    "fjd"
-            //};
-            //this.lettersListLower = "fjdkslaghrueiwoqptyvmcxzbn";
-            //this.lettersListLower = "FJDKSLAGHRUEIWOQPTYVMCXZBN";
-            //this.numberAndCharacterList = "/.,;[]'\\4738291056`-={}:\"|<>?$&#*@(!)%^~_+";
 
             this.characterListLower = "fjdksla;ghrueiwoqpvmc,x.z/bn4738291056[]'\\`-=";
             this.characterListUpper = "FJDKSLA:GHRUEIWOQPVMC<X>Z?BN$&#*@(!)%^{}\"|~_+";
 
-            random = new Random();
+            
 
-            //this.buttons = new List<Button>();
-            //this.buttons.AddRange(this.firstRowOfButtons.Children as IEnumerable<Button>);
-            //this.buttons.Add(this.firstRowBackspace);
+            //this.isGenerateCaseSensitiveString = 
+
 
 
             this.PreviewTextInput += MainWindow_PreviewTextInput;
-            
-
-            // <box
-            //this.textUserTyped.TextChanged += TextUserTyped_TextChanged;
-            // >block
-            
+           
 
             this.PreviewKeyDown += MainWindow_PreviewKeyDown;
             this.PreviewKeyUp += MainWindow_PreviewKeyUp;
 
             this.KeyBindingToThePressingCommand();
 
-            // test
+            
             this.KeyUp += MainWindow_KeyUp;
             this.KeyDown += MainWindow_KeyDown;
 
@@ -138,8 +127,6 @@ namespace Task_KeyboardSimulator
                 this.IsCapsLockIsOn = false;
             }
 
-
-
             if (IsCapsLockIsOn)
             {
                 this.stackPanelButtonsWithShift.Visibility = Visibility.Visible;
@@ -152,10 +139,21 @@ namespace Task_KeyboardSimulator
             }
 
 
+            // test
+            //this.sliderDifficulty.ValueChanged += SliderDifficulty_ValueChanged;
 
-
-            
         }
+
+
+        // test #1
+        //private void SliderDifficulty_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        //{
+        //    //Console.WriteLine(sliderDifficulty.TickFrequency);
+        //    Console.WriteLine(Convert.ToInt32(e.NewValue));
+
+
+        //    //Console.WriteLine(this.checkBoxCaseSensitive.IsChecked);
+        //}
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
        {
@@ -631,14 +629,21 @@ namespace Task_KeyboardSimulator
 
                 this.timer.Stop();
 
-                SwitchingVisualButtonsToStateWithoutPressing();
+                this.SwitchingVisualButtonsToStateWithoutPressing();
 
-                MessageBox.Show("Конец тренировки: результаты");
+                this.ShowMessageWithResults("completed");
 
                 // TODO убрать фокус с текстБокса
                 // например на кнопку старт
                 this.btnStart.Focus();
             }
+        }
+
+        private void ShowMessageWithResults(string trainingState)
+        {
+            MessageBox.Show($"Speed: {this.answerNumberOfCharsMin.Text} chars/min\n"
+                + $"Fails: {this.answerNumberOfMistakes.Text}",
+                $"Training {trainingState}");
         }
 
         /// <summary>
@@ -733,10 +738,10 @@ namespace Task_KeyboardSimulator
         {
             if (this.IsTrainingStarted())
             {
-                if (e.Text == "\u001b")
-                {
-                    Console.WriteLine(">>>>>>>>         " + e.Text + " -" + Char.IsControl(e.Text[0]));
-                }
+                //if (e.Text == "\u001b")
+                //{
+                //    //Console.WriteLine(">>>>>>>>         " + e.Text + " -" + Char.IsControl(e.Text[0]));
+                //}
 
                 // Если нажали не Backspace, Enter или Esc
                 if (e.Text != "\b" && e.Text != "\r" && e.Text != "\u001b")
@@ -821,7 +826,10 @@ namespace Task_KeyboardSimulator
             //this.textNeedToType.Text = "Lorem ipsum";
             //this.textNeedToType.Text = ("Lorem ipsum123").ToUpper();
             // TODO param StringGeneration(numberOfLetters, stringWithCaseSensitive)
-            this.textNeedToType.Text = this.StringGeneration(3, false);
+            this.textNeedToType.Text
+                = this.StringGeneration(
+                    Convert.ToInt32(this.sliderDifficulty.Value),
+                    this.isGenerateCaseSensitiveString);
 
             this.textUserTyped.Focus();
 
@@ -832,18 +840,36 @@ namespace Task_KeyboardSimulator
         {
             // TODO StringBuilder!?
             // string str = Rand
-
+            Random rand = new Random();
+            //Random randomCase = new Random();
             string randomString = null;
 
             if (IsCaseSensitiveUpper)
             {
+                int tempRandNumber;
 
+                for (int i = 0; i < this.numberOfCharactersInString; i++)
+                {
+                    tempRandNumber = rand.Next(number);
+
+                    switch (rand.Next(2))   // 2 режима (верхнний и нижний регистр)
+                    {
+                        case 0:
+                            randomString += this.characterListLower[rand.Next(number)].ToString();
+                            break;
+                        case 1:
+                            randomString += this.characterListUpper[rand.Next(number)].ToString();
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
             else
             {
                 for (int i = 0; i < this.numberOfCharactersInString; i++)
                 {
-                    randomString += this.characterListLower[random.Next(number)].ToString();
+                    randomString += this.characterListLower[rand.Next(number)].ToString();
                 }
             }
 
@@ -875,6 +901,8 @@ namespace Task_KeyboardSimulator
             this.btnStop.IsEnabled = false;
 
             this.timer.Stop();
+
+            this.ShowMessageWithResults("is stopped");
         }
 
         private void btnStop_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -919,11 +947,25 @@ namespace Task_KeyboardSimulator
             return false;
         }
 
+        private void checkBoxCaseSensitive_Checked(object sender, RoutedEventArgs e)
+        {
+            this.isGenerateCaseSensitiveString = true;
+            //Console.WriteLine(this.checkBoxCaseSensitive.IsChecked);
+        }
 
+        private void checkBoxCaseSensitive_Unchecked(object sender, RoutedEventArgs e)
+        {
+            this.isGenerateCaseSensitiveString = false;
+        }
 
-
-
-
+        /// <summary>
+        /// Обработчик изменения значения слайдера 
+        /// (кол-ва используемых символов для вывода строки).
+        /// </summary>
+        private void sliderDifficulty_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            this.answerDifficulty.Text = Convert.ToInt32(this.sliderDifficulty.Value).ToString();
+        }
 
 
 
@@ -1004,8 +1046,6 @@ namespace Task_KeyboardSimulator
             Console.WriteLine("working" + currentPressedButton.Name);
         }
 
-
-
-
+        
     }
 }

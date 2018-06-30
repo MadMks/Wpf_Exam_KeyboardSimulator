@@ -45,15 +45,21 @@
 
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
                     <TextBlock Text="Difficulty: "/><!--TODO fs-->
-                    <TextBlock Text="0"/> <!--TODO fs fw-->
+                    <TextBlock Name="answerDifficulty" Text="0"/> <!--TODO fs fw-->
                 </StackPanel>
 
-                <Slider Grid.Column="1" /> <!--TODO margin / h v align-->
+                <Slider Grid.Column="1"
+                        Name="sliderDifficulty" Value="2"
+                        SmallChange="1" LargeChange="1"
+                        Minimum="2" Maximum="46"
+                        ValueChanged="sliderDifficulty_ValueChanged"/> <!--TODO margin / h v align-->
 
             </Grid>
 
             <Grid Grid.Column="3">
-                <CheckBox>Case Sensitive</CheckBox><!--TODO fs / v align-->
+                <CheckBox Name="checkBoxCaseSensitive"
+                          Checked="checkBoxCaseSensitive_Checked"
+                          Unchecked="checkBoxCaseSensitive_Unchecked">Case Sensitive</CheckBox><!--TODO fs / v align-->
             </Grid>
             
         </Grid>
@@ -81,7 +87,8 @@
                         Style="{StaticResource styleControlButtons}" Grid.Column="1"
                         Margin="5,0,0,0" IsEnabled="False"
                         Click="btnStop_Click"
-                        IsEnabledChanged="btnStop_IsEnabledChanged">Stop</Button>
+                        IsEnabledChanged="btnStop_IsEnabledChanged"
+                        IsCancel="True">Stop</Button>
             </Grid>
             
         </Grid>
