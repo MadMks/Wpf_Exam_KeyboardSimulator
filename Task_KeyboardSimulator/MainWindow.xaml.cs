@@ -733,7 +733,13 @@ namespace Task_KeyboardSimulator
         {
             if (this.IsTrainingStarted())
             {
-                if (e.Text != "\b" && e.Text != "\r")
+                if (e.Text == "\u001b")
+                {
+                    Console.WriteLine(">>>>>>>>         " + e.Text + " -" + Char.IsControl(e.Text[0]));
+                }
+
+                // Если нажали не Backspace, Enter или Esc
+                if (e.Text != "\b" && e.Text != "\r" && e.Text != "\u001b")
                 {
                     this.AddingLetterToTextUserTyped(e.Text);
                 }
