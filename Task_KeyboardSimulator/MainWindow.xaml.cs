@@ -145,6 +145,12 @@ namespace Task_KeyboardSimulator
             // test
             //this.sliderDifficulty.ValueChanged += SliderDifficulty_ValueChanged;
 
+
+            //for (int i = 0; i < 256; i++)
+                //    Console.WriteLine("Знак unicode N'{0}' является символ {1}", i, (char)i);
+              //  Console.WriteLine((Key)i + " = " + i);
+
+
         }
 
 
@@ -552,12 +558,35 @@ namespace Task_KeyboardSimulator
         /// <param name="e">Параметры события нажатия кнопки.</param>
         private void WorkWithSymbolsInBoxes(KeyEventArgs e)
         {
-            if ((int)e.Key > 34
-                    && (int)e.Key < 115
-                    || (int)e.Key > 117
-                    && (int)e.Key < 151
+            // TODO error - не на все символы проверяю.
+            Console.WriteLine(">  e.Key =" + e.Key);
+            Console.WriteLine(">  Convert.ToChar(e.Key) =" + Convert.ToChar(e.Key));
+            Console.WriteLine(KeyInterop.VirtualKeyFromKey(e.Key));
+
+            //if ((int)e.Key > 34
+            //        && (int)e.Key < 115
+            //        || (int)e.Key > 117
+            //        && (int)e.Key < 151
+            //        || (int)e.Key == 18)
+            //char[] arrChar = this.characterListLower.ToCharArray();
+            ////arrChar.Contains((char)((int)e.Key))
+            //if (this.characterListLower.ToList().Exists(x => x == Convert.ToChar(KeyInterop.VirtualKeyFromKey(e.Key))))
+
+            // Проверка на допустимые вводимые символы.
+            if ((int)e.Key >= 34
+                    && (int)e.Key <= 69
+                    || (int)e.Key == 140
+                    || (int)e.Key == 141
+                    || (int)e.Key == 142
+                    || (int)e.Key == 143
+                    || (int)e.Key == 144
+                    || (int)e.Key == 145
+                    || (int)e.Key == 146
+                    || (int)e.Key >= 149
+                    && (int)e.Key <= 152
                     || (int)e.Key == 18)
             {
+                //Console.WriteLine(">> contains");
                 if (this.textNeedToType.Text.Length > 0)
                 {
                     this.textTyped.Inlines.Add(new Run(this.textNeedToType.Text[0].ToString()));
@@ -745,9 +774,11 @@ namespace Task_KeyboardSimulator
                 //{
                 //    //Console.WriteLine(">>>>>>>>         " + e.Text + " -" + Char.IsControl(e.Text[0]));
                 //}
+                //Console.WriteLine(e.TextComposition.Text);
 
                 // Если нажали не Backspace, Enter или Esc
-                if (e.Text != "\b" && e.Text != "\r" && e.Text != "\u001b")
+                //if (e.Text != "\b" && e.Text != "\r" && e.Text != "\u001b")
+                if (isAddingSymbols)
                 {
                     this.AddingLetterToTextUserTyped(e.Text);
                 }
@@ -796,7 +827,15 @@ namespace Task_KeyboardSimulator
 
         private bool IstheEnteredLetterIsCorrect(string letter)
         {
+            
+
+            //Console.WriteLine("\n==========");
+            //Console.WriteLine("letter[0]=" + letter[0]);
+            //Console.WriteLine("letter=" + letter);
+            //Console.WriteLine("this.textTyped.Text[textTyped.Text.Length - 1]=" + this.textTyped.Text[textTyped.Text.Length - 1]);
+            //Console.WriteLine("this.textNeedToType.Text[0]=" + this.textNeedToType.Text[0]);
             if (letter[0] == this.textTyped.Text[textTyped.Text.Length - 1])
+            //if (letter[0] == this.textNeedToType.Text[0])
             {
                 return true;
             }
@@ -827,6 +866,7 @@ namespace Task_KeyboardSimulator
             this.btnStart.IsEnabled = false;
 
             //this.textNeedToType.Text = "Lorem ipsum";
+            //this.textNeedToType.Text = "`-=[];'\\,./~!@#$%^&*()_+{}:\"|<>?";
             //this.textNeedToType.Text = ("Lorem ipsum123").ToUpper();
             // TODO param StringGeneration(numberOfLetters, stringWithCaseSensitive)
             this.textNeedToType.Text
@@ -903,7 +943,7 @@ namespace Task_KeyboardSimulator
             else
             {
                 // верхний регистр.
-                return this.characterListUpper[rand.Next(quantitySymbol)].ToString();
+                return this.characterListUpper[rand.Next(quantitySymbol)].ToString();   // TODO testing 39 -> 0
             }
         }
 
@@ -925,7 +965,7 @@ namespace Task_KeyboardSimulator
                 }
                 else
                 {
-                    characterString += this.characterListLower[rand.Next(quantitySymbol)].ToString();
+                    characterString += this.characterListLower[rand.Next(quantitySymbol)].ToString();   // TODO testing 39 -> 0
                 }
             }
 
