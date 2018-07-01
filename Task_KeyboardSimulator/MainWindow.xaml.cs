@@ -65,8 +65,9 @@ namespace Task_KeyboardSimulator
         //private string numberAndCharacterList;
 
         // TODO const
-        private int numberOfCharactersInString = 5;
+        private const int NUMBER_OF_CHARACTERS_IN_STRING = 15;
 
+        private const int NUMBER_OF_SPACES_IN_LINE = 6;
 
         private bool isGenerateCaseSensitiveString;
 
@@ -844,20 +845,27 @@ namespace Task_KeyboardSimulator
             //Random randomCase = new Random();
             string randomString = null;
 
+            // TODO список индексов пробелов
+            List<int> listOfIndicesOfSpace = new List<int>();
+            // сгенерировать новые индексы для пробелов
+            this.GenerateIndicesForSpaces(listOfIndicesOfSpace);
+
             if (IsCaseSensitiveUpper)
             {
                 int tempRandNumber;
 
-                for (int i = 0; i < this.numberOfCharactersInString; i++)
+                for (int i = 0; i < NUMBER_OF_CHARACTERS_IN_STRING; i++)
                 {
                     tempRandNumber = rand.Next(number);
 
-                    switch (rand.Next(2))   // 2 режима (верхнний и нижний регистр)
+                    switch (rand.Next(2))   // 2 режима (верхний и нижний регистр)
                     {
                         case 0:
+                            // нижний регистр.
                             randomString += this.characterListLower[rand.Next(number)].ToString();
                             break;
                         case 1:
+                            // верхний регистр.
                             randomString += this.characterListUpper[rand.Next(number)].ToString();
                             break;
                         default:
@@ -867,15 +875,34 @@ namespace Task_KeyboardSimulator
             }
             else
             {
-                for (int i = 0; i < this.numberOfCharactersInString; i++)
+                for (int i = 0; i < NUMBER_OF_CHARACTERS_IN_STRING; i++)
                 {
-                    randomString += this.characterListLower[rand.Next(number)].ToString();
+                    if (listOfIndicesOfSpace.Exists(x => x == i))
+                    {
+                        randomString += " ";
+                    }
+                    else
+                    {
+                        randomString += this.characterListLower[rand.Next(number)].ToString();
+                    }
                 }
             }
 
             
 
             return randomString;
+        }
+
+        private void GenerateIndicesForSpaces(List<int> listOfIndices)
+        {
+            Random random = new Random();
+            Console.WriteLine("list ind spaces");
+            for (int i = 0; i < NUMBER_OF_SPACES_IN_LINE; i++)
+            {
+                // Ставим рандомные пробелы, кроме первого и последнего символа.
+                listOfIndices.Add(random.Next(1, NUMBER_OF_CHARACTERS_IN_STRING - 1));
+                Console.WriteLine(listOfIndices[i]);
+            }
         }
 
         /// <summary>
