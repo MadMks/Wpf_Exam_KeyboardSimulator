@@ -42,7 +42,7 @@ namespace Task_KeyboardSimulator
         /// чтоб не реагировать на Backspace).
         /// </summary>
         private bool isAddingSymbols;
-        private Key lastKeyPressed;
+        //private Key lastKeyPressed;
         private Button currentPressedButton;
         //private List<Button> buttons;
         private bool IsCapsLockIsOn;
@@ -110,14 +110,14 @@ namespace Task_KeyboardSimulator
             this.PreviewKeyDown += MainWindow_PreviewKeyDown;
             this.PreviewKeyUp += MainWindow_PreviewKeyUp;
 
-            this.KeyBindingToThePressingCommand();
+            //this.KeyBindingToThePressingCommand();
 
             
             this.KeyUp += MainWindow_KeyUp;
             this.KeyDown += MainWindow_KeyDown;
 
 
-
+            // TODO рефакторинг
             // Узнаем состояние CapsLock. Запоминаем.
             if (Keyboard.IsKeyToggled(Key.Capital) == true)
             {
@@ -129,7 +129,7 @@ namespace Task_KeyboardSimulator
                 //Console.WriteLine("cap false");
                 this.IsCapsLockIsOn = false;
             }
-
+            // TODO рефакторинг
             if (IsCapsLockIsOn)
             {
                 this.stackPanelButtonsWithShift.Visibility = Visibility.Visible;
@@ -146,24 +146,17 @@ namespace Task_KeyboardSimulator
             //this.sliderDifficulty.ValueChanged += SliderDifficulty_ValueChanged;
 
 
-            for (int i = 0; i < 256; i++)
+            //for (int i = 0; i < 256; i++)
                 //    Console.WriteLine("Знак unicode N'{0}' является символ {1}", i, (char)i);
-                Console.WriteLine((Key)i + " = " + i);
+                //Console.WriteLine((Key)i + " = " + i);
 
 
         }
 
 
-        // test #1
-        //private void SliderDifficulty_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        //{
-        //    //Console.WriteLine(sliderDifficulty.TickFrequency);
-        //    Console.WriteLine(Convert.ToInt32(e.NewValue));
 
 
-        //    //Console.WriteLine(this.checkBoxCaseSensitive.IsChecked);
-        //}
-
+        
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
        {
             // Переключение на символы с помощью Shift. (нажатие).
@@ -184,6 +177,7 @@ namespace Task_KeyboardSimulator
 
         }
 
+        // TODO рефакторинг
         private void MainWindow_PreviewKeyUp(object sender, KeyEventArgs e)
         {
             // Переключение на буквы верхнего регистра с помощью Caps Lock.
@@ -470,22 +464,27 @@ namespace Task_KeyboardSimulator
             if (this.IsTrainingStarted())
             {
                 WorkWithSymbolsInBoxes(e);  // уже переместил букву в верхнем текстБоксе.
-
-                //ErrorChecking();    // проверка на ошибку (при этом в нижнем еще нет буквы!!!!!)
             }
 
+            this.SearchForAPressedVisualButton(e.Key);
 
-            this.lastKeyPressed = e.Key;
+            ButtonPressDown();
+        }
+
+        /// <summary>
+        /// Поиск нажатой визуальной кнопки (соответствующей физической клавише).
+        /// </summary>
+        /// <param name="lastKeyPressed">Последняя нажатая физическая кнопка.</param>
+        private void SearchForAPressedVisualButton(Key lastKeyPressed)
+        {
             if (this.stackPanelButtons.Visibility == Visibility.Visible)
             {
-                this.currentPressedButton = SearchingVisualButtons(this.lastKeyPressed);
+                this.currentPressedButton = SearchingVisualButtons(lastKeyPressed);
             }
             else if (this.stackPanelButtonsWithShift.Visibility == Visibility.Visible)
             {
-                this.currentPressedButton = SearchingVisualButtonsWithShift(this.lastKeyPressed);
+                this.currentPressedButton = SearchingVisualButtonsWithShift(lastKeyPressed);
             }
-            
-            ButtonPressDown();
         }
 
         private void ButtonPressDown()
@@ -499,15 +498,15 @@ namespace Task_KeyboardSimulator
             }
         }
 
-        private void TextUserTyped_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (this.IsTrainingStarted())
-            {
-                ErrorChecking();
+        //private void TextUserTyped_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    if (this.IsTrainingStarted())
+        //    {
+        //        ErrorChecking();
 
-                CheckTypingRequiredNumberOfCharacters();
-            }
-        }
+        //        CheckTypingRequiredNumberOfCharacters();
+        //    }
+        //}
 
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -532,25 +531,27 @@ namespace Task_KeyboardSimulator
         /// <summary>
         /// Проверка ошибок.
         /// </summary>
-        private void ErrorChecking()
-        {
-            if (textUserTyped.Text.Length > 0 
-                && isAddingSymbols)
-            {
-                if (this.textUserTyped.Text[textUserTyped.Text.Length - 1] != this.textTyped.Text[textTyped.Text.Length - 1])
-                {
-                    Run run = new Run(this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1));
-                    run.TextDecorations = this.textUserTyped.TextDecorations;
-                    string letterError = this.textUserTyped.Text.Substring(this.textUserTyped.Text.Length - 1);
-                    this.textUserTyped.Text = null;
-                    this.textUserTyped.Inlines.Add(run);
-                    this.textUserTyped.Inlines.Add(new Run(letterError) { Background = Brushes.Red });
+        //private void ErrorChecking()
+        //{
+        //    if (textUserTyped.Text.Length > 0 
+        //        && isAddingSymbols)
+        //    {
+        //        if (this.textUserTyped.Text[textUserTyped.Text.Length - 1] != this.textTyped.Text[textTyped.Text.Length - 1])
+        //        {
+        //            Run run = new Run(this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1));
+        //            run.TextDecorations = this.textUserTyped.TextDecorations;
+        //            string letterError = this.textUserTyped.Text.Substring(this.textUserTyped.Text.Length - 1);
+        //            this.textUserTyped.Text = null;
+        //            this.textUserTyped.Inlines.Add(run);
+        //            this.textUserTyped.Inlines.Add(new Run(letterError) { Background = Brushes.Red });
 
-                    this.answerNumberOfMistakes.Text = (++numberOfMistakes).ToString();
-                }
-            }
+        //            this.answerNumberOfMistakes.Text = (++numberOfMistakes).ToString();
+        //        }
+        //    }
 
-        }
+        //}
+
+        // TODO рефакторинг
 
         /// <summary>
         /// Работа с символами в текстБоксах
@@ -558,36 +559,8 @@ namespace Task_KeyboardSimulator
         /// <param name="e">Параметры события нажатия кнопки.</param>
         private void WorkWithSymbolsInBoxes(KeyEventArgs e)
         {
-            // TODO error - не на все символы проверяю.
-            Console.WriteLine(">  e.Key =" + e.Key);
-            Console.WriteLine(">  Convert.ToChar(e.Key) =" + Convert.ToChar(e.Key));
-            Console.WriteLine(KeyInterop.VirtualKeyFromKey(e.Key));
-
-            //if ((int)e.Key > 34
-            //        && (int)e.Key < 115
-            //        || (int)e.Key > 117
-            //        && (int)e.Key < 151
-            //        || (int)e.Key == 18)
-            //char[] arrChar = this.characterListLower.ToCharArray();
-            ////arrChar.Contains((char)((int)e.Key))
-            //if (this.characterListLower.ToList().Exists(x => x == Convert.ToChar(KeyInterop.VirtualKeyFromKey(e.Key))))
-
-            // Проверка на допустимые вводимые символы.
-            //if ((int)e.Key >= 34
-            //        && (int)e.Key <= 69
-            //        || (int)e.Key == 140
-            //        || (int)e.Key == 141
-            //        || (int)e.Key == 142
-            //        || (int)e.Key == 143
-            //        || (int)e.Key == 144
-            //        || (int)e.Key == 145
-            //        || (int)e.Key == 146
-            //        || (int)e.Key >= 149
-            //        && (int)e.Key <= 152
-            //        || (int)e.Key == 18)
             if (IsAValidInputKey(e.Key))
             {
-                //Console.WriteLine(">> contains");
                 if (this.textNeedToType.Text.Length > 0)
                 {
                     this.textTyped.Inlines.Add(new Run(this.textNeedToType.Text[0].ToString()));
@@ -638,18 +611,6 @@ namespace Task_KeyboardSimulator
         /// <returns>true если клавиша допустимая для ввода.</returns>
         private bool IsAValidInputKey(Key key)
         {
-            //if ((int)e.Key >= 34
-            //        && (int)e.Key <= 69
-            //        || (int)e.Key == 140
-            //        || (int)e.Key == 141
-            //        || (int)e.Key == 142
-            //        || (int)e.Key == 143
-            //        || (int)e.Key == 144
-            //        || (int)e.Key == 145
-            //        || (int)e.Key == 146
-            //        || (int)e.Key >= 149
-            //        && (int)e.Key <= 152
-            //        || (int)e.Key == 18)
             if (key >= Key.D0 && key <= Key.Z
                 || key >= Key.Oem1 && key <= Key.Oem3
                 || key >= Key.OemOpenBrackets && key <= Key.OemQuotes
@@ -701,8 +662,6 @@ namespace Task_KeyboardSimulator
 
                 this.ShowMessageWithResults("completed");
 
-                // TODO убрать фокус с текстБокса
-                // например на кнопку старт
                 this.btnStart.Focus();
             }
         }
@@ -806,14 +765,6 @@ namespace Task_KeyboardSimulator
         {
             if (this.IsTrainingStarted())
             {
-                //if (e.Text == "\u001b")
-                //{
-                //    //Console.WriteLine(">>>>>>>>         " + e.Text + " -" + Char.IsControl(e.Text[0]));
-                //}
-                //Console.WriteLine(e.TextComposition.Text);
-
-                // Если нажали не Backspace, Enter или Esc
-                //if (e.Text != "\b" && e.Text != "\r" && e.Text != "\u001b")
                 if (isAddingSymbols)
                 {
                     this.AddingLetterToTextUserTyped(e.Text);
@@ -863,26 +814,30 @@ namespace Task_KeyboardSimulator
 
         private bool IstheEnteredLetterIsCorrect(string letter)
         {
-            
-
-            //Console.WriteLine("\n==========");
-            //Console.WriteLine("letter[0]=" + letter[0]);
-            //Console.WriteLine("letter=" + letter);
-            //Console.WriteLine("this.textTyped.Text[textTyped.Text.Length - 1]=" + this.textTyped.Text[textTyped.Text.Length - 1]);
-            //Console.WriteLine("this.textNeedToType.Text[0]=" + this.textNeedToType.Text[0]);
             if (letter[0] == this.textTyped.Text[textTyped.Text.Length - 1])
-            //if (letter[0] == this.textNeedToType.Text[0])
             {
                 return true;
             }
 
-            // TODO method  увеличиваем число допущенных ошибок.
-            this.answerNumberOfMistakes.Text = (++numberOfMistakes).ToString();
+            this.IncreaseInTheNumberOfMistakesMade();
 
-            // TODO method  addErr(index)
+            this.RememberTheIndexErrorLocations();
+            
+            return false;
+        }
+
+        private void RememberTheIndexErrorLocations()
+        {
             this.listOfErrorIndicesForUserTyped.Add(this.textUserTyped.Text.Length);
             this.listOfErrorIndicesForTyped.Add(this.textUserTyped.Text.Length);
-            return false;
+        }
+
+        /// <summary>
+        /// Увеличение числа допущенных ошибок.
+        /// </summary>
+        private void IncreaseInTheNumberOfMistakesMade()
+        {
+            this.answerNumberOfMistakes.Text = (++numberOfMistakes).ToString();
         }
 
         private void AddingLetter(TextBlock textBlock, string letter)
@@ -901,10 +856,6 @@ namespace Task_KeyboardSimulator
 
             this.btnStart.IsEnabled = false;
 
-            //this.textNeedToType.Text = "Lorem ipsum";
-            //this.textNeedToType.Text = "`-=[];'\\,./~!@#$%^&*()_+{}:\"|<>?";
-            //this.textNeedToType.Text = ("Lorem ipsum123").ToUpper();
-            // TODO param StringGeneration(numberOfLetters, stringWithCaseSensitive)
             this.textNeedToType.Text
                 = this.StringGeneration(
                     Convert.ToInt32(this.sliderDifficulty.Value),
@@ -948,13 +899,10 @@ namespace Task_KeyboardSimulator
         /// <returns>Строку рандомных символов в верхнем и нижнем регистрах.</returns>
         private string StringGenerationInBothRegisters(List<int> listOfIndicesOfSpace, int quantitySymbol)
         {
-            //int tempRandNumber;
             string characterString = "";
 
             for (int i = 0; i < NUMBER_OF_CHARACTERS_IN_STRING; i++)
             {
-                //tempRandNumber = rand.Next(quantitySymbol);
-
                 if (listOfIndicesOfSpace.Exists(x => x == i))
                 {
                     characterString += " ";
@@ -979,7 +927,7 @@ namespace Task_KeyboardSimulator
             else
             {
                 // верхний регистр.
-                return this.characterListUpper[rand.Next(quantitySymbol)].ToString();   // TODO testing 39 -> 0
+                return this.characterListUpper[rand.Next(quantitySymbol)].ToString();
             }
         }
 
@@ -1001,7 +949,7 @@ namespace Task_KeyboardSimulator
                 }
                 else
                 {
-                    characterString += this.characterListLower[rand.Next(quantitySymbol)].ToString();   // TODO testing 39 -> 0
+                    characterString += this.characterListLower[rand.Next(quantitySymbol)].ToString();
                 }
             }
 
@@ -1076,8 +1024,6 @@ namespace Task_KeyboardSimulator
             if (this.btnStop.IsEnabled == false)
             {
                 this.btnStart.IsEnabled = true;
-
-                //this.timer.Start();
             }
         }
 
@@ -1086,8 +1032,6 @@ namespace Task_KeyboardSimulator
             if (this.btnStart.IsEnabled == false)
             {
                 this.btnStop.IsEnabled = true;
-
-                //this.timer.Stop();
             }
         }
 
@@ -1116,7 +1060,6 @@ namespace Task_KeyboardSimulator
         private void checkBoxCaseSensitive_Checked(object sender, RoutedEventArgs e)
         {
             this.isGenerateCaseSensitiveString = true;
-            //Console.WriteLine(this.checkBoxCaseSensitive.IsChecked);
         }
 
         private void checkBoxCaseSensitive_Unchecked(object sender, RoutedEventArgs e)
@@ -1124,94 +1067,6 @@ namespace Task_KeyboardSimulator
             this.isGenerateCaseSensitiveString = false;
         }
 
-        /// <summary>
-        /// Обработчик изменения значения слайдера 
-        /// (кол-ва используемых символов для вывода строки).
-        /// </summary>
-        private void sliderDifficulty_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            // HACK поменял на привязку
-            //this.answerDifficulty.Text = Convert.ToInt32(this.sliderDifficulty.Value).ToString();
-        }
-
-
-
-
-
-        // -------------
-
-        /// <summary>
-        /// Привязка кнопок клавиатуры к команде "визуального нажатия".
-        /// </summary>
-        private void KeyBindingToThePressingCommand()
-        {
-            this.CreationOfACommandOfVisualPressing();
-
-            this.BindingEachButtonToTheCommand();
-        }
-
-        private void BindingEachButtonToTheCommand()
-        {
-            KeyBinding keyBinding;
-
-            //for (int i = 34; i < 35; i++)  // TODO define!
-            //{
-            //    keyBinding = new KeyBinding();
-            //    keyBinding.Key = (Key)i;
-            //    keyBinding.Command = WindowCommands.BtnPressRoutedCommand;
-            //    this.InputBindings.Add(keyBinding);
-            //}
-
-            // Физическая привязка.
-            //keyBinding = new KeyBinding();
-            //keyBinding.Key = Key.D1;
-            //keyBinding.Command = WindowCommands.BtnPressRoutedCommand;
-            //this.InputBindings.Add(keyBinding);
-
-            //keyBinding = new KeyBinding();
-            //keyBinding.Key = Key.D2;
-            //keyBinding.Command = WindowCommands.BtnPressRoutedCommand;
-            //this.InputBindings.Add(keyBinding);
-        }
-
-        /// <summary>
-        /// Создание команды "визуального нажатия на кнопку".
-        /// </summary>
-        private void CreationOfACommandOfVisualPressing()
-        {
-            //CommandBinding commandBindingPressBtn = new CommandBinding(WindowCommands.BtnPressRoutedCommand);
-            //commandBindingPressBtn.Executed += CommandBindingPressBtn_Executed;
-            //this.CommandBindings.Add(commandBindingPressBtn);
-        }
-
-        /// <summary>
-        /// Метод обработки команды "визуального нажатия на кнопку".
-        /// </summary>
-        private void CommandBindingPressBtn_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            //typeof(Button).GetMethod(
-            //    "set_IsPressed",
-            //    BindingFlags.Instance | BindingFlags.NonPublic
-            //    ).Invoke((e.Source as Button), new object[] { true });
-            this.currentPressedButton = SearchingVisualButtons(this.lastKeyPressed);
-            currentPressedButton.Focus();
-
-
-
-            // рабочий вариант с тестовой кнопкой - "2"
-            //typeof(Button).GetMethod(
-            //    "set_IsPressed",
-            //    BindingFlags.Instance | BindingFlags.NonPublic
-            //    ).Invoke(btnTests, new object[] { true });
-
-            typeof(Button).GetMethod(
-                "set_IsPressed",
-                BindingFlags.Instance | BindingFlags.NonPublic
-                ).Invoke(currentPressedButton, new object[] { true });
-
-
-            Console.WriteLine("working" + currentPressedButton.Name);
-        }
 
         
     }
