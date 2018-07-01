@@ -146,9 +146,9 @@ namespace Task_KeyboardSimulator
             //this.sliderDifficulty.ValueChanged += SliderDifficulty_ValueChanged;
 
 
-            //for (int i = 0; i < 256; i++)
+            for (int i = 0; i < 256; i++)
                 //    Console.WriteLine("Знак unicode N'{0}' является символ {1}", i, (char)i);
-              //  Console.WriteLine((Key)i + " = " + i);
+                Console.WriteLine((Key)i + " = " + i);
 
 
         }
@@ -573,18 +573,19 @@ namespace Task_KeyboardSimulator
             //if (this.characterListLower.ToList().Exists(x => x == Convert.ToChar(KeyInterop.VirtualKeyFromKey(e.Key))))
 
             // Проверка на допустимые вводимые символы.
-            if ((int)e.Key >= 34
-                    && (int)e.Key <= 69
-                    || (int)e.Key == 140
-                    || (int)e.Key == 141
-                    || (int)e.Key == 142
-                    || (int)e.Key == 143
-                    || (int)e.Key == 144
-                    || (int)e.Key == 145
-                    || (int)e.Key == 146
-                    || (int)e.Key >= 149
-                    && (int)e.Key <= 152
-                    || (int)e.Key == 18)
+            //if ((int)e.Key >= 34
+            //        && (int)e.Key <= 69
+            //        || (int)e.Key == 140
+            //        || (int)e.Key == 141
+            //        || (int)e.Key == 142
+            //        || (int)e.Key == 143
+            //        || (int)e.Key == 144
+            //        || (int)e.Key == 145
+            //        || (int)e.Key == 146
+            //        || (int)e.Key >= 149
+            //        && (int)e.Key <= 152
+            //        || (int)e.Key == 18)
+            if (IsAValidInputKey(e.Key))
             {
                 //Console.WriteLine(">> contains");
                 if (this.textNeedToType.Text.Length > 0)
@@ -598,7 +599,7 @@ namespace Task_KeyboardSimulator
                 isAddingSymbols = true;
             }
             // иначе если Backspace.
-            else if ((int)e.Key == 2)
+            else if (e.Key == Key.Back)
             {
                 // Изменение нижнего ряда (TextBlock).
                 if (this.textUserTyped.Text.Length > 0)
@@ -623,6 +624,41 @@ namespace Task_KeyboardSimulator
                     isAddingSymbols = false;
                 }
             }
+            // Иначе запретим нажатие любых других клавиш (ввод недопустимых символов).
+            else
+            {
+                isAddingSymbols = false;
+            }
+        }
+
+        /// <summary>
+        /// Допустимая клавиша для ввода.
+        /// </summary>
+        /// <param name="key">Нажатая клавиша на физической клавиатуре.</param>
+        /// <returns>true если клавиша допустимая для ввода.</returns>
+        private bool IsAValidInputKey(Key key)
+        {
+            //if ((int)e.Key >= 34
+            //        && (int)e.Key <= 69
+            //        || (int)e.Key == 140
+            //        || (int)e.Key == 141
+            //        || (int)e.Key == 142
+            //        || (int)e.Key == 143
+            //        || (int)e.Key == 144
+            //        || (int)e.Key == 145
+            //        || (int)e.Key == 146
+            //        || (int)e.Key >= 149
+            //        && (int)e.Key <= 152
+            //        || (int)e.Key == 18)
+            if (key >= Key.D0 && key <= Key.Z
+                || key >= Key.Oem1 && key <= Key.Oem3
+                || key >= Key.OemOpenBrackets && key <= Key.OemQuotes
+                || key == Key.Space)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
