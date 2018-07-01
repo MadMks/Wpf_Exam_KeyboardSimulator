@@ -839,12 +839,14 @@ namespace Task_KeyboardSimulator
             this.timer.Start();
         }
 
+        /// <summary>
+        /// Генерация строки рандомных символов.
+        /// </summary>
+        /// <param name="quantitySymbol">Кол-во используемых символов.</param>
+        /// <param name="IsCaseSensitiveUpper">Использовать верхний регистр.</param>
+        /// <returns>Строка рандомных символов.</returns>
         private string StringGeneration(int quantitySymbol, bool IsCaseSensitiveUpper)
         {
-            // TODO StringBuilder!?
-            // string str = Rand
-            //Random rand = new Random();
-            //Random randomCase = new Random();
             string randomString = null;
             List<int> listOfIndicesOfSpace = new List<int>();
 
@@ -852,26 +854,7 @@ namespace Task_KeyboardSimulator
 
             if (IsCaseSensitiveUpper)
             {
-                int tempRandNumber;
-
-                for (int i = 0; i < NUMBER_OF_CHARACTERS_IN_STRING; i++)
-                {
-                    tempRandNumber = rand.Next(quantitySymbol);
-
-                    switch (rand.Next(2))   // 2 режима (верхний и нижний регистр)
-                    {
-                        case 0:
-                            // нижний регистр.
-                            randomString += this.characterListLower[rand.Next(quantitySymbol)].ToString();
-                            break;
-                        case 1:
-                            // верхний регистр.
-                            randomString += this.characterListUpper[rand.Next(quantitySymbol)].ToString();
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                randomString = StringGenerationInBothRegisters(listOfIndicesOfSpace, quantitySymbol);
             }
             else
             {
@@ -879,6 +862,49 @@ namespace Task_KeyboardSimulator
             }
 
             return randomString;
+        }
+
+        /// <summary>
+        /// Генерация строки рандомных символов в обоих регистрах.
+        /// </summary>
+        /// <param name="listOfIndicesOfSpace">Список индексов пробелов.</param>
+        /// <param name="quantitySymbol">Кол-во используемых символов.</param>
+        /// <returns>Строку рандомных символов в верхнем и нижнем регистрах.</returns>
+        private string StringGenerationInBothRegisters(List<int> listOfIndicesOfSpace, int quantitySymbol)
+        {
+            //int tempRandNumber;
+            string characterString = "";
+
+            for (int i = 0; i < NUMBER_OF_CHARACTERS_IN_STRING; i++)
+            {
+                //tempRandNumber = rand.Next(quantitySymbol);
+
+                if (listOfIndicesOfSpace.Exists(x => x == i))
+                {
+                    characterString += " ";
+                }
+                else
+                {
+                    characterString += GeneratingRandomCharacterInUpperOrLowercase(quantitySymbol);
+                }
+            }
+
+            return characterString;
+        }
+
+        private string GeneratingRandomCharacterInUpperOrLowercase(int quantitySymbol)
+        {
+            // 2 режима (верхний и нижний регистр).
+            if (rand.Next(2) == 0)
+            {
+                // нижний регистр.
+                return this.characterListLower[rand.Next(quantitySymbol)].ToString();
+            }
+            else
+            {
+                // верхний регистр.
+                return this.characterListUpper[rand.Next(quantitySymbol)].ToString();
+            }
         }
 
         /// <summary>
@@ -910,7 +936,7 @@ namespace Task_KeyboardSimulator
         {
             Random random = new Random();
             int randIndex;
-            Console.WriteLine("list ind spaces");
+
             for (int i = 0; i < NUMBER_OF_SPACES_IN_LINE; i++)
             {
                 // Получаем рандомные пробелы 
@@ -923,7 +949,6 @@ namespace Task_KeyboardSimulator
                 } while (IsPrevOrNextCellThereIsSpace(listOfIndices, randIndex));
 
                 listOfIndices.Add(randIndex);
-                Console.WriteLine(listOfIndices[i]);
             }
         }
 

@@ -53,7 +53,7 @@
                         Name="sliderDifficulty" Value="2"
                         SmallChange="1" LargeChange="1"
                         TickFrequency="1" IsSnapToTickEnabled="True"
-                        Minimum="2" Maximum="46"
+                        Minimum="2" Maximum="45"
                         ValueChanged="sliderDifficulty_ValueChanged"/> <!--TODO margin / h v align-->
 
             </Grid>
