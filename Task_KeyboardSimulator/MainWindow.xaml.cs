@@ -67,7 +67,7 @@ namespace Task_KeyboardSimulator
         // TODO const
         private const int NUMBER_OF_CHARACTERS_IN_STRING = 15;
 
-        private const int NUMBER_OF_SPACES_IN_LINE = 6;
+        private const int NUMBER_OF_SPACES_IN_LINE = 4;
 
         private bool isGenerateCaseSensitiveString;
 
@@ -760,7 +760,7 @@ namespace Task_KeyboardSimulator
         /// Перекрашивание всех сохраненных ошибок (для одного TextBlock).
         /// </summary>
         /// <param name="textBlock">TextBlock в котором нужно перекрасить ошибки.</param>
-        /// <param name="errorIndices">Список с индексами ошибок для textBlock</param>
+        /// <param name="errorIndices">Список с индексами ошибок для textBlock.</param>
         /// <param name="bgColor">Цвет для закрашивания фона ошибки.</param>
         private void RepaintingAllSavedErrors(TextBlock textBlock, List<int> errorIndices, Brush bgColor)
         {
@@ -896,13 +896,38 @@ namespace Task_KeyboardSimulator
         private void GenerateIndicesForSpaces(List<int> listOfIndices)
         {
             Random random = new Random();
+            int randIndex;
             Console.WriteLine("list ind spaces");
             for (int i = 0; i < NUMBER_OF_SPACES_IN_LINE; i++)
             {
-                // Ставим рандомные пробелы, кроме первого и последнего символа.
-                listOfIndices.Add(random.Next(1, NUMBER_OF_CHARACTERS_IN_STRING - 1));
+                // Получаем рандомные пробелы 
+                // # (доступные индексы кроме первого и последнего символа).
+                // # Индексы пробелов могут повторятся - чтоб кол-во пробелов было разное.
+                // # Пробелы не могут быть рядом.
+                do
+                {
+                    randIndex = random.Next(1, NUMBER_OF_CHARACTERS_IN_STRING - 1);
+                } while (IsPrevOrNextCellThereIsSpace(listOfIndices, randIndex));
+
+                listOfIndices.Add(randIndex);
                 Console.WriteLine(listOfIndices[i]);
             }
+        }
+
+        /// <summary>
+        /// В предыдущей или следующей ячейке есть пробел.
+        /// </summary>
+        /// <param name="listOfIndices">Список индексов.</param>
+        /// <param name="randIndex">Новый рандомный индекс.</param>
+        /// <returns>true если в соседней ячейке (слева или справа) есть пробел.</returns>
+        private bool IsPrevOrNextCellThereIsSpace(List<int> listOfIndices, int randIndex)
+        {
+            if (listOfIndices.Exists(x => x == randIndex - 1) || listOfIndices.Exists(x => x == randIndex + 1))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
