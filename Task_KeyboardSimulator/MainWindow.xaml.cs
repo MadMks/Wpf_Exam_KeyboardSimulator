@@ -71,6 +71,8 @@ namespace Task_KeyboardSimulator
 
         private bool isGenerateCaseSensitiveString;
 
+        Random rand;
+
 
 
         public MainWindow()
@@ -96,7 +98,7 @@ namespace Task_KeyboardSimulator
             this.characterListLower = "fjdksla;ghrueiwoqpvmc,x.z/bn4738291056[]'\\`-=";
             this.characterListUpper = "FJDKSLA:GHRUEIWOQPVMC<X>Z?BN$&#*@(!)%^{}\"|~_+";
 
-            
+            rand = new Random();
 
             //this.isGenerateCaseSensitiveString = 
 
@@ -837,17 +839,15 @@ namespace Task_KeyboardSimulator
             this.timer.Start();
         }
 
-        private string StringGeneration(int number, bool IsCaseSensitiveUpper)
+        private string StringGeneration(int quantitySymbol, bool IsCaseSensitiveUpper)
         {
             // TODO StringBuilder!?
             // string str = Rand
-            Random rand = new Random();
+            //Random rand = new Random();
             //Random randomCase = new Random();
             string randomString = null;
-
-            // TODO список индексов пробелов
             List<int> listOfIndicesOfSpace = new List<int>();
-            // сгенерировать новые индексы для пробелов
+
             this.GenerateIndicesForSpaces(listOfIndicesOfSpace);
 
             if (IsCaseSensitiveUpper)
@@ -856,17 +856,17 @@ namespace Task_KeyboardSimulator
 
                 for (int i = 0; i < NUMBER_OF_CHARACTERS_IN_STRING; i++)
                 {
-                    tempRandNumber = rand.Next(number);
+                    tempRandNumber = rand.Next(quantitySymbol);
 
                     switch (rand.Next(2))   // 2 режима (верхний и нижний регистр)
                     {
                         case 0:
                             // нижний регистр.
-                            randomString += this.characterListLower[rand.Next(number)].ToString();
+                            randomString += this.characterListLower[rand.Next(quantitySymbol)].ToString();
                             break;
                         case 1:
                             // верхний регистр.
-                            randomString += this.characterListUpper[rand.Next(number)].ToString();
+                            randomString += this.characterListUpper[rand.Next(quantitySymbol)].ToString();
                             break;
                         default:
                             break;
@@ -875,22 +875,35 @@ namespace Task_KeyboardSimulator
             }
             else
             {
-                for (int i = 0; i < NUMBER_OF_CHARACTERS_IN_STRING; i++)
+                randomString = StringGenerationOnlyInLowercase(listOfIndicesOfSpace, quantitySymbol);  
+            }
+
+            return randomString;
+        }
+
+        /// <summary>
+        /// Генерация строки рандомных символов только в нижнем регистре.
+        /// </summary>
+        /// <param name="listOfIndicesOfSpace">Список индексов пробелов.</param>
+        /// <param name="quantitySymbol">кол-во используемых символов.</param>
+        /// <returns>Строку рандомных символов в нижнем регистре.</returns>
+        private string StringGenerationOnlyInLowercase(List<int> listOfIndicesOfSpace, int quantitySymbol)
+        {
+            string characterString = "";
+
+            for (int i = 0; i < NUMBER_OF_CHARACTERS_IN_STRING; i++)
+            {
+                if (listOfIndicesOfSpace.Exists(x => x == i))
                 {
-                    if (listOfIndicesOfSpace.Exists(x => x == i))
-                    {
-                        randomString += " ";
-                    }
-                    else
-                    {
-                        randomString += this.characterListLower[rand.Next(number)].ToString();
-                    }
+                    characterString += " ";
+                }
+                else
+                {
+                    characterString += this.characterListLower[rand.Next(quantitySymbol)].ToString();
                 }
             }
 
-            
-
-            return randomString;
+            return characterString;
         }
 
         private void GenerateIndicesForSpaces(List<int> listOfIndices)
@@ -917,7 +930,7 @@ namespace Task_KeyboardSimulator
         /// <summary>
         /// В предыдущей или следующей ячейке есть пробел.
         /// </summary>
-        /// <param name="listOfIndices">Список индексов.</param>
+        /// <param name="listOfIndices">Список индексов пробелов.</param>
         /// <param name="randIndex">Новый рандомный индекс.</param>
         /// <returns>true если в соседней ячейке (слева или справа) есть пробел.</returns>
         private bool IsPrevOrNextCellThereIsSpace(List<int> listOfIndices, int randIndex)
