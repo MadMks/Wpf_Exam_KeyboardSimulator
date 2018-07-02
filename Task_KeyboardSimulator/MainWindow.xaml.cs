@@ -551,56 +551,76 @@ namespace Task_KeyboardSimulator
 
         //}
 
-        // TODO рефакторинг
+
 
         /// <summary>
-        /// Работа с символами в текстБоксах
+        /// Работа с символами в текстБлоках.
         /// </summary>
         /// <param name="e">Параметры события нажатия кнопки.</param>
         private void WorkWithSymbolsInBoxes(KeyEventArgs e)
         {
             if (IsAValidInputKey(e.Key))
             {
-                if (this.textNeedToType.Text.Length > 0)
-                {
-                    this.textTyped.Inlines.Add(new Run(this.textNeedToType.Text[0].ToString()));
-                    string tempStrNeedToType = this.textNeedToType.Text.Substring(1);
-                    this.textNeedToType.Inlines.Clear();
-                    this.textNeedToType.Inlines.Add(tempStrNeedToType);
-                }
+                this.MoveOneCharacterInTheTopLine();
 
                 isAddingSymbols = true;
             }
-            // иначе если Backspace.
             else if (e.Key == Key.Back)
             {
-                // Изменение нижнего ряда (TextBlock).
-                if (this.textUserTyped.Text.Length > 0)
-                {
-                    // При исправлении ошибки - убираем пометку (красный фон, для нижнего textBlock).
-                    if (listOfErrorIndicesForUserTyped.Exists(x => x == this.textUserTyped.Text.Length - 1))
-                    {
-                        this.listOfErrorIndicesForUserTyped.RemoveAt(this.listOfErrorIndicesForUserTyped.FindIndex(x => x == this.textUserTyped.Text.Length - 1));
-                    }
+                DeleteTheLastCharacterInTheBottomLine();
 
-                    this.RepaintingAllStoredErrorsWithoutLastLetter(this.textUserTyped, this.listOfErrorIndicesForUserTyped, Brushes.Red);
-                }
+                DeleteTheLastCharacterInTheTopLine();
 
-                // Изменения верхнего ряда (текстБоксов).
-                if (this.textTyped.Text.Length > 0)
-                {
-                    // Удаление последнего символа. // TODO method
-                    this.textNeedToType.Text = String.Concat(this.textTyped.Text[textTyped.Text.Length - 1], this.textNeedToType.Text);
-
-                    this.RepaintingAllStoredErrorsWithoutLastLetter(this.textTyped, this.listOfErrorIndicesForTyped, Brushes.Orange);
-
-                    isAddingSymbols = false;
-                }
+                isAddingSymbols = false;
             }
             // Иначе запретим нажатие любых других клавиш (ввод недопустимых символов).
             else
             {
                 isAddingSymbols = false;
+            }
+        }
+
+        /// <summary>
+        /// Удаление последнего символа в верхней строке.
+        /// </summary>
+        private void DeleteTheLastCharacterInTheTopLine()
+        {
+            if (this.textTyped.Text.Length > 0)
+            {
+                this.textNeedToType.Text = String.Concat(this.textTyped.Text[textTyped.Text.Length - 1], this.textNeedToType.Text);
+
+                this.RepaintingAllStoredErrorsWithoutLastLetter(this.textTyped, this.listOfErrorIndicesForTyped, Brushes.Orange);
+            }
+        }
+
+        /// <summary>
+        /// Удаление последнего символа в нижней строке.
+        /// </summary>
+        private void DeleteTheLastCharacterInTheBottomLine()
+        {
+            if (this.textUserTyped.Text.Length > 0)
+            {
+                // При исправлении ошибки - убираем пометку (красный фон, для нижнего textBlock).
+                if (listOfErrorIndicesForUserTyped.Exists(x => x == this.textUserTyped.Text.Length - 1))
+                {
+                    this.listOfErrorIndicesForUserTyped.RemoveAt(this.listOfErrorIndicesForUserTyped.FindIndex(x => x == this.textUserTyped.Text.Length - 1));
+                }
+
+                this.RepaintingAllStoredErrorsWithoutLastLetter(this.textUserTyped, this.listOfErrorIndicesForUserTyped, Brushes.Red);
+            }
+        }
+
+        /// <summary>
+        /// Перемещение одного символа в верхней строке.
+        /// </summary>
+        private void MoveOneCharacterInTheTopLine()
+        {
+            if (this.textNeedToType.Text.Length > 0)
+            {
+                this.textTyped.Inlines.Add(new Run(this.textNeedToType.Text[0].ToString()));
+                string tempStrNeedToType = this.textNeedToType.Text.Substring(1);
+                this.textNeedToType.Inlines.Clear();
+                this.textNeedToType.Inlines.Add(tempStrNeedToType);
             }
         }
 
