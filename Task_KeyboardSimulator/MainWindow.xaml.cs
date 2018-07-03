@@ -137,13 +137,13 @@ namespace Task_KeyboardSimulator
             // TODO рефакторинг
             if (IsCapsLockIsOn)
             {
-                this.stackPanelButtonsWithShift.Visibility = Visibility.Visible;
-                this.stackPanelButtons.Visibility = Visibility.Collapsed;
+                this.blockButtonsWithShift.Visibility = Visibility.Visible;
+                this.blockButtons.Visibility = Visibility.Collapsed;
             }
             else
             {
-                this.stackPanelButtonsWithShift.Visibility = Visibility.Collapsed;
-                this.stackPanelButtons.Visibility = Visibility.Visible;
+                this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
+                this.blockButtons.Visibility = Visibility.Visible;
             }
 
 
@@ -170,13 +170,13 @@ namespace Task_KeyboardSimulator
                 if (this.IsCapsLockIsOn)
                 {
                     // Нажимаем шифт.
-                    this.stackPanelButtonsWithShift.Visibility = Visibility.Collapsed;
-                    this.stackPanelButtons.Visibility = Visibility.Visible;
+                    this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
+                    this.blockButtons.Visibility = Visibility.Visible;
                 }
                 else if (!this.IsCapsLockIsOn)
                 {
-                    this.stackPanelButtonsWithShift.Visibility = Visibility.Visible;
-                    this.stackPanelButtons.Visibility = Visibility.Collapsed;
+                    this.blockButtonsWithShift.Visibility = Visibility.Visible;
+                    this.blockButtons.Visibility = Visibility.Collapsed;
                 }
             }
 
@@ -199,13 +199,13 @@ namespace Task_KeyboardSimulator
 
                 if (IsCapsLockIsOn)
                 {
-                    this.stackPanelButtonsWithShift.Visibility = Visibility.Visible;
-                    this.stackPanelButtons.Visibility = Visibility.Collapsed;
+                    this.blockButtonsWithShift.Visibility = Visibility.Visible;
+                    this.blockButtons.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
-                    this.stackPanelButtonsWithShift.Visibility = Visibility.Collapsed;
-                    this.stackPanelButtons.Visibility = Visibility.Visible;
+                    this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
+                    this.blockButtons.Visibility = Visibility.Visible;
                 }
             }
 
@@ -218,10 +218,12 @@ namespace Task_KeyboardSimulator
         {
             if (button != null)
             {
-                typeof(Button).GetMethod(
-                    "set_IsPressed",
-                    BindingFlags.Instance | BindingFlags.NonPublic
-                    ).Invoke(button, new object[] { false });
+                //typeof(Button).GetMethod(
+                //    "set_IsPressed",
+                //    BindingFlags.Instance | BindingFlags.NonPublic
+                //    ).Invoke(button, new object[] { false });
+
+                (button as ButtonAndKey).IsKeyPressed = false;
             }
         }
 
@@ -233,13 +235,13 @@ namespace Task_KeyboardSimulator
                 if (this.IsCapsLockIsOn)
                 {
                     // Отпускаем шифт.
-                    this.stackPanelButtonsWithShift.Visibility = Visibility.Visible;
-                    this.stackPanelButtons.Visibility = Visibility.Collapsed;
+                    this.blockButtonsWithShift.Visibility = Visibility.Visible;
+                    this.blockButtons.Visibility = Visibility.Collapsed;
                 }
                 else if (!this.IsCapsLockIsOn)
                 {
-                    this.stackPanelButtonsWithShift.Visibility = Visibility.Collapsed;
-                    this.stackPanelButtons.Visibility = Visibility.Visible;
+                    this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
+                    this.blockButtons.Visibility = Visibility.Visible;
                 }
             }
         }
@@ -561,7 +563,7 @@ namespace Task_KeyboardSimulator
 
             this.SearchForAPressedVisualButton(e.Key);
 
-            ButtonPressDown();
+            this.ButtonPressDown();
         }
 
         /// <summary>
@@ -570,11 +572,11 @@ namespace Task_KeyboardSimulator
         /// <param name="lastKeyPressed">Последняя нажатая физическая кнопка.</param>
         private void SearchForAPressedVisualButton(Key lastKeyPressed)
         {
-            if (this.stackPanelButtons.Visibility == Visibility.Visible)
+            if (this.blockButtons.Visibility == Visibility.Visible)
             {
                 this.currentPressedButton = SearchingVisualButtons(lastKeyPressed);
             }
-            else if (this.stackPanelButtonsWithShift.Visibility == Visibility.Visible)
+            else if (this.blockButtonsWithShift.Visibility == Visibility.Visible)
             {
                 this.currentPressedButton = SearchingVisualButtonsWithShift(lastKeyPressed);
             }
@@ -584,10 +586,12 @@ namespace Task_KeyboardSimulator
         {
             if (currentPressedButton != null)
             {
-                typeof(Button).GetMethod(
-                    "set_IsPressed",
-                    BindingFlags.Instance | BindingFlags.NonPublic
-                    ).Invoke(currentPressedButton, new object[] { true });
+                //typeof(Button).GetMethod(
+                //    "set_IsPressed",
+                //    BindingFlags.Instance | BindingFlags.NonPublic
+                //    ).Invoke(currentPressedButton, new object[] { true });
+                
+                (currentPressedButton as ButtonAndKey).IsKeyPressed = true;
             }
         }
 
@@ -1053,11 +1057,15 @@ namespace Task_KeyboardSimulator
         private void checkBoxCaseSensitive_Checked(object sender, RoutedEventArgs e)
         {
             this.isGenerateCaseSensitiveString = true;
+
+            //this.checkBoxCaseSensitive.focus
         }
 
         private void checkBoxCaseSensitive_Unchecked(object sender, RoutedEventArgs e)
         {
             this.isGenerateCaseSensitiveString = false;
+
+            //this.textUserTyped.Focus();
         }
 
 
