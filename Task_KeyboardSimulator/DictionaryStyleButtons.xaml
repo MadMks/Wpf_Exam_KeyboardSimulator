@@ -27,7 +27,8 @@
                     Margin="{TemplateBinding Margin}">
             <Grid>
                 <TextBlock HorizontalAlignment="Center"
-                           Foreground="{TemplateBinding Foreground}">
+                           Foreground="{TemplateBinding Foreground}"
+                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                         <ContentPresenter></ContentPresenter>
                 </TextBlock>
             </Grid>
@@ -75,6 +76,7 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style.Setters>
         <Style.Triggers>
             <Trigger Property="IsPressed" Value="True">
