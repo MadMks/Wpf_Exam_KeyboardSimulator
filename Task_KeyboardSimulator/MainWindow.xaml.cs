@@ -20,8 +20,13 @@ using System.Windows.Threading;
 // TODO #1 задержка визуального нажатия Шифта. Из-за визуального нажатия на клавиатуре нижнего регистра,
         // которая в данный момент Visibility.Collapsed (в данный момент не видно).
         // Визуальное нажатие появляется после сработки зажатия Шифта (RepeatButton).
-// TODO #2 добавить 3-ю клавиатуру для Caps Lock (нажатие Caps отличается от нажатия Shift).
-// TODO #3 Добавить все Button в одну коллекцию (одна коллекция для каждой клавиатуры).
+// TODO #2 добавить 3-ю клавиатуру для Caps Lock 
+        // (нажатие Caps отличается от нажатия Shift).
+        // При нажатии Caps все буквы в верхнем регистре, а цифры остаются неизменными.
+// TODO #3 добавить 4-ю клавиатуру для Shift при включенном Caps.
+        // При включенном Caps и последующем нажатии Shift,
+        // буквы становятся в маленьком регистре, а цифры меняются на символы.
+// TODO #4 Добавить все Button в одну коллекцию (одна коллекция для каждой клавиатуры).
         // Искать кнопки в коллекции (будет меньше кода).
 
 
@@ -459,6 +464,94 @@ namespace Task_KeyboardSimulator
             return null;
         }
 
+        /// <summary>
+        /// Переключение визуальных кнопок в состояние без нажатия.
+        /// </summary>
+        private void SwitchingVisualButtonsToStateWithoutPressing()
+        {
+            // HACK много одинакового кода #2. -> заменить на: поместить все кнопки в одну коллекцию.
+            #region ButtonSearchAndPressUp
+            // 1 ряд
+            foreach (Button button in this.firstRowOfButtons.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(firstRowBackspaceButton);
+            // 2 ряд
+            this.ButtonPressUp(secondRowTabButton);
+            foreach (Button button in this.secondRowOfButtons.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(secondRowBackslashButton);
+            // 3 ряд
+            this.ButtonPressUp(thirdRowCapitalButton);
+            foreach (Button button in this.thirdRowOfButtons.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(thirdRowReturnButton);
+            // 4 ряд
+            this.ButtonPressUp(fourthRowLShiftButton);
+            foreach (Button button in this.fourthRowOfButtons.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(fourthRowRShiftButton);
+            // 5 ряд
+            foreach (Button button in this.fifthRowLeftButtons.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(fifthRowSpaceButton);
+            foreach (Button button in this.fifthRowRightButtons.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            #endregion
+
+            // HACK много одинакового кода #4. -> заменить на: поместить все кнопки в одну коллекцию.
+            #region ButtonSearchAndPressUpSecondKeyboard
+            // 1 ряд
+            foreach (Button button in this.firstRowOfButtonsWithShift.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(firstRowBackspaceButtonWithShift);
+            // 2 ряд
+            this.ButtonPressUp(secondRowTabButtonWithShift);
+            foreach (Button button in this.secondRowOfButtonsWithShift.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(secondRowBackslashButtonWithShift);
+            // 3 ряд
+            this.ButtonPressUp(thirdRowCapitalButtonWithShift);
+            foreach (Button button in this.thirdRowOfButtonsWithShift.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(thirdRowReturnButtonWithShift);
+            // 4 ряд
+            this.ButtonPressUp(fourthRowLShiftButtonWithShift);
+            foreach (Button button in this.fourthRowOfButtonsWithShift.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(fourthRowRShiftButtonWithShift);
+            // 5 ряд
+            foreach (Button button in this.fifthRowLeftButtonsWithShift.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            this.ButtonPressUp(fifthRowSpaceButtonWithShift);
+            foreach (Button button in this.fifthRowRightButtonsWithShift.Children)
+            {
+                this.ButtonPressUp(button);
+            }
+            #endregion
+        }
+
         private void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (this.IsTrainingStarted())
@@ -498,15 +591,6 @@ namespace Task_KeyboardSimulator
             }
         }
 
-        //private void TextUserTyped_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    if (this.IsTrainingStarted())
-        //    {
-        //        ErrorChecking();
-
-        //        CheckTypingRequiredNumberOfCharacters();
-        //    }
-        //}
 
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -525,31 +609,6 @@ namespace Task_KeyboardSimulator
 
             return numberOfCharsMin.ToString();
         }
-
-
-
-        /// <summary>
-        /// Проверка ошибок.
-        /// </summary>
-        //private void ErrorChecking()
-        //{
-        //    if (textUserTyped.Text.Length > 0 
-        //        && isAddingSymbols)
-        //    {
-        //        if (this.textUserTyped.Text[textUserTyped.Text.Length - 1] != this.textTyped.Text[textTyped.Text.Length - 1])
-        //        {
-        //            Run run = new Run(this.textUserTyped.Text.Substring(0, this.textUserTyped.Text.Length - 1));
-        //            run.TextDecorations = this.textUserTyped.TextDecorations;
-        //            string letterError = this.textUserTyped.Text.Substring(this.textUserTyped.Text.Length - 1);
-        //            this.textUserTyped.Text = null;
-        //            this.textUserTyped.Inlines.Add(run);
-        //            this.textUserTyped.Inlines.Add(new Run(letterError) { Background = Brushes.Red });
-
-        //            this.answerNumberOfMistakes.Text = (++numberOfMistakes).ToString();
-        //        }
-        //    }
-
-        //}
 
 
 
@@ -693,93 +752,7 @@ namespace Task_KeyboardSimulator
                 $"Training {trainingState}");
         }
 
-        /// <summary>
-        /// Переключение визуальных кнопок в состояние без нажатия.
-        /// </summary>
-        private void SwitchingVisualButtonsToStateWithoutPressing()
-        {
-            // HACK много одинакового кода #2. -> заменить на: поместить все кнопки в одну коллекцию.
-            #region ButtonSearchAndPressUp
-            // 1 ряд
-            foreach (Button button in this.firstRowOfButtons.Children)
-            {
-                this.ButtonPressUp(button);
-            }
-            this.ButtonPressUp(firstRowBackspaceButton);
-            // 2 ряд
-            this.ButtonPressUp(secondRowTabButton);
-            foreach (Button button in this.secondRowOfButtons.Children)
-            {
-                this.ButtonPressUp(button);
-            }
-            this.ButtonPressUp(secondRowBackslashButton);
-            // 3 ряд
-            this.ButtonPressUp(thirdRowCapitalButton);
-            foreach (Button button in this.thirdRowOfButtons.Children)
-            {
-                this.ButtonPressUp(button);
-            }
-            this.ButtonPressUp(thirdRowReturnButton);
-            // 4 ряд
-            this.ButtonPressUp(fourthRowLShiftButton);
-            foreach (Button button in this.fourthRowOfButtons.Children)
-            {
-                this.ButtonPressUp(button);
-            }
-            this.ButtonPressUp(fourthRowRShiftButton);
-            // 5 ряд
-            foreach (Button button in this.fifthRowLeftButtons.Children)
-            {
-                this.ButtonPressUp(button);
-            }
-            this.ButtonPressUp(fifthRowSpaceButton);
-            foreach (Button button in this.fifthRowRightButtons.Children)
-            {
-                this.ButtonPressUp(button);
-            }
-            #endregion
-
-            // HACK много одинакового кода #4. -> заменить на: поместить все кнопки в одну коллекцию.
-            #region ButtonSearchAndPressUpSecondKeyboard
-            // 1 ряд
-            foreach (Button button in this.firstRowOfButtonsWithShift.Children)
-            {
-                this.ButtonPressUp(button);
-            }
-            this.ButtonPressUp(firstRowBackspaceButtonWithShift);
-            // 2 ряд
-            this.ButtonPressUp(secondRowTabButtonWithShift);
-            foreach (Button button in this.secondRowOfButtonsWithShift.Children)
-            {
-                this.ButtonPressUp(button);
-            }
-            this.ButtonPressUp(secondRowBackslashButtonWithShift);
-            // 3 ряд
-            this.ButtonPressUp(thirdRowCapitalButtonWithShift);
-            foreach (Button button in this.thirdRowOfButtonsWithShift.Children)
-            {
-                this.ButtonPressUp(button);
-            }
-            this.ButtonPressUp(thirdRowReturnButtonWithShift);
-            // 4 ряд
-            this.ButtonPressUp(fourthRowLShiftButtonWithShift);
-            foreach (Button button in this.fourthRowOfButtonsWithShift.Children)
-            {
-                this.ButtonPressUp(button);
-            }
-            this.ButtonPressUp(fourthRowRShiftButtonWithShift);
-            // 5 ряд
-            foreach (Button button in this.fifthRowLeftButtonsWithShift.Children)
-            {
-                this.ButtonPressUp(button);
-            }
-            this.ButtonPressUp(fifthRowSpaceButtonWithShift);
-            foreach (Button button in this.fifthRowRightButtonsWithShift.Children)
-            {
-                this.ButtonPressUp(button);
-            }
-            #endregion
-        }
+        
 
         private void MainWindow_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {

@@ -14,7 +14,7 @@
                                Padding="{TemplateBinding Padding}"
                                FontSize="{TemplateBinding FontSize}"
                                VerticalAlignment="{TemplateBinding VerticalAlignment}">
-                        <ContentPresenter></ContentPresenter>
+                    <ContentPresenter></ContentPresenter>
                 </TextBlock>
             </Grid>
         </Border>
@@ -46,6 +46,7 @@
             <Setter Property="Padding" Value="5"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="30"/>
+            <!--<Setter Property="VerticalAlignment" Value="Stretch"/>-->
         </Style.Setters>
         <Style.Triggers>
             <Trigger Property="IsPressed" Value="True">
@@ -125,4 +126,19 @@
         <Setter Property="Background" Value="#FF7FF077"/>
     </Style>
 
+    
+    <!--ТекстБлоки (информационные)-->
+    <Style TargetType="TextBlock" x:Key="styleInfoTextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize" Value="15"/>
+        </Style.Setters>
+    </Style>
+
+    <!--ТекстБлоки (значения/результаты)-->
+    <Style TargetType="TextBlock" x:Key="styleValueTextBlock" BasedOn="{StaticResource styleInfoTextBlock}">
+        <Style.Setters>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style.Setters>
+    </Style>
+    
 </ResourceDictionary>

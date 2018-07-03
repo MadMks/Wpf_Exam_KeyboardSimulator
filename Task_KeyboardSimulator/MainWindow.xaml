@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Task_KeyboardSimulator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        MinWidth="800" MinHeight="440">
+        Title="Keyboard Trainer" Height="450" Width="800"
+        MinWidth="800" MinHeight="450">
     <Grid>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <!--Первый ряд-->
@@ -27,14 +27,14 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <TextBlock Text="Speed: "/><!--TODO fs-->
-                <TextBlock Name="answerNumberOfCharsMin" Text="0"/> <!--TODO fs fw--> 
-                <TextBlock Text=" chars/min"/> <!--TODO fs-->
+                <TextBlock Style="{StaticResource styleInfoTextBlock}" Text="Speed: "/><!--TODO fs-->
+                <TextBlock Style="{StaticResource styleValueTextBlock}" Name="answerNumberOfCharsMin" Text="0"/> <!--TODO fs fw-->
+                <TextBlock Style="{StaticResource styleInfoTextBlock}" Text=" chars/min"/> <!--TODO fs-->
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <TextBlock Text="Fails: "/><!--TODO fs-->
-                <TextBlock Name="answerNumberOfMistakes" Text="0"/><!--TODO fs fw-->
+                <TextBlock Style="{StaticResource styleInfoTextBlock}" Text="Fails: "/><!--TODO fs-->
+                <TextBlock Style="{StaticResource styleValueTextBlock}" Name="answerNumberOfMistakes" Text="0"/><!--TODO fs fw-->
             </StackPanel>
 
             <Grid Grid.Column="2">
@@ -44,13 +44,14 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
-                    <TextBlock Text="Difficulty: "/><!--TODO fs-->
-                    <TextBlock Name="answerDifficulty" 
+                    <TextBlock Style="{StaticResource styleInfoTextBlock}" Text="Difficulty: "/><!--TODO fs-->
+                    <TextBlock Style="{StaticResource styleValueTextBlock}" Name="answerDifficulty" 
                                Text="{Binding ElementName=sliderDifficulty, Path=Value}"/> <!--TODO fs fw-->
                 </StackPanel>
 
                 <Slider Grid.Column="1"
                         Name="sliderDifficulty" Value="2"
+                        Margin="10,0,10,0"
                         SmallChange="1" LargeChange="1"
                         TickFrequency="1" IsSnapToTickEnabled="True"
                         Minimum="2" Maximum="45"/> <!--TODO margin / h v align-->
@@ -60,7 +61,8 @@
             <Grid Grid.Column="3">
                 <CheckBox Name="checkBoxCaseSensitive"
                           Checked="checkBoxCaseSensitive_Checked"
-                          Unchecked="checkBoxCaseSensitive_Unchecked">Case Sensitive</CheckBox><!--TODO fs / v align-->
+                          Unchecked="checkBoxCaseSensitive_Unchecked"
+                          FontSize="15">Case Sensitive</CheckBox><!--TODO fs / v align-->
             </Grid>
             
         </Grid>
@@ -290,7 +292,8 @@
             </StackPanel>
             
             <!--Обычные символы - панель по умолчанию-->
-            <StackPanel Name="stackPanelButtons" Visibility="Visible">
+            <UniformGrid Columns="1" Rows="5"
+                         Name="stackPanelButtons" Visibility="Visible">
                 <!--Первый ряд кнопок-->
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -305,7 +308,7 @@
                                 Command="{x:Static local:WindowCommands.BtnPressRoutedCommand}">1</Button>-->
                         <Button Style="{StaticResource styleLeftHandFifthFinger}" Tag="D1">1</Button>
                         <Button Style="{StaticResource styleLeftHandFifthFinger}" Tag="D2">2</Button>
-                        
+
                         <Button Style="{StaticResource styleLeftHandFourthFinger}" Tag="D3">3</Button>
                         <Button Style="{StaticResource styleLeftHandThirdFinger}" Tag="D4">4</Button>
                         <Button Style="{StaticResource styleLeftHandSecondFinger}" Tag="D5">5</Button>
@@ -321,9 +324,9 @@
 
                     <Button Grid.Column="1" Style="{StaticResource styleModifierKeys}"
                             Name="firstRowBackspaceButton" Tag="Back">Backspace</Button>
-                    
+
                 </Grid>
-                
+
                 <!--Второй ряд кнопок-->
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -352,12 +355,12 @@
                         <Button Style="{StaticResource styleRightHandFifthFinger}" Tag="Oem6">]</Button>
 
                     </UniformGrid>
-                    
+
                     <Button Grid.Column="2" Style="{StaticResource styleRightHandFifthFinger}"
                             Name="secondRowBackslashButton" Tag="Oem5">\</Button>
-                    
+
                 </Grid>
-                
+
                 <!--Третий ряд кнопок-->
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -390,7 +393,7 @@
                             Name="thirdRowReturnButton" Tag="Return">Enter</Button>
 
                 </Grid>
-                
+
                 <!--Четвертый ряд кнопок-->
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -421,7 +424,7 @@
                             Name="fourthRowRShiftButton" Tag="RightShift">Shift</Button>
 
                 </Grid>
-                
+
                 <!--Пятый ряд кнопок-->
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -446,9 +449,9 @@
                     </UniformGrid>
 
                 </Grid>
-                
-            </StackPanel>
-            
+
+            </UniformGrid>
+
         </Grid>
         
     </Grid>
