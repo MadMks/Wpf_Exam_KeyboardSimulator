@@ -27,14 +27,14 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <TextBlock Style="{StaticResource styleInfoTextBlock}" Text="Speed: "/><!--TODO fs-->
-                <TextBlock Style="{StaticResource styleValueTextBlock}" Name="answerNumberOfCharsMin" Text="0"/> <!--TODO fs fw-->
-                <TextBlock Style="{StaticResource styleInfoTextBlock}" Text=" chars/min"/> <!--TODO fs-->
+                <TextBlock Style="{StaticResource styleInfoTextBlock}" Text="Speed: "/>
+                <TextBlock Style="{StaticResource styleValueTextBlock}" Name="answerNumberOfCharsMin" Text="0"/>
+                <TextBlock Style="{StaticResource styleInfoTextBlock}" Text=" chars/min"/>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <TextBlock Style="{StaticResource styleInfoTextBlock}" Text="Fails: "/><!--TODO fs-->
-                <TextBlock Style="{StaticResource styleValueTextBlock}" Name="answerNumberOfMistakes" Text="0"/><!--TODO fs fw-->
+                <TextBlock Style="{StaticResource styleInfoTextBlock}" Text="Fails: "/>
+                <TextBlock Style="{StaticResource styleValueTextBlock}" Name="answerNumberOfMistakes" Text="0"/>
             </StackPanel>
 
             <Grid Grid.Column="2">
@@ -44,9 +44,9 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource styleInfoTextBlock}" Text="Difficulty: "/><!--TODO fs-->
+                    <TextBlock Style="{StaticResource styleInfoTextBlock}" Text="Difficulty: "/>
                     <TextBlock Style="{StaticResource styleValueTextBlock}" Name="answerDifficulty" 
-                               Text="{Binding ElementName=sliderDifficulty, Path=Value}"/> <!--TODO fs fw-->
+                               Text="{Binding ElementName=sliderDifficulty, Path=Value}"/>
                 </StackPanel>
 
                 <Slider Grid.Column="1"
