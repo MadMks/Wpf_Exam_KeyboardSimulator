@@ -11,9 +11,8 @@
                     Margin="{TemplateBinding Margin}">
             <Grid>
                 <TextBlock HorizontalAlignment="Center"
-                               Padding="{TemplateBinding Padding}"
                                FontSize="{TemplateBinding FontSize}"
-                               VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                     <ContentPresenter></ContentPresenter>
                 </TextBlock>
             </Grid>
@@ -43,8 +42,8 @@
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="Margin" Value="2"/>
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
+            <!--<Setter Property="Padding" Value="5"/>-->
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="30"/>
             <!--<Setter Property="VerticalAlignment" Value="Stretch"/>-->
         </Style.Setters>
