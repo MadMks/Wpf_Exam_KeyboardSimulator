@@ -751,34 +751,36 @@ namespace Task_KeyboardSimulator
 
                 this.SwitchingVisualButtonsToStateWithoutPressing();
 
-                if (Keyboard.IsKeyToggled(Key.Capital) == true)
-                {
-                    // TODO отключить клавиатуру если был зажат Шифт
-                    if (Keyboard.IsKeyUp(Key.LeftShift) || Keyboard.IsKeyUp(Key.RightShift))
-                    {
-                        this.blockButtonsWithShift.Visibility = Visibility.Visible;
-                        this.blockButtons.Visibility = Visibility.Collapsed;
-                    }
-                }
-                else if (Keyboard.IsKeyToggled(Key.Capital) == false)
-                {
-                    // TODO отключить клавиатуру если был зажат Шифт
-                    if (Keyboard.IsKeyUp(Key.LeftShift) || Keyboard.IsKeyUp(Key.RightShift))
-                    {
-                        this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
-                        this.blockButtons.Visibility = Visibility.Visible;
-                    }
-                }
-                // TODO отключить клавиатуру если был зажат Шифт
-                //if (Keyboard.IsKeyUp(Key.LeftShift) || Keyboard.IsKeyUp(Key.RightShift))
-                //{
-                //    this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
-                //    this.blockButtons.Visibility = Visibility.Visible;
-                //}
+                this.SwitchKeyboardCaseInCorrectPositionAtTheEndOfWorkout();
 
                 this.ShowMessageWithResults("completed");
 
                 this.btnStart.Focus();
+            }
+        }
+
+        /// <summary>
+        /// Переключение регистра визуальной клавиатуры 
+        /// в правильное (визуальное) положение,
+        /// при завершении тренировки.
+        /// </summary>
+        private void SwitchKeyboardCaseInCorrectPositionAtTheEndOfWorkout()
+        {
+            if (Keyboard.IsKeyToggled(Key.Capital) == true)
+            {
+                if (Keyboard.IsKeyUp(Key.LeftShift) || Keyboard.IsKeyUp(Key.RightShift))
+                {
+                    this.blockButtonsWithShift.Visibility = Visibility.Visible;
+                    this.blockButtons.Visibility = Visibility.Collapsed;
+                }
+            }
+            else if (Keyboard.IsKeyToggled(Key.Capital) == false)
+            {
+                if (Keyboard.IsKeyUp(Key.LeftShift) || Keyboard.IsKeyUp(Key.RightShift))
+                {
+                    this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
+                    this.blockButtons.Visibility = Visibility.Visible;
+                }
             }
         }
 
