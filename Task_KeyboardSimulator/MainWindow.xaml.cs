@@ -105,7 +105,8 @@ namespace Task_KeyboardSimulator
 
             rand = new Random();
 
-            //this.isGenerateCaseSensitiveString = 
+
+            //this.checkBoxCaseSensitive.Focusable = false;
 
 
 
@@ -115,7 +116,6 @@ namespace Task_KeyboardSimulator
             this.PreviewKeyDown += MainWindow_PreviewKeyDown;
             this.PreviewKeyUp += MainWindow_PreviewKeyUp;
 
-            //this.KeyBindingToThePressingCommand();
 
             
             this.KeyUp += MainWindow_KeyUp;
@@ -149,19 +149,27 @@ namespace Task_KeyboardSimulator
 
             // test
             //this.sliderDifficulty.ValueChanged += SliderDifficulty_ValueChanged;
+            
 
 
             //for (int i = 0; i < 256; i++)
-                //    Console.WriteLine("Знак unicode N'{0}' является символ {1}", i, (char)i);
-                //Console.WriteLine((Key)i + " = " + i);
+            //    Console.WriteLine("Знак unicode N'{0}' является символ {1}", i, (char)i);
+            //Console.WriteLine((Key)i + " = " + i);
 
-
+            this.checkBoxCaseSensitive.GotFocus += CheckBoxCaseSensitive_GotFocus;
+            this.checkBoxCaseSensitive.GotKeyboardFocus += CheckBoxCaseSensitive_GotKeyboardFocus;
         }
 
+        private void CheckBoxCaseSensitive_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            Console.WriteLine("GotKeyboardFocus");
+        }
 
+        private void CheckBoxCaseSensitive_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("GotFocus");
+        }
 
-
-        
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
        {
             // Переключение на символы с помощью Shift. (нажатие).
@@ -861,6 +869,18 @@ namespace Task_KeyboardSimulator
             this.textUserTyped.Focus();
 
             this.timer.Start();
+
+
+
+            Console.WriteLine("=================================================================");
+            Console.WriteLine("this.checkBoxCaseSensitive.IsFocused " + this.checkBoxCaseSensitive.IsFocused);
+            Console.WriteLine("this.checkBoxCaseSensitive.IsKeyboardFocused " + this.checkBoxCaseSensitive.IsKeyboardFocused);
+            Console.WriteLine("this.checkBoxCaseSensitive.IsKeyboardFocusWithin " + this.checkBoxCaseSensitive.IsKeyboardFocusWithin);
+            Console.WriteLine();
+            Console.WriteLine("this.textUserTyped.IsFocused " + this.textUserTyped.IsFocused);
+            Console.WriteLine("this.textUserTyped.IsKeyboardFocused " + this.textUserTyped.IsKeyboardFocused);
+            Console.WriteLine("this.textUserTyped.IsKeyboardFocusWithin " + this.textUserTyped.IsKeyboardFocusWithin);
+            Console.WriteLine();
         }
 
         /// <summary>
@@ -1059,6 +1079,15 @@ namespace Task_KeyboardSimulator
             this.isGenerateCaseSensitiveString = true;
 
             //this.checkBoxCaseSensitive.focus
+            Console.WriteLine("=================================================================");
+            Console.WriteLine("this.checkBoxCaseSensitive.IsFocused " + this.checkBoxCaseSensitive.IsFocused);
+            Console.WriteLine("this.checkBoxCaseSensitive.IsKeyboardFocused " + this.checkBoxCaseSensitive.IsKeyboardFocused);
+            Console.WriteLine("this.checkBoxCaseSensitive.IsKeyboardFocusWithin " + this.checkBoxCaseSensitive.IsKeyboardFocusWithin);
+            Console.WriteLine();
+            Console.WriteLine("this.textUserTyped.IsFocused " + this.textUserTyped.IsFocused);
+            Console.WriteLine("this.textUserTyped.IsKeyboardFocused " + this.textUserTyped.IsKeyboardFocused);
+            Console.WriteLine("this.textUserTyped.IsKeyboardFocusWithin " + this.textUserTyped.IsKeyboardFocusWithin);
+            Console.WriteLine();
         }
 
         private void checkBoxCaseSensitive_Unchecked(object sender, RoutedEventArgs e)
@@ -1066,6 +1095,15 @@ namespace Task_KeyboardSimulator
             this.isGenerateCaseSensitiveString = false;
 
             //this.textUserTyped.Focus();
+            Console.WriteLine("=================================================================");
+            Console.WriteLine("this.checkBoxCaseSensitive.IsFocused " + this.checkBoxCaseSensitive.IsFocused);
+            Console.WriteLine("this.checkBoxCaseSensitive.IsKeyboardFocused " + this.checkBoxCaseSensitive.IsKeyboardFocused);
+            Console.WriteLine("this.checkBoxCaseSensitive.IsKeyboardFocusWithin " + this.checkBoxCaseSensitive.IsKeyboardFocusWithin);
+            Console.WriteLine();
+            Console.WriteLine("this.textUserTyped.IsFocused " + this.textUserTyped.IsFocused);
+            Console.WriteLine("this.textUserTyped.IsKeyboardFocused " + this.textUserTyped.IsKeyboardFocused);
+            Console.WriteLine("this.textUserTyped.IsKeyboardFocusWithin " + this.textUserTyped.IsKeyboardFocusWithin);
+            Console.WriteLine();
         }
 
 

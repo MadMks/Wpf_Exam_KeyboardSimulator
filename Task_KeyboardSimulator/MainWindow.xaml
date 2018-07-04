@@ -60,6 +60,7 @@
 
             <Grid Grid.Column="3">
                 <CheckBox Name="checkBoxCaseSensitive"
+                          Focusable="False"
                           Checked="checkBoxCaseSensitive_Checked"
                           Unchecked="checkBoxCaseSensitive_Unchecked"
                           FontSize="15">Case Sensitive</CheckBox><!--TODO fs / v align-->
@@ -101,10 +102,6 @@
               Name="gridTypingBlocks" MouseDown="gridTypingBlocks_MouseDown">
             <StackPanel>    <!--TODO-->
                 <StackPanel Background="LightBlue" Orientation="Horizontal">
-                    <!--<TextBlock Name="textTyped"
-                               Background="LightGreen" FontFamily="Consolas" FontSize="20"></TextBlock>
-                    <TextBlock Name="textNeedToType"
-                               FontFamily="Consolas" FontSize="20">Lorem ipsum</TextBlock>-->
                     <TextBlock Name="textTyped"
                              Background="LightGreen" FontFamily="Consolas" FontSize="20"
                              Focusable="False"></TextBlock>
@@ -115,17 +112,9 @@
                 </StackPanel>
                 <Grid>
                     <StackPanel Background="LightBlue" Orientation="Horizontal">
-                        <!--<TextBlock Name="textUserTyped"
-                               Background="LightGreen" FontFamily="Consolas" FontSize="20"></TextBlock>-->
-                        <!--<TextBox Name="textUserTyped"
-                                 Background="LightGreen" FontFamily="Consolas" FontSize="20"></TextBox>-->
                         <TextBlock Name="textUserTyped"
                                    Background="LightGreen" FontFamily="Consolas" FontSize="20"></TextBlock>
                     </StackPanel>
-                    <!--<TextBox IsReadOnly="True"
-                             Background="Transparent" 
-                             Focusable="False">
-                    </TextBox>-->
                 </Grid>
                 
             </StackPanel>
