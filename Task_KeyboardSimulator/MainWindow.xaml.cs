@@ -49,7 +49,7 @@ namespace Task_KeyboardSimulator
         /// </summary>
         private bool isAddingSymbols;
         //private Key lastKeyPressed;
-        private Button currentPressedButton;
+        private ButtonAndKey currentPressedButton;
         //private List<Button> buttons;
         private bool IsCapsLockIsOn;
 
@@ -156,22 +156,10 @@ namespace Task_KeyboardSimulator
             //for (int i = 0; i < 256; i++)
             //    Console.WriteLine("Знак unicode N'{0}' является символ {1}", i, (char)i);
             //Console.WriteLine((Key)i + " = " + i);
-
-            //this.checkBoxCaseSensitive.GotFocus += CheckBoxCaseSensitive_GotFocus;
-            //this.checkBoxCaseSensitive.GotKeyboardFocus += CheckBoxCaseSensitive_GotKeyboardFocus;
+            
         }
 
 
-
-        //private void CheckBoxCaseSensitive_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        //{
-        //    Console.WriteLine("GotKeyboardFocus");
-        //}
-
-        //private void CheckBoxCaseSensitive_GotFocus(object sender, RoutedEventArgs e)
-        //{
-        //    Console.WriteLine("GotFocus");
-        //}
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
        {
@@ -229,11 +217,11 @@ namespace Task_KeyboardSimulator
             }
         }
 
-        private void ButtonPressUp(Button button)
+        private void ButtonPressUp(ButtonAndKey button)
         {
             if (button != null)
             {
-                (button as ButtonAndKey).IsKeyPressed = false;
+                button.IsKeyPressed = false;
             }
         }
 
@@ -273,137 +261,10 @@ namespace Task_KeyboardSimulator
         }
 
 
-        private Button SearchingVisualButtons(UniformGrid block, Key lastKey)
+        private ButtonAndKey SearchingVisualButtons(UniformGrid block, Key lastKey)
         {
             Console.WriteLine("                  " + lastKey.ToString());
 
-            // HACK много одинакового кода #1. -> заменить на: поместить все кнопки в одну коллекцию.
-            #region ButtonSearch
-            // 1 ряд
-            //foreach (Button button in this.firstRowOfButtons.Children)
-            //{
-            //    if (button.Tag != null)
-            //    {
-            //        if (button.Tag.ToString() == lastKey.ToString())
-            //        {
-            //            return button;
-            //        }
-            //    }
-            //}
-            //if (this.firstRowBackspaceButton.Tag.ToString() == lastKey.ToString())
-            //{
-            //    return this.firstRowBackspaceButton;
-            //}
-            //// 2 ряд
-            //else if (this.secondRowTabButton.Tag.ToString() == lastKey.ToString())
-            //{
-            //    return this.secondRowTabButton;
-            //}
-            //foreach (Button button in this.secondRowOfButtons.Children)
-            //{
-            //    if (button.Tag != null)
-            //    {
-            //        if (button.Tag.ToString() == lastKey.ToString())
-            //        {
-            //            return button;
-            //        }
-            //    }
-            //}
-            //if (this.secondRowBackslashButton.Tag.ToString() == lastKey.ToString())
-            //{
-            //    return secondRowBackslashButton;
-            //}
-            //// 3 ряд
-            //if (this.thirdRowCapitalButton.Tag.ToString() == lastKey.ToString())
-            //{
-            //    return this.thirdRowCapitalButton;
-            //}
-            //foreach (Button button in this.thirdRowOfButtons.Children)
-            //{
-            //    if (button.Tag != null)
-            //    {
-            //        if (button.Tag.ToString() == lastKey.ToString())
-            //        {
-            //            return button;
-            //        }
-            //    }
-            //}
-            //if (this.thirdRowReturnButton.Tag.ToString() == lastKey.ToString())
-            //{
-            //    return this.thirdRowReturnButton;
-            //}
-            //// 4 ряд
-            //if (this.fourthRowLShiftButton.Tag.ToString() == lastKey.ToString())
-            //{
-            //    return this.fourthRowLShiftButton;
-            //}
-            //foreach (Button button in this.fourthRowOfButtons.Children)
-            //{
-            //    if (button.Tag != null)
-            //    {
-            //        if (button.Tag.ToString() == lastKey.ToString())
-            //        {
-            //            return button;
-            //        }
-            //    }
-            //}
-            //if (this.fourthRowRShiftButton.Tag.ToString() == lastKey.ToString())
-            //{
-            //    return this.fourthRowRShiftButton;
-            //}
-            //// 5 ряд
-            //foreach (Button button in this.fifthRowLeftButtons.Children)
-            //{
-            //    if (button.Tag != null)
-            //    {
-            //        if (button.Tag.ToString() == lastKey.ToString())
-            //        {
-            //            return button;
-            //        }
-            //    }
-            //}
-            //if (this.fifthRowSpaceButton.Tag.ToString() == lastKey.ToString())
-            //{
-            //    return this.fifthRowSpaceButton;
-            //}
-            //foreach (Button button in this.fifthRowRightButtons.Children)
-            //{
-            //    if (button.Tag != null)
-            //    {
-            //        if (button.Tag.ToString() == lastKey.ToString())
-            //        {
-            //            return button;
-            //        }
-            //    }
-            //}
-            #endregion
-
-
-
-            // 
-            //foreach (Grid grid in this.blockButtons.Children)
-            //{
-            //    foreach (var item in grid.Children)
-            //    {
-            //        if (item is UniformGrid)
-            //        {
-            //            foreach (ButtonAndKey button in (item as UniformGrid).Children)
-            //            {
-            //                if (button.Tag.ToString() == lastKey.ToString())
-            //                {
-            //                    return button;
-            //                }
-            //            }
-            //        }
-            //        else if (item is ButtonAndKey)
-            //        {
-            //            if ((item as ButtonAndKey).Tag.ToString() == lastKey.ToString())
-            //            {
-            //                return (item as ButtonAndKey);
-            //            }
-            //        }
-            //    }
-            //}
 
             foreach (Grid grid in block.Children)
             {
@@ -546,87 +407,6 @@ namespace Task_KeyboardSimulator
         /// </summary>
         private void SwitchingVisualButtonsToStateWithoutPressing()
         {
-            // HACK много одинакового кода #2. -> заменить на: поместить все кнопки в одну коллекцию.
-            #region ButtonSearchAndPressUp
-            //// 1 ряд
-            //foreach (Button button in this.firstRowOfButtons.Children)
-            //{
-            //    this.ButtonPressUp(button);
-            //}
-            //this.ButtonPressUp(firstRowBackspaceButton);
-            //// 2 ряд
-            //this.ButtonPressUp(secondRowTabButton);
-            //foreach (Button button in this.secondRowOfButtons.Children)
-            //{
-            //    this.ButtonPressUp(button);
-            //}
-            //this.ButtonPressUp(secondRowBackslashButton);
-            //// 3 ряд
-            //this.ButtonPressUp(thirdRowCapitalButton);
-            //foreach (Button button in this.thirdRowOfButtons.Children)
-            //{
-            //    this.ButtonPressUp(button);
-            //}
-            //this.ButtonPressUp(thirdRowReturnButton);
-            //// 4 ряд
-            //this.ButtonPressUp(fourthRowLShiftButton);
-            //foreach (Button button in this.fourthRowOfButtons.Children)
-            //{
-            //    this.ButtonPressUp(button);
-            //}
-            //this.ButtonPressUp(fourthRowRShiftButton);
-            //// 5 ряд
-            //foreach (Button button in this.fifthRowLeftButtons.Children)
-            //{
-            //    this.ButtonPressUp(button);
-            //}
-            //this.ButtonPressUp(fifthRowSpaceButton);
-            //foreach (Button button in this.fifthRowRightButtons.Children)
-            //{
-            //    this.ButtonPressUp(button);
-            //}
-            #endregion
-
-            // HACK много одинакового кода #4. -> заменить на: поместить все кнопки в одну коллекцию.
-            #region ButtonSearchAndPressUpSecondKeyboard
-            //// 1 ряд
-            //foreach (Button button in this.firstRowOfButtonsWithShift.Children)
-            //{
-            //    this.ButtonPressUp(button);
-            //}
-            //this.ButtonPressUp(firstRowBackspaceButtonWithShift);
-            //// 2 ряд
-            //this.ButtonPressUp(secondRowTabButtonWithShift);
-            //foreach (Button button in this.secondRowOfButtonsWithShift.Children)
-            //{
-            //    this.ButtonPressUp(button);
-            //}
-            //this.ButtonPressUp(secondRowBackslashButtonWithShift);
-            //// 3 ряд
-            //this.ButtonPressUp(thirdRowCapitalButtonWithShift);
-            //foreach (Button button in this.thirdRowOfButtonsWithShift.Children)
-            //{
-            //    this.ButtonPressUp(button);
-            //}
-            //this.ButtonPressUp(thirdRowReturnButtonWithShift);
-            //// 4 ряд
-            //this.ButtonPressUp(fourthRowLShiftButtonWithShift);
-            //foreach (Button button in this.fourthRowOfButtonsWithShift.Children)
-            //{
-            //    this.ButtonPressUp(button);
-            //}
-            //this.ButtonPressUp(fourthRowRShiftButtonWithShift);
-            //// 5 ряд
-            //foreach (Button button in this.fifthRowLeftButtonsWithShift.Children)
-            //{
-            //    this.ButtonPressUp(button);
-            //}
-            //this.ButtonPressUp(fifthRowSpaceButtonWithShift);
-            //foreach (Button button in this.fifthRowRightButtonsWithShift.Children)
-            //{
-            //    this.ButtonPressUp(button);
-            //}
-            #endregion
 
 
             //if (blockButtons.Visibility == Visibility.Visible)
@@ -694,7 +474,7 @@ namespace Task_KeyboardSimulator
         {
             if (currentPressedButton != null)
             {
-                (currentPressedButton as ButtonAndKey).IsKeyPressed = true;
+                currentPressedButton.IsKeyPressed = true;
             }
         }
 
@@ -1144,6 +924,8 @@ namespace Task_KeyboardSimulator
             this.timer.Stop();
 
             this.ShowMessageWithResults("is stopped");
+
+            this.btnStart.Focus();
         }
 
         private void btnStop_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
