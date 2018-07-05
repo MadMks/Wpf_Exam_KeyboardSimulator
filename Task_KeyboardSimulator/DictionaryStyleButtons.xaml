@@ -47,6 +47,7 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="30"/>
             <!--<Setter Property="VerticalAlignment" Value="Stretch"/>-->
+            <Setter Property="Focusable" Value="False"/>
         </Style.Setters>
         <Style.Triggers>
             <Trigger Property="IsPressed" Value="True">

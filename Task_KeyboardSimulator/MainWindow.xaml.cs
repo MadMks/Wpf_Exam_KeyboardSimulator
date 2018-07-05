@@ -149,7 +149,7 @@ namespace Task_KeyboardSimulator
 
             // test
             //this.sliderDifficulty.ValueChanged += SliderDifficulty_ValueChanged;
-            
+
 
 
             //for (int i = 0; i < 256; i++)
@@ -159,6 +159,8 @@ namespace Task_KeyboardSimulator
             this.checkBoxCaseSensitive.GotFocus += CheckBoxCaseSensitive_GotFocus;
             this.checkBoxCaseSensitive.GotKeyboardFocus += CheckBoxCaseSensitive_GotKeyboardFocus;
         }
+
+
 
         private void CheckBoxCaseSensitive_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
@@ -277,103 +279,130 @@ namespace Task_KeyboardSimulator
             // HACK много одинакового кода #1. -> заменить на: поместить все кнопки в одну коллекцию.
             #region ButtonSearch
             // 1 ряд
-            foreach (Button button in this.firstRowOfButtons.Children)
-            {
-                if (button.Tag != null)
-                {
-                    if (button.Tag.ToString() == lastKey.ToString())
-                    {
-                        return button;
-                    }
-                }
-            }
-            if (this.firstRowBackspaceButton.Tag.ToString() == lastKey.ToString())
-            {
-                return this.firstRowBackspaceButton;
-            }
-            // 2 ряд
-            else if (this.secondRowTabButton.Tag.ToString() == lastKey.ToString())
-            {
-                return this.secondRowTabButton;
-            }
-            foreach (Button button in this.secondRowOfButtons.Children)
-            {
-                if (button.Tag != null)
-                {
-                    if (button.Tag.ToString() == lastKey.ToString())
-                    {
-                        return button;
-                    }
-                }
-            }
-            if (this.secondRowBackslashButton.Tag.ToString() == lastKey.ToString())
-            {
-                return secondRowBackslashButton;
-            }
-            // 3 ряд
-            if (this.thirdRowCapitalButton.Tag.ToString() == lastKey.ToString())
-            {
-                return this.thirdRowCapitalButton;
-            }
-            foreach (Button button in this.thirdRowOfButtons.Children)
-            {
-                if (button.Tag != null)
-                {
-                    if (button.Tag.ToString() == lastKey.ToString())
-                    {
-                        return button;
-                    }
-                }
-            }
-            if (this.thirdRowReturnButton.Tag.ToString() == lastKey.ToString())
-            {
-                return this.thirdRowReturnButton;
-            }
-            // 4 ряд
-            if (this.fourthRowLShiftButton.Tag.ToString() == lastKey.ToString())
-            {
-                return this.fourthRowLShiftButton;
-            }
-            foreach (Button button in this.fourthRowOfButtons.Children)
-            {
-                if (button.Tag != null)
-                {
-                    if (button.Tag.ToString() == lastKey.ToString())
-                    {
-                        return button;
-                    }
-                }
-            }
-            if (this.fourthRowRShiftButton.Tag.ToString() == lastKey.ToString())
-            {
-                return this.fourthRowRShiftButton;
-            }
-            // 5 ряд
-            foreach (Button button in this.fifthRowLeftButtons.Children)
-            {
-                if (button.Tag != null)
-                {
-                    if (button.Tag.ToString() == lastKey.ToString())
-                    {
-                        return button;
-                    }
-                }
-            }
-            if (this.fifthRowSpaceButton.Tag.ToString() == lastKey.ToString())
-            {
-                return this.fifthRowSpaceButton;
-            }
-            foreach (Button button in this.fifthRowRightButtons.Children)
-            {
-                if (button.Tag != null)
-                {
-                    if (button.Tag.ToString() == lastKey.ToString())
-                    {
-                        return button;
-                    }
-                }
-            }
+            //foreach (Button button in this.firstRowOfButtons.Children)
+            //{
+            //    if (button.Tag != null)
+            //    {
+            //        if (button.Tag.ToString() == lastKey.ToString())
+            //        {
+            //            return button;
+            //        }
+            //    }
+            //}
+            //if (this.firstRowBackspaceButton.Tag.ToString() == lastKey.ToString())
+            //{
+            //    return this.firstRowBackspaceButton;
+            //}
+            //// 2 ряд
+            //else if (this.secondRowTabButton.Tag.ToString() == lastKey.ToString())
+            //{
+            //    return this.secondRowTabButton;
+            //}
+            //foreach (Button button in this.secondRowOfButtons.Children)
+            //{
+            //    if (button.Tag != null)
+            //    {
+            //        if (button.Tag.ToString() == lastKey.ToString())
+            //        {
+            //            return button;
+            //        }
+            //    }
+            //}
+            //if (this.secondRowBackslashButton.Tag.ToString() == lastKey.ToString())
+            //{
+            //    return secondRowBackslashButton;
+            //}
+            //// 3 ряд
+            //if (this.thirdRowCapitalButton.Tag.ToString() == lastKey.ToString())
+            //{
+            //    return this.thirdRowCapitalButton;
+            //}
+            //foreach (Button button in this.thirdRowOfButtons.Children)
+            //{
+            //    if (button.Tag != null)
+            //    {
+            //        if (button.Tag.ToString() == lastKey.ToString())
+            //        {
+            //            return button;
+            //        }
+            //    }
+            //}
+            //if (this.thirdRowReturnButton.Tag.ToString() == lastKey.ToString())
+            //{
+            //    return this.thirdRowReturnButton;
+            //}
+            //// 4 ряд
+            //if (this.fourthRowLShiftButton.Tag.ToString() == lastKey.ToString())
+            //{
+            //    return this.fourthRowLShiftButton;
+            //}
+            //foreach (Button button in this.fourthRowOfButtons.Children)
+            //{
+            //    if (button.Tag != null)
+            //    {
+            //        if (button.Tag.ToString() == lastKey.ToString())
+            //        {
+            //            return button;
+            //        }
+            //    }
+            //}
+            //if (this.fourthRowRShiftButton.Tag.ToString() == lastKey.ToString())
+            //{
+            //    return this.fourthRowRShiftButton;
+            //}
+            //// 5 ряд
+            //foreach (Button button in this.fifthRowLeftButtons.Children)
+            //{
+            //    if (button.Tag != null)
+            //    {
+            //        if (button.Tag.ToString() == lastKey.ToString())
+            //        {
+            //            return button;
+            //        }
+            //    }
+            //}
+            //if (this.fifthRowSpaceButton.Tag.ToString() == lastKey.ToString())
+            //{
+            //    return this.fifthRowSpaceButton;
+            //}
+            //foreach (Button button in this.fifthRowRightButtons.Children)
+            //{
+            //    if (button.Tag != null)
+            //    {
+            //        if (button.Tag.ToString() == lastKey.ToString())
+            //        {
+            //            return button;
+            //        }
+            //    }
+            //}
             #endregion
+
+
+
+            // 
+            foreach (Grid grid in this.blockButtons.Children)
+            {
+                foreach (var item in grid.Children)
+                {
+                    if (item is UniformGrid)
+                    {
+                        foreach (ButtonAndKey button in (item as UniformGrid).Children)
+                        {
+                            if (button.Tag.ToString() == lastKey.ToString())
+                            {
+                                return button;
+                            }
+                        }
+                    }
+                    else if (item is ButtonAndKey)
+                    {
+                        if ((item as ButtonAndKey).Tag.ToString() == lastKey.ToString())
+                        {
+                            return (item as ButtonAndKey);
+                        }
+                    }
+                }
+            }
 
 
             return null;
@@ -483,7 +512,6 @@ namespace Task_KeyboardSimulator
                 }
             }
             #endregion
-
 
             return null;
         }
