@@ -29,7 +29,7 @@ using System.Windows.Threading;
 // TODO #4 Добавить все Button в одну коллекцию (одна коллекция для каждой клавиатуры).
         // Искать кнопки в коллекции (будет меньше кода).
 
-// TODO #5 во время тренировки, при нажатии на Ctrl + "any Key" - exception "...range..." -> IstheEnteredLetterIsCorrect
+// TODO #5 во время тренировки, при нажатии на Ctrl + "any Key" - exception "...index..." -> IstheEnteredLetterIsCorrect
 
 namespace Task_KeyboardSimulator
 {
@@ -240,6 +240,9 @@ namespace Task_KeyboardSimulator
                     this.ShowBlockOfStandardButtons();
                 }
             }
+
+
+            Console.WriteLine("e.Key" + e.Key);
         }
 
         /// <summary>
@@ -582,6 +585,11 @@ namespace Task_KeyboardSimulator
                 || key >= Key.OemOpenBrackets && key <= Key.OemQuotes
                 || key == Key.Space)
             {
+                if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+                {
+                    return false;
+                }
+
                 return true;
             }
 
