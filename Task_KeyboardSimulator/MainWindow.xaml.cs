@@ -26,10 +26,6 @@ using System.Windows.Threading;
 // TODO #3 добавить 4-ю клавиатуру для Shift при включенном Caps.
         // При включенном Caps и последующем нажатии Shift,
         // буквы становятся в маленьком регистре, а цифры меняются на символы.
-// TODO #4 Добавить все Button в одну коллекцию (одна коллекция для каждой клавиатуры).
-        // Искать кнопки в коллекции (будет меньше кода).
-
-// TODO #5 во время тренировки, при нажатии на Ctrl + "any Key" - exception "...index..." -> IstheEnteredLetterIsCorrect
 
 namespace Task_KeyboardSimulator
 {
