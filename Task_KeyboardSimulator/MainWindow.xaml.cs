@@ -20,8 +20,7 @@ using System.Windows.Threading;
 // TODO #1 задержка визуального нажатия Шифта. Из-за визуального нажатия на клавиатуре нижнего регистра,
         // которая в данный момент Visibility.Collapsed (в данный момент не видно).
         // Визуальное нажатие появляется после сработки зажатия Шифта (RepeatButton).
-// TODO #2 визуальное нажатие для 3 и 4й клавиатур.
-// TODO #3 откулючение визуального нажатия для 3 и 4й клавиатур.
+
 
 namespace Task_KeyboardSimulator
 {
@@ -30,9 +29,25 @@ namespace Task_KeyboardSimulator
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DispatcherTimer timer;
+        /// <summary>
+        /// Кол-во символов в строке.
+        /// </summary>
+        private const int NUMBER_OF_CHARACTERS_IN_STRING = 15;
+        /// <summary>
+        /// Кол-во пробелов в строке.
+        /// </summary>
+        private const int NUMBER_OF_SPACES_IN_LINE = 4;
 
+        private DispatcherTimer timer;
+        private Random rand;
+
+        /// <summary>
+        /// Кол-во ошибок.
+        /// </summary>
         private int numberOfMistakes;
+        /// <summary>
+        /// Кол-во секунд.
+        /// </summary>
         private int numberOfSeconds;
         /// <summary>
         /// Добавление символов 
@@ -40,14 +55,19 @@ namespace Task_KeyboardSimulator
         /// чтоб не реагировать на Backspace).
         /// </summary>
         private bool isAddingSymbols;
-        //private Key lastKeyPressed;
+        /// <summary>
+        /// Текущая нажатая кнопка.
+        /// </summary>
         private ButtonAndKey currentPressedButton;
         private bool IsCapsLockIsOn;
-
+        /// <summary>
+        /// Список индексов ошибок для UserTyped.
+        /// </summary>
         private List<int> listOfErrorIndicesForUserTyped;
+        /// <summary>
+        /// Список индексов ошибок для Typed.
+        /// </summary>
         private List<int> listOfErrorIndicesForTyped;
-
-        //private List<char> characterList;
         /// <summary>
         /// Список символов нижнего регистра.
         /// </summary>
@@ -56,18 +76,12 @@ namespace Task_KeyboardSimulator
         /// Список символов верхнего регистра.
         /// </summary>
         private string characterListUpper;
-
-
-        // TODO const
-        private const int NUMBER_OF_CHARACTERS_IN_STRING = 15;
-
-        private const int NUMBER_OF_SPACES_IN_LINE = 4;
-
+        /// <summary>
+        /// Генерировать строку учитывая символы верхнего регистра.
+        /// </summary>
         private bool isGenerateCaseSensitiveString;
 
-        Random rand;
-
-
+        
 
         public MainWindow()
         {
@@ -92,7 +106,6 @@ namespace Task_KeyboardSimulator
             this.characterListUpper = "FJDKSLA:GHRUEIWOQPVMC<X>Z?BN$&#*@(!)%^{}\"|~_+";
 
             rand = new Random();
-
 
 
             this.PreviewTextInput += MainWindow_PreviewTextInput;
@@ -185,7 +198,6 @@ namespace Task_KeyboardSimulator
             this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
         }
 
-        // TODO рефакторинг
         private void MainWindow_PreviewKeyUp(object sender, KeyEventArgs e)
         {
             // Переключение на буквы верхнего регистра с помощью Caps Lock.
@@ -280,114 +292,6 @@ namespace Task_KeyboardSimulator
 
             return null;
         }
-
-        //private Button SearchingVisualButtonsWithShift(Key lastKey)
-        //{
-        //    Console.WriteLine("                  " + lastKey.ToString());
-
-        //    // HACK много одинакового кода #3. -> заменить на: поместить все кнопки в одну коллекцию.
-        //    #region ButtonSearchSecondKeyboard
-        //    // 1 ряд
-        //    foreach (Button button in this.firstRowOfButtonsWithShift.Children)
-        //    {
-        //        if (button.Tag != null)
-        //        {
-        //            if (button.Tag.ToString() == lastKey.ToString())
-        //            {
-        //                return button;
-        //            }
-        //        }
-        //    }
-        //    if (this.firstRowBackspaceButtonWithShift.Tag.ToString() == lastKey.ToString())
-        //    {
-        //        return this.firstRowBackspaceButtonWithShift;
-        //    }
-        //    // 2 ряд
-        //    else if (this.secondRowTabButtonWithShift.Tag.ToString() == lastKey.ToString())
-        //    {
-        //        return this.secondRowTabButtonWithShift;
-        //    }
-        //    foreach (Button button in this.secondRowOfButtonsWithShift.Children)
-        //    {
-        //        if (button.Tag != null)
-        //        {
-        //            if (button.Tag.ToString() == lastKey.ToString())
-        //            {
-        //                return button;
-        //            }
-        //        }
-        //    }
-        //    if (this.secondRowBackslashButtonWithShift.Tag.ToString() == lastKey.ToString())
-        //    {
-        //        return secondRowBackslashButtonWithShift;
-        //    }
-        //    // 3 ряд
-        //    if (this.thirdRowCapitalButtonWithShift.Tag.ToString() == lastKey.ToString())
-        //    {
-        //        return this.thirdRowCapitalButtonWithShift;
-        //    }
-        //    foreach (Button button in this.thirdRowOfButtonsWithShift.Children)
-        //    {
-        //        if (button.Tag != null)
-        //        {
-        //            if (button.Tag.ToString() == lastKey.ToString())
-        //            {
-        //                return button;
-        //            }
-        //        }
-        //    }
-        //    if (this.thirdRowReturnButtonWithShift.Tag.ToString() == lastKey.ToString())
-        //    {
-        //        return this.thirdRowReturnButtonWithShift;
-        //    }
-        //    // 4 ряд
-        //    if (this.fourthRowLShiftButtonWithShift.Tag.ToString() == lastKey.ToString())
-        //    {
-        //        return this.fourthRowLShiftButtonWithShift;
-        //    }
-        //    foreach (Button button in this.fourthRowOfButtonsWithShift.Children)
-        //    {
-        //        if (button.Tag != null)
-        //        {
-        //            if (button.Tag.ToString() == lastKey.ToString())
-        //            {
-        //                return button;
-        //            }
-        //        }
-        //    }
-        //    if (this.fourthRowRShiftButtonWithShift.Tag.ToString() == lastKey.ToString())
-        //    {
-        //        return this.fourthRowRShiftButtonWithShift;
-        //    }
-        //    // 5 ряд
-        //    foreach (Button button in this.fifthRowLeftButtonsWithShift.Children)
-        //    {
-        //        if (button.Tag != null)
-        //        {
-        //            if (button.Tag.ToString() == lastKey.ToString())
-        //            {
-        //                return button;
-        //            }
-        //        }
-        //    }
-        //    if (this.fifthRowSpaceButtonWithShift.Tag.ToString() == lastKey.ToString())
-        //    {
-        //        return this.fifthRowSpaceButtonWithShift;
-        //    }
-        //    foreach (Button button in this.fifthRowRightButtonsWithShift.Children)
-        //    {
-        //        if (button.Tag != null)
-        //        {
-        //            if (button.Tag.ToString() == lastKey.ToString())
-        //            {
-        //                return button;
-        //            }
-        //        }
-        //    }
-        //    #endregion
-
-        //    return null;
-        //}
 
         /// <summary>
         /// Переключение визуальных кнопок в состояние без нажатия.
