@@ -408,6 +408,10 @@ namespace Task_KeyboardSimulator
             this.SwitchingToStateWithoutPressing(this.blockButtons);
 
             this.SwitchingToStateWithoutPressing(this.blockButtonsWithShift);
+
+            this.SwitchingToStateWithoutPressing(this.blockButtonsWithCapsLock);
+
+            this.SwitchingToStateWithoutPressing(this.blockButtonsWithCapsLockWithShift);
         }
 
         private void SwitchingToStateWithoutPressing(UniformGrid block)
