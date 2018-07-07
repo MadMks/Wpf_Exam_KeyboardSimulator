@@ -134,12 +134,21 @@ namespace Task_KeyboardSimulator
             // TODO рефакторинг
             if (IsCapsLockIsOn)
             {
-                this.blockButtonsWithShift.Visibility = Visibility.Visible;
+                //this.blockButtonsWithShift.Visibility = Visibility.Visible;
+                //this.blockButtons.Visibility = Visibility.Collapsed;
+
+                this.blockButtonsWithCapsLock.Visibility = Visibility.Visible;
+
+                this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
+                this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
                 this.blockButtons.Visibility = Visibility.Collapsed;
             }
             else
             {
+                this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
+                this.blockButtonsWithCapsLock.Visibility = Visibility.Collapsed;
                 this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
+
                 this.blockButtons.Visibility = Visibility.Visible;
             }
 
@@ -165,7 +174,8 @@ namespace Task_KeyboardSimulator
                 if (this.IsCapsLockIsOn)
                 {
                     // Нажимаем шифт.
-                    this.ShowBlockOfStandardButtons();
+                    //this.ShowBlockOfStandardButtons();
+                    this.ShowBlockOfStandardButtonsWhenYouPressCapsLockWithShift();
                 }
                 else if (!this.IsCapsLockIsOn)
                 {
@@ -173,6 +183,14 @@ namespace Task_KeyboardSimulator
                 }
             }
 
+        }
+
+        private void ShowBlockOfStandardButtonsWhenYouPressCapsLockWithShift()
+        {
+            this.blockButtons.Visibility = Visibility.Collapsed;
+            this.blockButtonsWithCapsLock.Visibility = Visibility.Collapsed;
+            this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
+            this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Visible;
         }
 
         // TODO рефакторинг
@@ -185,7 +203,8 @@ namespace Task_KeyboardSimulator
 
                 if (IsCapsLockIsOn)
                 {
-                    this.ShowABlockOfButtonsWhenYouPressTheShift();
+                    //this.ShowABlockOfButtonsWhenYouPressTheShift();
+                    this.ShowBlockOfStandardButtonsWhenYouPressTheCapsLock();
                 }
                 else
                 {
@@ -196,6 +215,15 @@ namespace Task_KeyboardSimulator
             ButtonPressUp(this.currentPressedButton);
 
             SwitchingVisualButtonsToStateWithoutPressing();
+        }
+
+        private void ShowBlockOfStandardButtonsWhenYouPressTheCapsLock()
+        {
+            this.blockButtonsWithCapsLock.Visibility = Visibility.Visible;
+
+            this.blockButtons.Visibility = Visibility.Collapsed;
+            this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
+            this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
@@ -229,7 +257,8 @@ namespace Task_KeyboardSimulator
                 if (this.IsCapsLockIsOn)
                 {
                     // Отпускаем шифт.
-                    this.ShowABlockOfButtonsWhenYouPressTheShift();
+                    //this.ShowABlockOfButtonsWhenYouPressTheShift();
+                    this.ShowBlockOfStandardButtonsWhenYouPressTheCapsLock();
                 }
                 else if (!this.IsCapsLockIsOn)
                 {
@@ -246,8 +275,11 @@ namespace Task_KeyboardSimulator
         /// </summary>
         private void ShowBlockOfStandardButtons()
         {
-            this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
             this.blockButtons.Visibility = Visibility.Visible;
+
+            this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
+            this.blockButtonsWithCapsLock.Visibility = Visibility.Collapsed;
+            this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>

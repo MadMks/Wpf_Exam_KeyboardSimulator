@@ -122,7 +122,158 @@
         
         <!--Четвертый ряд - кнопки-->
         <Grid Grid.Row="3">
-            
+
+            <!--Обычные символы - панель по умолчанию-->
+            <UniformGrid Columns="1" Rows="5"
+                         Name="blockButtons" Visibility="Visible">
+                <!--Первый ряд кнопок-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="13*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <UniformGrid Columns="13" Rows="1" Grid.Column="0">
+
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="Oem3">`</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="D1">1</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="D2">2</local:ButtonAndKey>
+
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFourthFinger}" Tag="D3">3</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandThirdFinger}" Tag="D4">4</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandSecondFinger}" Tag="D5">5</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandSecondFinger}" Tag="D6">6</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandSecondFinger}" Tag="D7">7</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandSecondFinger}" Tag="D8">8</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandThirdFinger}" Tag="D9">9</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFourthFinger}" Tag="D0">0</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFifthFinger}" Tag="OemMinus">-</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFifthFinger}" Tag="OemPlus">=</local:ButtonAndKey>
+
+                    </UniformGrid>
+
+                    <local:ButtonAndKey Grid.Column="1" Style="{StaticResource styleModifierKeys}" Tag="Back">Backspace</local:ButtonAndKey>
+
+                </Grid>
+
+                <!--Второй ряд кнопок-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="12*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <local:ButtonAndKey Grid.Column="0" Style="{StaticResource styleModifierKeys}" Tag="Tab">Tab</local:ButtonAndKey>
+
+                    <UniformGrid Grid.Column="1" Columns="12" Rows="1">
+
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="Q">q</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFourthFinger}" Tag="W">w</local:ButtonAndKey>
+
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandThirdFinger}" Tag="E">e</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandSecondFinger}" Tag="R">r</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandSecondFinger}" Tag="T">t</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandSecondFinger}" Tag="Y">y</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandSecondFinger}" Tag="U">u</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandThirdFinger}" Tag="I">i</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFourthFinger}" Tag="O">o</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFifthFinger}" Tag="P">p</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFifthFinger}" Tag="OemOpenBrackets">[</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFifthFinger}" Tag="Oem6">]</local:ButtonAndKey>
+
+                    </UniformGrid>
+
+                    <local:ButtonAndKey Grid.Column="2" Style="{StaticResource styleRightHandFifthFinger}" Tag="Oem5">\</local:ButtonAndKey>
+
+                </Grid>
+
+                <!--Третий ряд кнопок-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="11*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <local:ButtonAndKey Grid.Column="0" Style="{StaticResource styleModifierKeys}" Tag="Capital">Caps Lock</local:ButtonAndKey>
+
+                    <UniformGrid Grid.Column="1" Columns="11" Rows="1">
+
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="A">a</local:ButtonAndKey>
+
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFourthFinger}" Tag="S">s</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandThirdFinger}" Tag="D">d</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandSecondFinger}" Tag="F">f</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandSecondFinger}" Tag="G">g</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandSecondFinger}" Tag="H">h</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandSecondFinger}" Tag="J">j</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandThirdFinger}" Tag="K">k</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFourthFinger}" Tag="L">l</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFifthFinger}" Tag="Oem1">;</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFifthFinger}" Tag="OemQuotes">'</local:ButtonAndKey>
+
+                    </UniformGrid>
+
+                    <local:ButtonAndKey Grid.Column="2" Style="{StaticResource styleModifierKeys}" Tag="Return">Enter</local:ButtonAndKey>
+
+                </Grid>
+
+                <!--Четвертый ряд кнопок-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2.5*"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="2.5*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <local:ButtonAndKey Grid.Column="0" Style="{StaticResource styleModifierKeys}" Tag="LeftShift">Shift</local:ButtonAndKey>
+
+                    <UniformGrid Grid.Column="1" Columns="10" Rows="1">
+
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="Z">z</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFourthFinger}" Tag="X">x</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandThirdFinger}" Tag="C">c</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandSecondFinger}" Tag="V">v</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandSecondFinger}" Tag="B">b</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandSecondFinger}" Tag="N">n</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandSecondFinger}" Tag="M">m</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandThirdFinger}" Tag="OemComma">,</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFourthFinger}" Tag="OemPeriod">.</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFifthFinger}" Tag="OemQuestion">/</local:ButtonAndKey>
+
+                    </UniformGrid>
+
+                    <local:ButtonAndKey Grid.Column="2" Style="{StaticResource styleModifierKeys}" Tag="RightShift">Shift</local:ButtonAndKey>
+
+                </Grid>
+
+                <!--Пятый ряд кнопок-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4.5*"/>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="4.5*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <UniformGrid Grid.Column="0" Columns="3" Rows="1">
+                        <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="LeftCtrl">Ctrl</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="LWin">Win</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="System">Alt</local:ButtonAndKey>
+                    </UniformGrid>
+
+                    <local:ButtonAndKey Grid.Column="1" Style="{StaticResource styleFirstFinger}" Tag="Space">Space</local:ButtonAndKey>
+
+                    <UniformGrid Grid.Column="2" Columns="3" Rows="1">
+                        <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="System">Alt</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="RWin">Win</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="RightCtrl">Ctrl</local:ButtonAndKey>
+                    </UniformGrid>
+
+                </Grid>
+
+            </UniformGrid>
+
             <!--Символы при нажатии на shift - скрытая панель-->
             <UniformGrid Columns="1" Rows="5"
                          Visibility="Collapsed" Name="blockButtonsWithShift">
@@ -133,7 +284,7 @@
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
 
-                    <UniformGrid Name="firstRowOfButtonsWithShift" Columns="13" Rows="1" Grid.Column="0">
+                    <UniformGrid Columns="13" Rows="1" Grid.Column="0">
 
                         <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="Oem3">~</local:ButtonAndKey>
                         <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="D1">!</local:ButtonAndKey>
@@ -152,8 +303,7 @@
 
                     </UniformGrid>
 
-                    <local:ButtonAndKey Grid.Column="1" Style="{StaticResource styleModifierKeys}"
-                            x:Name="firstRowBackspaceButtonWithShift" Tag="Back">Backspace</local:ButtonAndKey>
+                    <local:ButtonAndKey Grid.Column="1" Style="{StaticResource styleModifierKeys}" Tag="Back">Backspace</local:ButtonAndKey>
                     
                 </Grid>
                 
@@ -165,10 +315,9 @@
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
 
-                    <local:ButtonAndKey Grid.Column="0" Style="{StaticResource styleModifierKeys}"
-                            x:Name="secondRowTabButtonWithShift" Tag="Tab">Tab</local:ButtonAndKey>
+                    <local:ButtonAndKey Grid.Column="0" Style="{StaticResource styleModifierKeys}" Tag="Tab">Tab</local:ButtonAndKey>
 
-                    <UniformGrid Name="secondRowOfButtonsWithShift" Grid.Column="1" Columns="12" Rows="1">
+                    <UniformGrid Grid.Column="1" Columns="12" Rows="1">
 
                         <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="Q">Q</local:ButtonAndKey>
                         <local:ButtonAndKey Style="{StaticResource styleLeftHandFourthFinger}" Tag="W">W</local:ButtonAndKey>
@@ -186,8 +335,7 @@
 
                     </UniformGrid>
 
-                    <local:ButtonAndKey Grid.Column="2" Style="{StaticResource styleRightHandFifthFinger}"
-                            x:Name="secondRowBackslashButtonWithShift" Tag="Oem5">|</local:ButtonAndKey>
+                    <local:ButtonAndKey Grid.Column="2" Style="{StaticResource styleRightHandFifthFinger}" Tag="Oem5">|</local:ButtonAndKey>
                     
                 </Grid>
                 
@@ -199,10 +347,9 @@
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
 
-                    <local:ButtonAndKey Grid.Column="0" Style="{StaticResource styleModifierKeys}"
-                            x:Name="thirdRowCapitalButtonWithShift" Tag="Capital">Caps Lock</local:ButtonAndKey>
+                    <local:ButtonAndKey Grid.Column="0" Style="{StaticResource styleModifierKeys}" Tag="Capital">Caps Lock</local:ButtonAndKey>
 
-                    <UniformGrid Name="thirdRowOfButtonsWithShift" Grid.Column="1" Columns="11" Rows="1">
+                    <UniformGrid Grid.Column="1" Columns="11" Rows="1">
 
                         <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="A">A</local:ButtonAndKey>
 
@@ -219,8 +366,7 @@
 
                     </UniformGrid>
 
-                    <local:ButtonAndKey Grid.Column="2" Style="{StaticResource styleModifierKeys}"
-                            x:Name="thirdRowReturnButtonWithShift" Tag="Return">Enter</local:ButtonAndKey>
+                    <local:ButtonAndKey Grid.Column="2" Style="{StaticResource styleModifierKeys}" Tag="Return">Enter</local:ButtonAndKey>
 
                 </Grid>
                 
@@ -232,10 +378,9 @@
                         <ColumnDefinition Width="2.5*"/>
                     </Grid.ColumnDefinitions>
 
-                    <local:ButtonAndKey Grid.Column="0" Style="{StaticResource styleModifierKeys}"
-                            x:Name="fourthRowLShiftButtonWithShift" Tag="LeftShift">Shift</local:ButtonAndKey>
+                    <local:ButtonAndKey Grid.Column="0" Style="{StaticResource styleModifierKeys}" Tag="LeftShift">Shift</local:ButtonAndKey>
 
-                    <UniformGrid Name="fourthRowOfButtonsWithShift" Grid.Column="1" Columns="10" Rows="1">
+                    <UniformGrid Grid.Column="1" Columns="10" Rows="1">
 
                         <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="Z">Z</local:ButtonAndKey>
                         <local:ButtonAndKey Style="{StaticResource styleLeftHandFourthFinger}" Tag="X">X</local:ButtonAndKey>
@@ -250,8 +395,7 @@
 
                     </UniformGrid>
 
-                    <local:ButtonAndKey Grid.Column="2" Style="{StaticResource styleModifierKeys}"
-                            x:Name="fourthRowRShiftButtonWithShift" Tag="RightShift">Shift</local:ButtonAndKey>
+                    <local:ButtonAndKey Grid.Column="2" Style="{StaticResource styleModifierKeys}" Tag="RightShift">Shift</local:ButtonAndKey>
 
                 </Grid>
                 
@@ -263,27 +407,27 @@
                         <ColumnDefinition Width="4.5*"/>
                     </Grid.ColumnDefinitions>
 
-                    <UniformGrid Name="fifthRowLeftButtonsWithShift" Grid.Column="0" Columns="3" Rows="1">
+                    <UniformGrid Grid.Column="0" Columns="3" Rows="1">
                         <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="LeftCtrl">Ctrl</local:ButtonAndKey>
                         <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="LWin">Win</local:ButtonAndKey>
                         <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="System">Alt</local:ButtonAndKey>
                     </UniformGrid>
 
-                    <local:ButtonAndKey Grid.Column="1" Style="{StaticResource styleFirstFinger}"
-                            x:Name="fifthRowSpaceButtonWithShift" Tag="Space">Space</local:ButtonAndKey>
+                    <local:ButtonAndKey Grid.Column="1" Style="{StaticResource styleFirstFinger}" Tag="Space">Space</local:ButtonAndKey>
 
-                    <UniformGrid Name="fifthRowRightButtonsWithShift" Grid.Column="2" Columns="3" Rows="1">
+                    <UniformGrid Grid.Column="2" Columns="3" Rows="1">
                         <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="System">Alt</local:ButtonAndKey>
                         <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="RWin">Win</local:ButtonAndKey>
                         <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="RightCtrl">Ctrl</local:ButtonAndKey>
                     </UniformGrid>
 
                 </Grid>
+                
             </UniformGrid>
-            
-            <!--Обычные символы - панель по умолчанию-->
+
+            <!--Символы при нажатии на Caps Lock - скрытая панель-->
             <UniformGrid Columns="1" Rows="5"
-                         Name="blockButtons" Visibility="Visible">
+                         Visibility="Collapsed" Name="blockButtonsWithCapsLock">
                 <!--Первый ряд кнопок-->
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -291,11 +435,9 @@
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
 
-                    <UniformGrid Name="firstRowOfButtons" Columns="13" Rows="1" Grid.Column="0">
+                    <UniformGrid Columns="13" Rows="1" Grid.Column="0">
 
                         <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="Oem3">`</local:ButtonAndKey>
-                        <!--<Button Style="{StaticResource styleLeftHandFifthFinger}"
-                                Command="{x:Static local:WindowCommands.BtnPressRoutedCommand}">1</Button>-->
                         <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="D1">1</local:ButtonAndKey>
                         <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="D2">2</local:ButtonAndKey>
 
@@ -312,8 +454,7 @@
 
                     </UniformGrid>
 
-                    <local:ButtonAndKey Grid.Column="1" Style="{StaticResource styleModifierKeys}"
-                            x:Name="firstRowBackspaceButton" Tag="Back">Backspace</local:ButtonAndKey>
+                    <local:ButtonAndKey Grid.Column="1" Style="{StaticResource styleModifierKeys}" Tag="Back">Backspace</local:ButtonAndKey>
 
                 </Grid>
 
@@ -325,10 +466,160 @@
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
 
-                    <local:ButtonAndKey Grid.Column="0" Style="{StaticResource styleModifierKeys}"
-                            x:Name="secondRowTabButton" Tag="Tab">Tab</local:ButtonAndKey>
+                    <local:ButtonAndKey Grid.Column="0" Style="{StaticResource styleModifierKeys}" Tag="Tab">Tab</local:ButtonAndKey>
 
-                    <UniformGrid Name="secondRowOfButtons" Grid.Column="1" Columns="12" Rows="1">
+                    <UniformGrid Grid.Column="1" Columns="12" Rows="1">
+
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="Q">Q</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFourthFinger}" Tag="W">W</local:ButtonAndKey>
+
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandThirdFinger}" Tag="E">E</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandSecondFinger}" Tag="R">R</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandSecondFinger}" Tag="T">T</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandSecondFinger}" Tag="Y">Y</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandSecondFinger}" Tag="U">U</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandThirdFinger}" Tag="I">I</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFourthFinger}" Tag="O">O</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFifthFinger}" Tag="P">P</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFifthFinger}" Tag="OemOpenBrackets">{</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFifthFinger}" Tag="Oem6">}</local:ButtonAndKey>
+
+                    </UniformGrid>
+
+                    <local:ButtonAndKey Grid.Column="2" Style="{StaticResource styleRightHandFifthFinger}" Tag="Oem5">|</local:ButtonAndKey>
+
+                </Grid>
+
+                <!--Третий ряд кнопок-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="11*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <local:ButtonAndKey Grid.Column="0" Style="{StaticResource styleModifierKeys}" Tag="Capital">Caps Lock</local:ButtonAndKey>
+
+                    <UniformGrid Grid.Column="1" Columns="11" Rows="1">
+
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="A">A</local:ButtonAndKey>
+
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFourthFinger}" Tag="S">S</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandThirdFinger}" Tag="D">D</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandSecondFinger}" Tag="F">F</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandSecondFinger}" Tag="G">G</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandSecondFinger}" Tag="H">H</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandSecondFinger}" Tag="J">J</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandThirdFinger}" Tag="K">K</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFourthFinger}" Tag="L">L</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFifthFinger}" Tag="Oem1">:</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFifthFinger}" Tag="OemQuotes">"</local:ButtonAndKey>
+
+                    </UniformGrid>
+
+                    <local:ButtonAndKey Grid.Column="2" Style="{StaticResource styleModifierKeys}" Tag="Return">Enter</local:ButtonAndKey>
+
+                </Grid>
+
+                <!--Четвертый ряд кнопок-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2.5*"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="2.5*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <local:ButtonAndKey Grid.Column="0" Style="{StaticResource styleModifierKeys}" Tag="LeftShift">Shift</local:ButtonAndKey>
+
+                    <UniformGrid Grid.Column="1" Columns="10" Rows="1">
+
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="Z">Z</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFourthFinger}" Tag="X">X</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandThirdFinger}" Tag="C">C</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandSecondFinger}" Tag="V">V</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandSecondFinger}" Tag="B">B</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandSecondFinger}" Tag="N">N</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandSecondFinger}" Tag="M">M</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandThirdFinger}" Tag="OemComma">&#60;</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFourthFinger}" Tag="OemPeriod">&#62;</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFifthFinger}" Tag="OemQuestion">?</local:ButtonAndKey>
+
+                    </UniformGrid>
+
+                    <local:ButtonAndKey Grid.Column="2" Style="{StaticResource styleModifierKeys}" Tag="RightShift">Shift</local:ButtonAndKey>
+
+                </Grid>
+
+                <!--Пятый ряд кнопок-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4.5*"/>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="4.5*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <UniformGrid Grid.Column="0" Columns="3" Rows="1">
+                        <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="LeftCtrl">Ctrl</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="LWin">Win</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="System">Alt</local:ButtonAndKey>
+                    </UniformGrid>
+
+                    <local:ButtonAndKey Grid.Column="1" Style="{StaticResource styleFirstFinger}" Tag="Space">Space</local:ButtonAndKey>
+
+                    <UniformGrid Grid.Column="2" Columns="3" Rows="1">
+                        <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="System">Alt</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="RWin">Win</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="RightCtrl">Ctrl</local:ButtonAndKey>
+                    </UniformGrid>
+
+                </Grid>
+
+            </UniformGrid>
+
+            <!--Символы при нажатии на Shift при нажатом Caps Lock - скрытая панель-->
+            <UniformGrid Columns="1" Rows="5"
+                         Visibility="Collapsed" Name="blockButtonsWithCapsLockWithShift">
+                <!--Первый ряд кнопок-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="13*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <UniformGrid Columns="13" Rows="1" Grid.Column="0">
+
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="Oem3">~</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="D1">!</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="D2">@</local:ButtonAndKey>
+
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandFourthFinger}" Tag="D3">#</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandThirdFinger}" Tag="D4">$</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandSecondFinger}" Tag="D5">%</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleLeftHandSecondFinger}" Tag="D6">^</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandSecondFinger}" Tag="D7">&#38;</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandSecondFinger}" Tag="D8">*</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandThirdFinger}" Tag="D9">(</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFourthFinger}" Tag="D0">)</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFifthFinger}" Tag="OemMinus">_</local:ButtonAndKey>
+                        <local:ButtonAndKey Style="{StaticResource styleRightHandFifthFinger}" Tag="OemPlus">+</local:ButtonAndKey>
+
+                    </UniformGrid>
+
+                    <local:ButtonAndKey Grid.Column="1" Style="{StaticResource styleModifierKeys}" Tag="Back">Backspace</local:ButtonAndKey>
+
+                </Grid>
+
+                <!--Второй ряд кнопок-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="12*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <local:ButtonAndKey Grid.Column="0" Style="{StaticResource styleModifierKeys}" Tag="Tab">Tab</local:ButtonAndKey>
+
+                    <UniformGrid Grid.Column="1" Columns="12" Rows="1">
 
                         <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="Q">q</local:ButtonAndKey>
                         <local:ButtonAndKey Style="{StaticResource styleLeftHandFourthFinger}" Tag="W">w</local:ButtonAndKey>
@@ -346,8 +637,7 @@
 
                     </UniformGrid>
 
-                    <local:ButtonAndKey Grid.Column="2" Style="{StaticResource styleRightHandFifthFinger}"
-                            x:Name="secondRowBackslashButton" Tag="Oem5">\</local:ButtonAndKey>
+                    <local:ButtonAndKey Grid.Column="2" Style="{StaticResource styleRightHandFifthFinger}" Tag="Oem5">|</local:ButtonAndKey>
 
                 </Grid>
 
@@ -359,10 +649,9 @@
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
 
-                    <local:ButtonAndKey Grid.Column="0" Style="{StaticResource styleModifierKeys}"
-                            x:Name="thirdRowCapitalButton" Tag="Capital">Caps Lock</local:ButtonAndKey>
+                    <local:ButtonAndKey Grid.Column="0" Style="{StaticResource styleModifierKeys}" Tag="Capital">Caps Lock</local:ButtonAndKey>
 
-                    <UniformGrid Name="thirdRowOfButtons" Grid.Column="1" Columns="11" Rows="1">
+                    <UniformGrid Grid.Column="1" Columns="11" Rows="1">
 
                         <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="A">a</local:ButtonAndKey>
 
@@ -379,8 +668,7 @@
 
                     </UniformGrid>
 
-                    <local:ButtonAndKey Grid.Column="2" Style="{StaticResource styleModifierKeys}"
-                            x:Name="thirdRowReturnButton" Tag="Return">Enter</local:ButtonAndKey>
+                    <local:ButtonAndKey Grid.Column="2" Style="{StaticResource styleModifierKeys}" Tag="Return">Enter</local:ButtonAndKey>
 
                 </Grid>
 
@@ -392,10 +680,9 @@
                         <ColumnDefinition Width="2.5*"/>
                     </Grid.ColumnDefinitions>
 
-                    <local:ButtonAndKey Grid.Column="0" Style="{StaticResource styleModifierKeys}"
-                            x:Name="fourthRowLShiftButton" Tag="LeftShift">Shift</local:ButtonAndKey>
+                    <local:ButtonAndKey Grid.Column="0" Style="{StaticResource styleModifierKeys}" Tag="LeftShift">Shift</local:ButtonAndKey>
 
-                    <UniformGrid Name="fourthRowOfButtons" Grid.Column="1" Columns="10" Rows="1">
+                    <UniformGrid Grid.Column="1" Columns="10" Rows="1">
 
                         <local:ButtonAndKey Style="{StaticResource styleLeftHandFifthFinger}" Tag="Z">z</local:ButtonAndKey>
                         <local:ButtonAndKey Style="{StaticResource styleLeftHandFourthFinger}" Tag="X">x</local:ButtonAndKey>
@@ -410,8 +697,7 @@
 
                     </UniformGrid>
 
-                    <local:ButtonAndKey Grid.Column="2" Style="{StaticResource styleModifierKeys}"
-                            x:Name="fourthRowRShiftButton" Tag="RightShift">Shift</local:ButtonAndKey>
+                    <local:ButtonAndKey Grid.Column="2" Style="{StaticResource styleModifierKeys}" Tag="RightShift">Shift</local:ButtonAndKey>
 
                 </Grid>
 
@@ -423,16 +709,15 @@
                         <ColumnDefinition Width="4.5*"/>
                     </Grid.ColumnDefinitions>
 
-                    <UniformGrid Name="fifthRowLeftButtons" Grid.Column="0" Columns="3" Rows="1">
+                    <UniformGrid Grid.Column="0" Columns="3" Rows="1">
                         <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="LeftCtrl">Ctrl</local:ButtonAndKey>
                         <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="LWin">Win</local:ButtonAndKey>
                         <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="System">Alt</local:ButtonAndKey>
                     </UniformGrid>
 
-                    <local:ButtonAndKey Grid.Column="1" Style="{StaticResource styleFirstFinger}"
-                            x:Name="fifthRowSpaceButton" Tag="Space">Space</local:ButtonAndKey>
+                    <local:ButtonAndKey Grid.Column="1" Style="{StaticResource styleFirstFinger}" Tag="Space">Space</local:ButtonAndKey>
 
-                    <UniformGrid Name="fifthRowRightButtons" Grid.Column="2" Columns="3" Rows="1">
+                    <UniformGrid Grid.Column="2" Columns="3" Rows="1">
                         <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="System">Alt</local:ButtonAndKey>
                         <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="RWin">Win</local:ButtonAndKey>
                         <local:ButtonAndKey Style="{StaticResource styleModifierKeys}" Tag="RightCtrl">Ctrl</local:ButtonAndKey>
