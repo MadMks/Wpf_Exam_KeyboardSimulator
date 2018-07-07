@@ -61,10 +61,7 @@ namespace Task_KeyboardSimulator
         /// Список символов верхнего регистра.
         /// </summary>
         private string characterListUpper;
-        /// <summary>
-        /// Список символов, цифры и символы.
-        /// </summary>
-        //private string numberAndCharacterList;
+
 
         // TODO const
         private const int NUMBER_OF_CHARACTERS_IN_STRING = 15;
@@ -103,9 +100,6 @@ namespace Task_KeyboardSimulator
             rand = new Random();
 
 
-            //this.checkBoxCaseSensitive.Focusable = false;
-
-
 
             this.PreviewTextInput += MainWindow_PreviewTextInput;
            
@@ -123,45 +117,34 @@ namespace Task_KeyboardSimulator
             // Узнаем состояние CapsLock. Запоминаем.
             if (Keyboard.IsKeyToggled(Key.Capital) == true)
             {
-                //Console.WriteLine("cap true");
                 this.IsCapsLockIsOn = true;
             }
             else if (Keyboard.IsKeyToggled(Key.Capital) == false)
             {
-                //Console.WriteLine("cap false");
                 this.IsCapsLockIsOn = false;
             }
             // TODO рефакторинг
             if (IsCapsLockIsOn)
             {
-                //this.blockButtonsWithShift.Visibility = Visibility.Visible;
+                //this.blockButtonsWithCapsLock.Visibility = Visibility.Visible;
+
+                //this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
+                //this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
                 //this.blockButtons.Visibility = Visibility.Collapsed;
 
-                this.blockButtonsWithCapsLock.Visibility = Visibility.Visible;
-
-                this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
-                this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
-                this.blockButtons.Visibility = Visibility.Collapsed;
+                this.ShowBlockOfStandardButtonsWhenYouPressTheCapsLock();
             }
             else
             {
-                this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
-                this.blockButtonsWithCapsLock.Visibility = Visibility.Collapsed;
-                this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
+                //this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
+                //this.blockButtonsWithCapsLock.Visibility = Visibility.Collapsed;
+                //this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
 
-                this.blockButtons.Visibility = Visibility.Visible;
+                //this.blockButtons.Visibility = Visibility.Visible;
+
+                this.ShowBlockOfStandardButtons();
             }
 
-
-            // test
-            //this.sliderDifficulty.ValueChanged += SliderDifficulty_ValueChanged;
-
-
-
-            //for (int i = 0; i < 256; i++)
-            //    Console.WriteLine("Знак unicode N'{0}' является символ {1}", i, (char)i);
-            //Console.WriteLine((Key)i + " = " + i);
-            
         }
 
 
@@ -174,7 +157,6 @@ namespace Task_KeyboardSimulator
                 if (this.IsCapsLockIsOn)
                 {
                     // Нажимаем шифт.
-                    //this.ShowBlockOfStandardButtons();
                     this.ShowBlockOfStandardButtonsWhenYouPressCapsLockWithShift();
                 }
                 else if (!this.IsCapsLockIsOn)
@@ -190,7 +172,41 @@ namespace Task_KeyboardSimulator
             this.blockButtons.Visibility = Visibility.Collapsed;
             this.blockButtonsWithCapsLock.Visibility = Visibility.Collapsed;
             this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
+
             this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Visible;
+        }
+
+        private void ShowBlockOfStandardButtonsWhenYouPressTheCapsLock()
+        {
+            this.blockButtonsWithCapsLock.Visibility = Visibility.Visible;
+
+            this.blockButtons.Visibility = Visibility.Collapsed;
+            this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
+            this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// Показать стандартный блок кнопок (без нажатого Shift или Caps Lock).
+        /// </summary>
+        private void ShowBlockOfStandardButtons()
+        {
+            this.blockButtons.Visibility = Visibility.Visible;
+
+            this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
+            this.blockButtonsWithCapsLock.Visibility = Visibility.Collapsed;
+            this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// Показать блок кнопок с нажатым Shift.
+        /// </summary>
+        private void ShowABlockOfButtonsWhenYouPressTheShift()
+        {
+            this.blockButtonsWithShift.Visibility = Visibility.Visible;
+
+            this.blockButtons.Visibility = Visibility.Collapsed;
+            this.blockButtonsWithCapsLock.Visibility = Visibility.Collapsed;
+            this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
         }
 
         // TODO рефакторинг
@@ -203,7 +219,6 @@ namespace Task_KeyboardSimulator
 
                 if (IsCapsLockIsOn)
                 {
-                    //this.ShowABlockOfButtonsWhenYouPressTheShift();
                     this.ShowBlockOfStandardButtonsWhenYouPressTheCapsLock();
                 }
                 else
@@ -217,14 +232,7 @@ namespace Task_KeyboardSimulator
             SwitchingVisualButtonsToStateWithoutPressing();
         }
 
-        private void ShowBlockOfStandardButtonsWhenYouPressTheCapsLock()
-        {
-            this.blockButtonsWithCapsLock.Visibility = Visibility.Visible;
-
-            this.blockButtons.Visibility = Visibility.Collapsed;
-            this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
-            this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
-        }
+        
 
         /// <summary>
         /// Меняем значение Caps Lock на противоположное.
@@ -257,7 +265,6 @@ namespace Task_KeyboardSimulator
                 if (this.IsCapsLockIsOn)
                 {
                     // Отпускаем шифт.
-                    //this.ShowABlockOfButtonsWhenYouPressTheShift();
                     this.ShowBlockOfStandardButtonsWhenYouPressTheCapsLock();
                 }
                 else if (!this.IsCapsLockIsOn)
@@ -265,38 +272,13 @@ namespace Task_KeyboardSimulator
                     this.ShowBlockOfStandardButtons();
                 }
             }
-
-
-            Console.WriteLine("e.Key" + e.Key);
         }
 
-        /// <summary>
-        /// Показать стандартный блок кнопок (без нажатого Shift или Caps Lock).
-        /// </summary>
-        private void ShowBlockOfStandardButtons()
-        {
-            this.blockButtons.Visibility = Visibility.Visible;
-
-            this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
-            this.blockButtonsWithCapsLock.Visibility = Visibility.Collapsed;
-            this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
-        }
-
-        /// <summary>
-        /// Показать блок кнопок с нажатым Shift.
-        /// </summary>
-        private void ShowABlockOfButtonsWhenYouPressTheShift()
-        {
-            this.blockButtonsWithShift.Visibility = Visibility.Visible;
-            this.blockButtons.Visibility = Visibility.Collapsed;
-        }
+        
 
 
         private ButtonAndKey SearchingVisualButtons(UniformGrid block, Key lastKey)
         {
-            Console.WriteLine("                  " + lastKey.ToString());
-
-
             foreach (Grid grid in block.Children)
             {
                 foreach (var item in grid.Children)
@@ -438,16 +420,9 @@ namespace Task_KeyboardSimulator
         /// </summary>
         private void SwitchingVisualButtonsToStateWithoutPressing()
         {
+            this.SwitchingToStateWithoutPressing(this.blockButtons);
 
-
-            //if (blockButtons.Visibility == Visibility.Visible)
-            //{
-                this.SwitchingToStateWithoutPressing(this.blockButtons);
-            //}
-            //else if (blockButtonsWithShift.Visibility == Visibility.Visible)
-            //{
-                this.SwitchingToStateWithoutPressing(this.blockButtonsWithShift);
-            //}
+            this.SwitchingToStateWithoutPressing(this.blockButtonsWithShift);
         }
 
         private void SwitchingToStateWithoutPressing(UniformGrid block)
@@ -491,12 +466,10 @@ namespace Task_KeyboardSimulator
         {
             if (this.blockButtons.Visibility == Visibility.Visible)
             {
-                //this.currentPressedButton = SearchingVisualButtons(lastKeyPressed);
                 this.currentPressedButton = SearchingVisualButtons(this.blockButtons, lastKeyPressed);
             }
             else if (this.blockButtonsWithShift.Visibility == Visibility.Visible)
             {
-                //this.currentPressedButton = SearchingVisualButtonsWithShift(lastKeyPressed);
                 this.currentPressedButton = SearchingVisualButtons(this.blockButtonsWithShift, lastKeyPressed);
             }
         }
@@ -681,16 +654,26 @@ namespace Task_KeyboardSimulator
             {
                 if (Keyboard.IsKeyUp(Key.LeftShift) || Keyboard.IsKeyUp(Key.RightShift))
                 {
-                    this.blockButtonsWithShift.Visibility = Visibility.Visible;
-                    this.blockButtons.Visibility = Visibility.Collapsed;
+                    //this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
+                    //this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
+                    //this.blockButtons.Visibility = Visibility.Collapsed;
+
+                    //this.blockButtonsWithCapsLock.Visibility = Visibility.Visible;
+
+                    this.ShowBlockOfStandardButtonsWhenYouPressTheCapsLock();
                 }
             }
             else if (!IsCapsLockIsOn)
             {
                 if (Keyboard.IsKeyUp(Key.LeftShift) || Keyboard.IsKeyUp(Key.RightShift))
                 {
-                    this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
-                    this.blockButtons.Visibility = Visibility.Visible;
+                    //this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
+                    //this.blockButtonsWithCapsLock.Visibility = Visibility.Collapsed;
+                    //this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
+
+                    //this.blockButtons.Visibility = Visibility.Visible;
+
+                    this.ShowBlockOfStandardButtons();
                 }
             }
         }
