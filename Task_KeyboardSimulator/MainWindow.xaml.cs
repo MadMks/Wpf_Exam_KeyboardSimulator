@@ -42,7 +42,6 @@ namespace Task_KeyboardSimulator
         private bool isAddingSymbols;
         //private Key lastKeyPressed;
         private ButtonAndKey currentPressedButton;
-        //private List<Button> buttons;
         private bool IsCapsLockIsOn;
 
         private List<int> listOfErrorIndicesForUserTyped;
@@ -89,7 +88,6 @@ namespace Task_KeyboardSimulator
             this.listOfErrorIndicesForUserTyped = new List<int>();
             this.listOfErrorIndicesForTyped = new List<int>();
 
-
             this.characterListLower = "fjdksla;ghrueiwoqpvmc,x.z/bn4738291056[]'\\`-=";
             this.characterListUpper = "FJDKSLA:GHRUEIWOQPVMC<X>Z?BN$&#*@(!)%^{}\"|~_+";
 
@@ -98,13 +96,8 @@ namespace Task_KeyboardSimulator
 
 
             this.PreviewTextInput += MainWindow_PreviewTextInput;
-           
-
             this.PreviewKeyDown += MainWindow_PreviewKeyDown;
             this.PreviewKeyUp += MainWindow_PreviewKeyUp;
-
-
-            
             this.KeyUp += MainWindow_KeyUp;
             this.KeyDown += MainWindow_KeyDown;
 
@@ -123,15 +116,7 @@ namespace Task_KeyboardSimulator
                 this.IsCapsLockIsOn = false;
             }
 
-            // TODO рефакторинг
-            if (IsCapsLockIsOn)
-            {
-                this.ShowBlockOfStandardButtonsWhenYouPressTheCapsLock();
-            }
-            else
-            {
-                this.ShowBlockOfStandardButtons();
-            }
+            this.SwitchingToCapsLockButtonsOrStandardButtons();
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
@@ -152,6 +137,9 @@ namespace Task_KeyboardSimulator
 
         }
 
+        /// <summary>
+        /// Показать блок кнопок с нажатым Caps Lock и зажатым Shift.
+        /// </summary>
         private void ShowBlockOfStandardButtonsWhenYouPressCapsLockWithShift()
         {
             this.blockButtons.Visibility = Visibility.Collapsed;
@@ -161,6 +149,9 @@ namespace Task_KeyboardSimulator
             this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Показать блок кнопок с нажатым Caps Lock.
+        /// </summary>
         private void ShowBlockOfStandardButtonsWhenYouPressTheCapsLock()
         {
             this.blockButtonsWithCapsLock.Visibility = Visibility.Visible;
@@ -202,22 +193,28 @@ namespace Task_KeyboardSimulator
             {
                 this.ChangeCapslockValue();
 
-                if (IsCapsLockIsOn)
-                {
-                    this.ShowBlockOfStandardButtonsWhenYouPressTheCapsLock();
-                }
-                else
-                {
-                    this.ShowBlockOfStandardButtons();
-                }
+                this.SwitchingToCapsLockButtonsOrStandardButtons();
             }
 
-            ButtonPressUp(this.currentPressedButton);
+            this.ButtonPressUp(this.currentPressedButton);
 
-            SwitchingVisualButtonsToStateWithoutPressing();
+            this.SwitchingVisualButtonsToStateWithoutPressing();
         }
 
-        
+        /// <summary>
+        /// Переключение или на клавиатуру "Caps Lock" или на стандартную клавиатуру.
+        /// </summary>
+        private void SwitchingToCapsLockButtonsOrStandardButtons()
+        {
+            if (IsCapsLockIsOn)
+            {
+                this.ShowBlockOfStandardButtonsWhenYouPressTheCapsLock();
+            }
+            else
+            {
+                this.ShowBlockOfStandardButtons();
+            }
+        }
 
         /// <summary>
         /// Меняем значение Caps Lock на противоположное.
@@ -247,15 +244,7 @@ namespace Task_KeyboardSimulator
             // Переключение на символы с помощью Shift. (отпускание).
             if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
             {
-                if (this.IsCapsLockIsOn)
-                {
-                    // Отпускаем шифт.
-                    this.ShowBlockOfStandardButtonsWhenYouPressTheCapsLock();
-                }
-                else if (!this.IsCapsLockIsOn)
-                {
-                    this.ShowBlockOfStandardButtons();
-                }
+                this.SwitchingToCapsLockButtonsOrStandardButtons();
             }
         }
 
@@ -980,7 +969,5 @@ namespace Task_KeyboardSimulator
             this.isGenerateCaseSensitiveString = false;
         }
 
-
-        
     }
 }
