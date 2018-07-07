@@ -43,10 +43,8 @@
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="Margin" Value="2"/>
-            <!--<Setter Property="Padding" Value="5"/>-->
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="30"/>
-            <!--<Setter Property="VerticalAlignment" Value="Stretch"/>-->
             <Setter Property="Focusable" Value="False"/>
         </Style.Setters>
         <Style.Triggers>
@@ -69,31 +67,7 @@
                 <Setter Property="Background" Value="White"/>
                 <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
             </Trigger>
-
-            <!--<EventTrigger RoutedEvent="PreviewKeyDown">
-                <EventTrigger.Actions>
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation Duration="0:0:0"
-                                             Storyboard.TargetProperty="FontSize"
-                                                 To="20">
-                            </DoubleAnimation>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger.Actions>
-            </EventTrigger>
-            <EventTrigger RoutedEvent="PreviewKeyUp">
-                <EventTrigger.Actions>
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation Duration="0:0:0"
-                                             Storyboard.TargetProperty="FontSize"
-                                                 To="30">
-                            </DoubleAnimation>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger.Actions>
-            </EventTrigger>-->
+            
         </Style.Triggers>
     </Style>
 

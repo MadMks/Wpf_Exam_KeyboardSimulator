@@ -54,7 +54,7 @@
                         Margin="10,0,10,0"
                         SmallChange="1" LargeChange="1"
                         TickFrequency="1" IsSnapToTickEnabled="True"
-                        Minimum="2" Maximum="45"/> <!--TODO margin / h v align-->
+                        Minimum="2" Maximum="45"/>
 
             </Grid>
 
@@ -100,7 +100,7 @@
         <!--Третий ряд - 2 строки текста-->
         <Grid Grid.Row="2" Margin="2"
               Name="gridTypingBlocks" MouseDown="gridTypingBlocks_MouseDown">
-            <StackPanel>    <!--TODO-->
+            <StackPanel>
                 <StackPanel Background="LightBlue" Orientation="Horizontal">
                     <TextBlock Name="textTyped"
                              Background="LightGreen" FontFamily="Consolas" FontSize="20"

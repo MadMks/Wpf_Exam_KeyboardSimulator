@@ -58,8 +58,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ButtonAndKey.cs" />
-    <Compile Include="WindowCommands.cs" />
-    <Page Include="DictionaryStyleButtons.xaml">
+    <Page Include="DictionaryStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
