@@ -20,12 +20,8 @@ using System.Windows.Threading;
 // TODO #1 задержка визуального нажатия Шифта. Из-за визуального нажатия на клавиатуре нижнего регистра,
         // которая в данный момент Visibility.Collapsed (в данный момент не видно).
         // Визуальное нажатие появляется после сработки зажатия Шифта (RepeatButton).
-// TODO #2 добавить 3-ю клавиатуру для Caps Lock 
-        // (нажатие Caps отличается от нажатия Shift).
-        // При нажатии Caps все буквы в верхнем регистре, а цифры остаются неизменными.
-// TODO #3 добавить 4-ю клавиатуру для Shift при включенном Caps.
-        // При включенном Caps и последующем нажатии Shift,
-        // буквы становятся в маленьком регистре, а цифры меняются на символы.
+// TODO #2 визуальное нажатие для 3 и 4й клавиатур.
+// TODO #3 откулючение визуального нажатия для 3 и 4й клавиатур.
 
 namespace Task_KeyboardSimulator
 {
@@ -113,8 +109,11 @@ namespace Task_KeyboardSimulator
             this.KeyDown += MainWindow_KeyDown;
 
 
-            // TODO рефакторинг
-            // Узнаем состояние CapsLock. Запоминаем.
+            this.ComputeAndRememberStateOfCapsLock();
+        }
+
+        private void ComputeAndRememberStateOfCapsLock()
+        {
             if (Keyboard.IsKeyToggled(Key.Capital) == true)
             {
                 this.IsCapsLockIsOn = true;
@@ -123,31 +122,17 @@ namespace Task_KeyboardSimulator
             {
                 this.IsCapsLockIsOn = false;
             }
+
             // TODO рефакторинг
             if (IsCapsLockIsOn)
             {
-                //this.blockButtonsWithCapsLock.Visibility = Visibility.Visible;
-
-                //this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
-                //this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
-                //this.blockButtons.Visibility = Visibility.Collapsed;
-
                 this.ShowBlockOfStandardButtonsWhenYouPressTheCapsLock();
             }
             else
             {
-                //this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
-                //this.blockButtonsWithCapsLock.Visibility = Visibility.Collapsed;
-                //this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
-
-                //this.blockButtons.Visibility = Visibility.Visible;
-
                 this.ShowBlockOfStandardButtons();
             }
-
         }
-
-
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
        {
@@ -472,6 +457,14 @@ namespace Task_KeyboardSimulator
             {
                 this.currentPressedButton = SearchingVisualButtons(this.blockButtonsWithShift, lastKeyPressed);
             }
+            else if (this.blockButtonsWithCapsLock.Visibility == Visibility.Visible)
+            {
+                this.currentPressedButton = SearchingVisualButtons(this.blockButtonsWithCapsLock, lastKeyPressed);
+            }
+            else if (this.blockButtonsWithCapsLockWithShift.Visibility == Visibility.Visible)
+            {
+                this.currentPressedButton = SearchingVisualButtons(this.blockButtonsWithCapsLockWithShift, lastKeyPressed);
+            }
         }
 
         private void ButtonPressDown()
@@ -654,12 +647,6 @@ namespace Task_KeyboardSimulator
             {
                 if (Keyboard.IsKeyUp(Key.LeftShift) || Keyboard.IsKeyUp(Key.RightShift))
                 {
-                    //this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
-                    //this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
-                    //this.blockButtons.Visibility = Visibility.Collapsed;
-
-                    //this.blockButtonsWithCapsLock.Visibility = Visibility.Visible;
-
                     this.ShowBlockOfStandardButtonsWhenYouPressTheCapsLock();
                 }
             }
@@ -667,12 +654,6 @@ namespace Task_KeyboardSimulator
             {
                 if (Keyboard.IsKeyUp(Key.LeftShift) || Keyboard.IsKeyUp(Key.RightShift))
                 {
-                    //this.blockButtonsWithCapsLockWithShift.Visibility = Visibility.Collapsed;
-                    //this.blockButtonsWithCapsLock.Visibility = Visibility.Collapsed;
-                    //this.blockButtonsWithShift.Visibility = Visibility.Collapsed;
-
-                    //this.blockButtons.Visibility = Visibility.Visible;
-
                     this.ShowBlockOfStandardButtons();
                 }
             }
